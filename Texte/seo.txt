@@ -1,0 +1,14 @@
+[Accueil]
+Titre: ARHL.DS | Agence d'Architecture & Design
+Description: Bienvenue sur le portfolio officiel de l'agence ARHL.DS. Découvrez nos projets d'architecture innovants et l'univers de l'Atelier de la Colline.
+Keywords: architecture, architecte, design, portfolio, ARHL.DS, atelier de la colline, projets architecturaux, urbanisme, accueil
+
+[Projets]
+Titre: ARHL.DS | Nos Réalisations & Projets
+Description: Explorez les projets d'architecture signés ARHL.DS. Équipements publics, logements collectifs et design urbain à travers une sélection de nos meilleures réalisations.
+Keywords: projets architecture, réalisations architecte, portfolio projets, logements, équipements, ARHL.DS, expertise architecturale
+
+[Colline]
+Titre: ARHL.DS | La Colline - L'Équipe & La Vision
+Description: Découvrez l'histoire de l'Atelier de la Colline, notre philosophie de conception et l'équipe d'associés passionnés derrière chaque projet ARHL.DS.
+Keywords: agence architecture, équipe architectes, vision, approche architecturale, associés, atelier de la colline, philosophie design

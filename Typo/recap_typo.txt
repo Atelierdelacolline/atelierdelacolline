@@ -1,0 +1,85 @@
+Police globale utilisée : Lato (Light, Regular, Bold, Black)
+Taille de base de référence : 11px
+
+--------------------------------------------------------------------------------
+1. NAVIGATION ET SIDEBAR
+--------------------------------------------------------------------------------
+Menu Principal (PROJETS, LA COLLINE) :
+- Police : Lato Bold
+- Taille : 1.4rem
+- Style : Majuscules
+
+Bloc Contact (Adresse, Mail, etc.) :
+- Police : Lato Regular
+- Taille : 0.9rem
+- Style : Majuscules
+
+Réseaux Sociaux (INSTAGRAM, LINKEDIN) :
+- Police : Lato Bold
+- Taille : 0.9rem
+- Style : Majuscules
+
+Tableau des Projets (Sidebar) :
+- En-têtes (N°, TITRE...) :
+	- Police : Lato Bold
+	- Taille : 0.9rem
+	- Style : Majuscules
+
+- Cellules classiques :
+	- Police : Lato Regular
+	- Taille : 0.80rem
+	- Style : Majuscules
+
+- Titres du tableau :
+	- Police : Lato Bold
+	- Taille : 0.80rem
+	- Style : Majuscules
+
+Copyright :
+- Police : Lato Regular
+- Taille : 0.81rem
+- Style : Casse normale
+
+--------------------------------------------------------------------------------
+2. ACCUEIL ET TEXTES DE MISE EN AVANT
+--------------------------------------------------------------------------------
+Slogan d'Accueil & Texte Philosophie :
+- Police : Lato Light
+- Taille : 2.50rem
+- Style : Italique, Casse normale
+
+--------------------------------------------------------------------------------
+3. PAGES DE CONTENU (PROJETS & LA COLLINE)
+--------------------------------------------------------------------------------
+En-têtes de Section :
+- Police : Lato Bold
+- Taille : 1.2rem
+- Style : Majuscules
+
+Sous-titres de Projet :
+- Police : Lato Bold
+- Taille : 1.4rem
+- Style : Majuscules
+
+Points Clés (Client, Budget, Surface, État) :
+- Police : Lato Bold
+- Taille : 0.9rem
+- Style : Majuscules
+
+Corps de Texte (Présentation, Approche, etc.) :
+- Police : Lato Regular
+- Taille : 1.20rem
+- Style : Casse normale, Justifié
+
+--------------------------------------------------------------------------------
+4. ÉQUIPE
+--------------------------------------------------------------------------------
+Nom du membre :
+- Police : Lato Black
+- Taille : 1.4rem
+- Style : Majuscules
+
+Biographie (CV) :
+- Police : Lato Regular
+- Taille : 1.2rem
+- Style : Casse normale
