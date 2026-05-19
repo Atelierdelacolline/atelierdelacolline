@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title></title>
+    <meta name="description" id="meta-desc" content="">
+    <meta name="keywords" id="meta-keywords" content="">
+    
+    <style>
+        /* ==========================================================================
+           0. VARIABLES DE COULEURS ET TYPOGRAPHIE DYNAMIQUES
+           ========================================================================== */
+        :root {
+            --color-cadre: #12328a;  
+            --color-action: #ff0000; 
+            --color-fond: #ffffff;   
+            --color-texte: #333333;  
+            --color-titre: #000000;  
+
+            --font-nav: 'Lato', sans-serif; --size-nav: 1.27rem; --weight-nav: 700; --transform-nav: uppercase; --style-nav: normal;
+            --font-contact: 'Lato', sans-serif; --size-contact: 1rem; --weight-contact: 400; --transform-contact: uppercase; --style-contact: normal;
+            --font-social: 'Lato', sans-serif; --size-social: 0.9rem; --weight-social: 700; --transform-social: uppercase; --style-social: normal;
+            --font-table: 'Lato', sans-serif; --size-table: 0.81rem; --weight-table: 400; --weight-table-bold: 700; --transform-table: uppercase; --style-table: normal;
+            --font-slogan: 'Lato', sans-serif; --size-slogan: 2.54rem; --weight-slogan: 300; --transform-slogan: none; --style-slogan: italic;
+            --font-section-header: 'Lato', sans-serif; --size-section-header: 1rem; --weight-section-header: 700; --transform-section-header: uppercase; --style-section-header: normal;
+            --font-project-sub: 'Lato', sans-serif; --size-project-sub: 1.27rem; --weight-project-sub: 700; --transform-project-sub: uppercase; --style-project-sub: normal;
+            --font-key-points: 'Lato', sans-serif; --size-key-points: 0.9rem; --weight-key-points: 700; --transform-key-points: uppercase; --style-key-points: normal;
+            --font-body-text: 'Lato', sans-serif; --size-body-text: 1.09rem; --weight-body-text: 400; --transform-body-text: none; --style-body-text: normal;
+            --font-team-name: 'Lato', sans-serif; --size-team-name: 1.27rem; --weight-team-name: 900; --transform-team-name: uppercase; --style-team-name: normal;
+            --font-cv: 'Lato', sans-serif; --size-cv: 1rem; --weight-cv: 400; --transform-cv: none; --style-cv: normal;
+        }
+
+        @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Light.ttf') format('truetype'); font-weight: 300; }
+        @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Regular.ttf') format('truetype'); font-weight: 400; }
+        @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Bold.ttf') format('truetype'); font-weight: 700; }
+        @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Black.ttf') format('truetype'); font-weight: 900; }
+
+        /* ==========================================================================
+           1. RESPONSIVITÉ HOMOTHÉTIQUE ET MOBILE
+           ========================================================================== */
+        html { font-size: 11px; } 
+        @media (max-width: 1600px) and (min-width: 1101px) { html { font-size: 0.6875vw; } }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Lato', sans-serif; font-weight: 400; font-size: 1rem; background-color: var(--color-fond); color: var(--color-texte); line-height: 1.4; display: flex; min-height: 100vh; text-transform: uppercase; transition: background-color 0.3s, color 0.3s; }
+
+        /* --- ÉCRAN D'INTRODUCTION --- */
+        #intro-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999;
+            background-color: var(--color-fond); cursor: pointer; overflow: hidden; display: flex;
+        }
+        #intro-bg {
+            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+            object-fit: cover; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        #intro-logo-container {
+            position: absolute; right: 30px; top: 20px;
+            width: 16.36rem; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), width 0.8s;
+        }
+        .mask-logo {
+            width: 100%; height: auto; aspect-ratio: 5/1;
+            background-color: var(--color-texte); 
+            -webkit-mask-image: url('Images/Icones/logo.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: left center;
+            mask-image: url('Images/Icones/logo.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: left center;
+        }
+
+        /* ==========================================================================
+           2. LAYOUT : COLONNES ET GABARIT (DESKTOP)
+           ========================================================================== */
+        .sidebar { width: 600px; flex-shrink: 0; padding: 20px 30px; position: sticky; top: 0; height: 100vh; max-height: 100vh; overflow: hidden; border-right: 5px solid transparent; display: flex; flex-direction: column; }
+        .main-content { flex-grow: 1; display: flex; justify-content: center; padding: 20px 0; width: calc(100% - 600px); }
+        .page-section { width: 1000px; max-width: 100%; padding: 0 30px; display: none; animation: fadeIn 0.4s ease-in-out; }
+
+        @media (max-width: 1600px) and (min-width: 1101px) {
+            .sidebar { width: 37.5vw; }
+            .main-content { width: 62.5vw; }
+        }
+
+        .mobile-only { display: none; }
+        .desktop-only { display: block; margin-top: auto; }
+
+        @media (max-width: 1100px) {
+            html { font-size: 11px; } 
+            body { flex-direction: column; } 
+            
+            .sidebar { width: 100%; max-width: 1000px; margin: 0 auto; height: auto; max-height: none; position: relative; border-right: none; padding: 20px; overflow: visible; }
+            .table-container { overflow-y: visible !important; margin-bottom: 40px; }
+
+            .main-content { width: 100%; padding: 20px 0; }
+            .page-section { padding: 0 20px; }
+            
+            .team-grid, .details-grid, .details-footer { grid-template-columns: 1fr; gap: 20px; }
+            .details-footer .span-2 { grid-column: span 1; }
+            
+            .main-nav { flex-wrap: wrap; }
+            .project-header { flex-wrap: wrap; }
+            .image-placeholder { height: 300px; } 
+
+            .desktop-only { display: none !important; }
+            .mobile-only { display: block; }
+            .mobile-footer { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 20px 40px 20px; }
+        }
+
+        .page-section.active-page { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- LOGO BARRE LATÉRALE --- */
+        #sidebar-logo { display: block; margin-bottom: 30px; text-decoration: none; width: 16.36rem; max-width: 100%; cursor: pointer; opacity: 0; transition: background-color 0.3s ease; }
+        #sidebar-logo:hover .mask-logo { background-color: var(--color-action); }
+
+        .main-nav { display: flex; gap: 20px; margin-bottom: 30px; font-family: var(--font-nav); font-size: var(--size-nav); font-weight: var(--weight-nav); text-transform: var(--transform-nav); font-style: var(--style-nav); }
+        .main-nav a { text-decoration: none; color: var(--color-texte); padding-bottom: 2px; border-bottom: 5px solid transparent; transition: color 0.3s ease, border-color 0.3s ease; cursor: pointer;}
+        .main-nav a:hover { color: var(--color-action); border-bottom-color: var(--color-action); }
+        .main-nav a.active { color: var(--color-action); border-bottom: 5px solid var(--color-action); }
+        
+        .info-block { margin-bottom: 40px; color: var(--color-texte); font-family: var(--font-contact); font-size: var(--size-contact); font-weight: var(--weight-contact); text-transform: var(--transform-contact); font-style: var(--style-contact); }
+        .copyright { margin-top: 20px; font-family: var(--font-contact); font-size: var(--size-table); text-transform: none; color: var(--color-texte); }
+
+        /* --- TABLEAU ET ASCENSEUR --- */
+        .table-container { flex-grow: 1; overflow-y: auto; margin-bottom: 20px; padding-right: 10px; min-height: 0; }
+        .table-container::-webkit-scrollbar { width: 4px; }
+        .table-container::-webkit-scrollbar-thumb { background-color: var(--color-texte); border-radius: 4px; }
+
+        .table-works { width: 100%; border-collapse: collapse; color: var(--color-texte); font-family: var(--font-table); font-size: var(--size-table); text-transform: var(--transform-table); font-style: var(--style-table); } 
+        .table-works th, .table-works td { padding: 5px 2px; border-bottom: 1px solid var(--color-texte); transition: background-color 0.3s ease, color 0.3s ease, padding-left 0.3s ease; }
+        
+        .table-works th { border-top: 1px double var(--color-texte); border-bottom: 1px double var(--color-texte); font-weight: var(--weight-table-bold); color: var(--color-texte); position: sticky; top: 0; background-color: var(--color-fond); z-index: 2; transition: color 0.3s ease; cursor: pointer;}
+        .table-works th:hover { color: var(--color-action); }
+        
+        .table-works tr th:first-child, .table-works tr td:first-child { width: 15%; text-align: left; }
+        .table-works tr th:not(:first-child), .table-works tr td:not(:first-child) { width: 21.25%; text-align: center; }
+        .table-works tr td:nth-child(2) { font-weight: var(--weight-table-bold); }
+        
+        .work-link { cursor: pointer; }
+        
+        /* HOVER SUR TOUTE LA LIGNE */
+        .work-link:hover td { background-color: var(--color-action); color: var(--color-fond) !important; border-color: var(--color-action); }
+        
+        /* SURLIGNAGE DE LA LIGNE ACTIVE */
+        .work-link.active-row td { background-color: var(--color-action); color: var(--color-fond) !important; border-color: var(--color-action); }
+        
+        /* DÉPLACEMENT UNIQUEMENT DU N° (COLONNE 1) */
+        .work-link:hover td:first-child,
+        .work-link.active-row td:first-child { padding-left: 6px; }
+
+        /* --- CONTENU --- */
+        .blue-frame { background-color: var(--color-cadre); padding: 5px; position: relative; margin-bottom: 15px; transition: background-color 0.3s; }
+        .section-header { display: flex; justify-content: space-between; border-top: 1px solid var(--color-texte); border-bottom: 1px solid var(--color-texte); padding: 4px 0; margin-bottom: 30px; font-family: var(--font-section-header); font-size: var(--size-section-header); font-weight: var(--weight-section-header); text-transform: var(--transform-section-header); font-style: var(--style-section-header); color: var(--color-texte); }
+        .text-block { column-gap: 40px; text-align: justify; margin-bottom: 30px; color: var(--color-texte); font-family: var(--font-body-text); font-size: var(--size-body-text); font-weight: var(--weight-body-text); text-transform: var(--transform-body-text); font-style: var(--style-body-text); }
+        
+        .image-placeholder, .portrait-placeholder, .slide { background-color: var(--color-fond); filter: brightness(0.95); background-image: radial-gradient(var(--color-texte) 1px, transparent 1px); background-size: 15px 15px; display: flex; align-items: center; justify-content: center; color: var(--color-texte); text-align: center; overflow: hidden; }
+        .image-placeholder { height: 450px; font-size: 1.63rem; }
+        .portrait-placeholder { height: 400px; font-size: 1.63rem; }
+        .image-placeholder img, .portrait-placeholder img, .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* --- PROJETS & CARROUSEL --- */
+        .project { margin-bottom: 40px; scroll-margin-top: 20px; }
+        .project-header { display: flex; justify-content: space-between; border-top: 1px solid var(--color-texte); border-bottom: 1px solid var(--color-texte); padding: 4px 0; margin-bottom: 15px; font-family: var(--font-section-header); font-size: var(--size-section-header); font-weight: var(--weight-section-header); text-transform: var(--transform-section-header); font-style: var(--style-section-header); gap: 10px; color: var(--color-texte); }
+        
+        .carousel-viewport { width: 100%; aspect-ratio: 1.85 / 1; height: auto; background: none; border: none; padding: 0; margin-bottom: 15px; overflow: hidden; position: relative; }
+        .carousel-track { height: 100%; display: flex; }
+        .slide { min-width: 100%; height: 100%; background: none; font-size: 2.18rem; }
+        .slide img { width: 100%; height: 100%; object-fit: contain; }
+        
+        /* ZONES DE CLICS ET FLÈCHES DYNAMIQUES */
+        .click-zone { position: absolute; top: 0; bottom: 0; width: 30%; z-index: 10; cursor: pointer; display: flex; align-items: center; }
+        .zone-left { left: 0; justify-content: flex-start; }
+        .zone-right { right: 0; justify-content: flex-end; }
+        
+        .arrow-icon { width: 1.75rem; height: 1.75rem; background-color: var(--color-texte); transition: background-color 0.3s ease; margin: 0 10px; }
+        .arrow-small { width: 0.875rem; height: 0.875rem; } 
+        
+        .click-zone:hover .arrow-icon { background-color: var(--color-action); }
+
+        .icon-left { -webkit-mask-image: url('Images/Icones/fleche_gauche.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('Images/Icones/fleche_gauche.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
+        .icon-right { -webkit-mask-image: url('Images/Icones/fleche_droite.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('Images/Icones/fleche_droite.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
+
+        /* --- CARROUSEL VIGNETTES --- */
+        .vignettes-wrapper { display: flex; align-items: center; justify-content: space-between; margin-top: 50px; border-top: 1px solid var(--color-texte); padding-top: 30px; margin-bottom: 50px;}
+        .vignettes-viewport { width: calc(100% - 4rem); overflow: hidden; position: relative; } 
+        .vignettes-track { display: flex; margin: 0 -10px; } 
+        
+        .vignette-slide { flex: 0 0 33.3333%; padding: 0 10px; box-sizing: border-box; cursor: pointer; }
+        .vignette-img-container { width: 100%; aspect-ratio: 1/1; overflow: hidden; }
+        .vignette-img-container img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        .vignette-slide:hover .vignette-img-container img { transform: scale(1.05); }
+
+        /* Textes sous le carrousel */
+        .project-desc { display: flex; flex-direction: column; gap: 10px; }
+        .project-desc-id { font-family: var(--font-project-sub); font-size: var(--size-project-sub); font-weight: var(--weight-project-sub); text-transform: var(--transform-project-sub); font-style: var(--style-project-sub); margin-bottom: 10px; color: var(--color-texte); }
+        .key-points { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+        .key-item { display: flex; align-items: center; gap: 10px; font-family: var(--font-key-points); font-size: var(--size-key-points); font-weight: var(--weight-key-points); text-transform: var(--transform-key-points); font-style: var(--style-key-points); margin-bottom: 4px; color: var(--color-texte); }
+        .dot { width: 5px; height: 5px; background-color: var(--color-texte); border-radius: 50%; flex-shrink: 0; }
+        .project-text { text-align: justify; line-height: 1.5; color: var(--color-texte); font-family: var(--font-body-text); font-size: var(--size-body-text); font-weight: var(--weight-body-text); text-transform: var(--transform-body-text); font-style: var(--style-body-text); }
+        .project-text p { margin-bottom: 15px; }
+
+        /* --- COLLINE --- */
+        #section-colline .blue-frame { background-color: transparent; border: none; padding: 0; margin-bottom: 25px; }
+        #section-colline .image-placeholder { height: auto; background: none; padding: 0; }
+        #section-colline .image-placeholder img { width: 100%; height: auto; display: block; }
+        #section-colline .portrait-placeholder { width: 100%; aspect-ratio: 1 / 1; height: auto; background: none; padding: 0; }
+        #section-colline .portrait-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .philosophy-text { font-family: var(--font-slogan); font-size: var(--size-slogan); font-weight: var(--weight-slogan); font-style: var(--style-slogan); text-transform: var(--transform-slogan); margin-bottom: 20px; letter-spacing: -0.5px; color: var(--color-texte); }
+        .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .member-name { font-family: var(--font-team-name); font-size: var(--size-team-name); font-weight: var(--weight-team-name); text-transform: var(--transform-team-name); font-style: var(--style-team-name); border-bottom: 1px solid var(--color-texte); padding-bottom: 5px; margin-bottom: 10px; color: var(--color-texte); }
+        .member-cv { font-family: var(--font-cv); font-size: var(--size-cv); font-weight: var(--weight-cv); text-transform: var(--transform-cv); font-style: var(--style-cv); color: var(--color-texte); }
+    </style>
+</head>
+<body>
+
+    <div id="intro-screen" onclick="playIntro()">
+        <img id="intro-bg" src="" alt="Couverture">
+        <div id="intro-logo-container">
+            <div class="mask-logo"></div>
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <a id="sidebar-logo" onclick="showIntro()"><div class="mask-logo"></div></a>
+        
+        <nav class="main-nav">
+            <a id="nav-projets" onclick="switchPage('projets')">PROJETS</a>
+            <a id="nav-colline" onclick="switchPage('colline')">LA COLLINE</a>
+        </nav>
+        <div class="info-block" id="dynamic-contact-info"></div>
+        
+        <div class="table-container" id="dynamic-table-works" style="display: none;">
+            <table class="table-works">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('id')">N°</th>
+                        <th onclick="sortTable('titre')">TITRE</th>
+                        <th onclick="sortTable('type')">TYPE</th>
+                        <th onclick="sortTable('lieu')">LIEU</th>
+                        <th onclick="sortTable('annee')">ANNÉE</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-projets"></tbody>
+            </table>
+        </div>
+        
+        <div class="desktop-only">
+            <div class="copyright dynamic-copyright"></div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div id="section-projets" class="page-section">
+            <div id="current-project-container"></div>
+            
+            <div class="vignettes-wrapper" id="bottom-carousel-wrapper" style="display: none;">
+                <div class="click-zone" onclick="moveVignettes(-1)" style="position:relative; width:auto;">
+                    <div class="arrow-icon arrow-small icon-left"></div>
+                </div>
+                <div class="vignettes-viewport" data-is-animating="false">
+                    <div class="vignettes-track" id="vignettes-track"></div>
+                </div>
+                <div class="click-zone" onclick="moveVignettes(1)" style="position:relative; width:auto;">
+                    <div class="arrow-icon arrow-small icon-right"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-colline" class="page-section">
+            <section class="about-section">
+                <div class="section-header"><div>01 PHILOSOPHIE</div><div>AGENCE</div></div>
+                <div class="philosophy-text" id="colline-philo"></div>
+            </section>
+            
+            <section class="about-section" id="approche-1">
+                <div class="section-header"><div>02 NOTRE APPROCHE</div><div>VISION</div></div>
+                <div class="text-block" id="colline-approche-1"></div>
+                <div class="full-width-image" id="photo-approche">
+                    <div class="blue-frame">
+                        <div class="image-placeholder" data-thumbnail="Images/Approche/vignette_approche.jpg">
+                            <img src="Images/Approche/photo_approche.jpg" alt="Notre Approche">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-block" style="margin-top: 20px;" id="colline-approche-2"></div>
+            </section>
+            
+            <section class="about-section">
+                <div class="section-header"><div>03 L'ÉQUIPE</div><div>ASSOCIES</div></div>
+                <div class="team-grid" id="team-grid-container"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="mobile-footer mobile-only">
+        <div class="copyright dynamic-copyright"></div>
+    </footer>
+
+    <script>
+        const seoData = { general: { title: "", desc: "", keys: "" }, projets: { title: "", desc: "", keys: "" }, colline: { title: "", desc: "", keys: "" } };
+        
+        let allProjects = []; 
+        let currentProjectId = null; 
+        
+        let sortDirection = 1;
+        let currentSortColumn = '';
+
+        // --- GESTION DE L'INTRODUCTION ---
+        function setupIntro() {
+            if(window.location.hash.replace('#', '') !== '') {
+                document.getElementById('intro-screen').style.display = 'none';
+                document.getElementById('sidebar-logo').style.opacity = '1';
+                return;
+            }
+            
+            // Préchargement visuel invisible
+            document.getElementById('section-projets').classList.add('active-page');
+            document.getElementById('dynamic-table-works').style.display = 'block';
+            document.getElementById('nav-projets').classList.add('active');
+
+            fetch('Texte/accueil.txt').then(r => r.text()).then(text => {
+                const match = text.match(/Nombre de couvertures\s*:\s*(\d+)/i);
+                const nbCouv = match ? parseInt(match[1]) : 3;
+                const rand = Math.floor(Math.random() * nbCouv) + 1;
+                document.getElementById('intro-bg').src = `Images/Couverture/${rand}.jpg`;
+            }).catch(e => {
+                document.getElementById('intro-bg').src = `Images/Couverture/1.jpg`; 
+            });
+        }
+
+        function showIntro() {
+            const introScreen = document.getElementById('intro-screen');
+            const introBg = document.getElementById('intro-bg');
+            const introLogo = document.getElementById('intro-logo-container');
+            const sidebarLogo = document.getElementById('sidebar-logo');
+            
+            history.pushState(null, null, window.location.pathname);
+            
+            introBg.style.transition = 'none';
+            introLogo.style.transition = 'none';
+            introBg.style.transform = 'translateX(0)';
+            introLogo.style.transform = 'none'; 
+            introLogo.style.width = '16.36rem'; 
+            introScreen.style.backgroundColor = 'var(--color-fond)'; 
+
+            fetch('Texte/accueil.txt').then(r => r.text()).then(text => {
+                const match = text.match(/Nombre de couvertures\s*:\s*(\d+)/i);
+                const nbCouv = match ? parseInt(match[1]) : 3;
+                const rand = Math.floor(Math.random() * nbCouv) + 1;
+                introBg.src = `Images/Couverture/${rand}.jpg`;
+            }).catch(e => { introBg.src = `Images/Couverture/1.jpg`; });
+
+            introScreen.style.display = 'flex';
+            sidebarLogo.style.opacity = '0';
+            
+            void introScreen.offsetWidth;
+            
+            introBg.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+            introLogo.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), width 0.8s';
+        }
+
+        function playIntro() {
+            const introScreen = document.getElementById('intro-screen');
+            const introBg = document.getElementById('intro-bg');
+            const introLogo = document.getElementById('intro-logo-container');
+            const sidebarLogo = document.getElementById('sidebar-logo');
+            
+            if (!introScreen || introScreen.style.display === 'none') return;
+            
+            // Rend le fond de l'intro transparent au clic pour dévoiler le site préchargé dessous
+            introScreen.style.backgroundColor = 'transparent';
+
+            const sRect = sidebarLogo.getBoundingClientRect();
+            const iRect = introLogo.getBoundingClientRect();
+            const tx = sRect.left - iRect.left;
+            const ty = sRect.top - iRect.top;
+            
+            introBg.style.transform = 'translateX(-100vw)';
+            introLogo.style.transform = `translate(${tx}px, ${ty}px)`;
+            introLogo.style.width = `${sRect.width}px`; 
+            
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+                sidebarLogo.style.opacity = '1';
+                
+                let current = window.location.hash.replace('#', '');
+                if(!current || current === 'accueil') current = 'projets';
+                switchPage(current);
+            }, 800); 
+        }
+
+        function loadSEO() {
+            fetch('Texte/seo.txt?nocache=' + new Date().getTime()).then(r => r.text()).then(text => {
+                const blocks = text.split('[');
+                blocks.forEach(block => {
+                    if(!block.trim()) return;
+                    const pageMatch = block.match(/^([^\]]+)\]/);
+                    if(pageMatch) {
+                        const pageKey = pageMatch[1].toLowerCase().trim();
+                        const titleMatch = block.match(/Titre\s*:\s*(.+)/i);
+                        const descMatch = block.match(/Description\s*:\s*(.+)/i);
+                        const keysMatch = block.match(/Keywords\s*:\s*(.+)/i);
+                        if(!seoData[pageKey]) seoData[pageKey] = {};
+                        if(titleMatch) seoData[pageKey].title = titleMatch[1].trim();
+                        if(descMatch) seoData[pageKey].desc = descMatch[1].trim();
+                        if(keysMatch) seoData[pageKey].keys = keysMatch[1].trim();
+                    }
+                });
+                updateSEO();
+            }).catch(e => console.log("Fichier seo.txt non trouvé."));
+        }
+
+        function updateSEO() {
+            const currentPage = window.location.hash.replace('#', '') || 'projets';
+            const specific = seoData[currentPage] || {};
+            const gen = seoData['general'] || {};
+            document.title = specific.title || gen.title || "";
+            document.getElementById('meta-desc').setAttribute('content', specific.desc || gen.desc || "");
+            document.getElementById('meta-keywords').setAttribute('content', specific.keys || gen.keys || "");
+        }
+
+        function loadTypo() {
+            fetch('Typo/recap_typo.txt?nocache=' + new Date().getTime()).then(r => r.text()).then(text => {
+                const mappings = { "Menu Principal": "nav", "Bloc Contact": "contact", "Réseaux Sociaux": "social", "Slogan": "slogan", "En-têtes de Section": "section-header", "Sous-titres de Projet": "project-sub", "Points Clés": "key-points", "Corps de Texte": "body-text", "Nom du membre": "team-name", "Biographie": "cv" };
+                const parseWeight = (v) => { if (v.includes('Light')) return '300'; if (v.includes('Regular')) return '400'; if (v.includes('Bold')) return '700'; if (v.includes('Black')) return '900'; return '400'; };
+                let currentPrefix = null;
+                text.split('\n').forEach(line => {
+                    const cleanLine = line.trim();
+                    if (!cleanLine) return;
+                    for (const [key, prefix] of Object.entries(mappings)) { if (cleanLine.includes(key)) { currentPrefix = prefix; break; } }
+                    if (cleanLine.includes("En-têtes (N°, TITRE...)")) currentPrefix = "table-header";
+                    else if (cleanLine.includes("Cellules classiques")) currentPrefix = "table-cell";
+                    else if (cleanLine.includes("Titres du tableau")) currentPrefix = "table-title";
+                    if (currentPrefix) {
+                        if (cleanLine.toLowerCase().startsWith("- police") || cleanLine.toLowerCase().startsWith("police")) {
+                            const val = cleanLine.split(':')[1].trim();
+                            const fontName = val.split(' ')[0];
+                            const weight = parseWeight(val);
+                            if (currentPrefix.startsWith("table-")) { document.documentElement.style.setProperty('--font-table', `'${fontName}', sans-serif`); if (currentPrefix === "table-header" || currentPrefix === "table-title") { document.documentElement.style.setProperty('--weight-table-bold', weight); } else { document.documentElement.style.setProperty('--weight-table', weight); } } 
+                            else { document.documentElement.style.setProperty(`--font-${currentPrefix}`, `'${fontName}', sans-serif`); document.documentElement.style.setProperty(`--weight-${currentPrefix}`, weight); }
+                        }
+                        else if (cleanLine.toLowerCase().startsWith("- taille") || cleanLine.toLowerCase().startsWith("taille")) {
+                            const size = cleanLine.match(/[\d.]+rem/);
+                            if (size) document.documentElement.style.setProperty(`--size-${currentPrefix.startsWith("table-") ? "table" : currentPrefix}`, size[0]);
+                        }
+                        else if (cleanLine.toLowerCase().startsWith("- style") || cleanLine.toLowerCase().startsWith("style")) {
+                            const val = cleanLine.toLowerCase();
+                            let target = currentPrefix.startsWith("table-") ? "table" : currentPrefix;
+                            document.documentElement.style.setProperty(`--transform-${target}`, val.includes('majuscule') ? 'uppercase' : 'none');
+                            document.documentElement.style.setProperty(`--style-${target}`, val.includes('italique') ? 'italic' : 'normal');
+                        }
+                    }
+                });
+            }).catch(e => console.log("Fichier recap_typo.txt non trouvé."));
+        }
+
+        function loadColors() {
+            fetch('Couleur/couleur.txt?nocache=' + new Date().getTime()).then(r => r.text()).then(text => {
+                text.split('\n').forEach(line => {
+                    const parts = line.split(':');
+                    if (parts.length >= 2) {
+                        const name = parts[0].trim().toLowerCase();
+                        let value = parts[1].trim().replace(/\s/g, ''); 
+                        if (/^[0-9A-Fa-f]{3,6}$/.test(value)) value = '#' + value;
+                        if (name.includes('cadre')) document.documentElement.style.setProperty('--color-cadre', value);
+                        if (name.includes('action')) document.documentElement.style.setProperty('--color-action', value);
+                        if (name.includes('fond')) document.documentElement.style.setProperty('--color-fond', value);
+                        if (name.includes('texte')) document.documentElement.style.setProperty('--color-texte', value);
+                        if (name.includes('titre')) document.documentElement.style.setProperty('--color-titre', value);
+                    }
+                });
+            }).catch(e => console.log("Fichier couleur non trouvé."));
+        }
+
+        function loadContact() {
+            fetch('Texte/contact.txt').then(r => r.text()).then(text => document.getElementById('dynamic-contact-info').innerHTML = text.replace(/\n/g, '<br>'));
+        }
+
+        function loadAllTexts() {
+            fetch('Texte/accueil.txt').then(r => r.text()).then(text => {
+                const copyMatch = text.match(/Sidebar - Copyright\s*:\s*([^\r\n]+)/i);
+                if (copyMatch) {
+                    document.querySelectorAll('.dynamic-copyright').forEach(el => el.innerHTML = copyMatch[1].trim().replace(/\n/g, '<br>'));
+                }
+            });
+
+            fetch('Texte/colline.txt').then(r => r.text()).then(text => {
+                const philoMatch = text.match(/01 Philosophie[\s\S]*?Texte\s*:\s*([\s\S]*?)(?=Section La Colline - 02|$)/i);
+                if (philoMatch) document.getElementById('colline-philo').innerText = philoMatch[1].trim();
+                const appBloc1 = text.match(/Texte bloc 1\s*:\s*([\s\S]*?)(?=Texte bloc 2\s*:)/i);
+                if (appBloc1) document.getElementById('colline-approche-1').innerHTML = appBloc1[1].trim().replace(/\n/g, '<br>');
+                const appBloc2 = text.match(/Texte bloc 2\s*:\s*([\s\S]*?)(?=Section La Colline - 03|$)/i);
+                if (appBloc2) document.getElementById('colline-approche-2').innerHTML = appBloc2[1].trim().replace(/\n/g, '<br>');
+            });
+
+            fetch('Texte/projets.txt').then(r => r.text()).then(text => {
+                allProjects = []; 
+                text.split(/Section Projets - /i).filter(b => b.trim() !== "").forEach((block) => {
+                    if (block.toLowerCase().startsWith("projet")) {
+                        const id = block.match(/Projet\s+(\d+)/i)?.[1] || "0";
+                        const project = {
+                            id: id,
+                            titre: block.match(/Titre\s*:\s*(.+)/i)?.[1] || "",
+                            type: block.match(/Type\s*:\s*(.+)/i)?.[1] || "",
+                            annee: block.match(/Année\s*:\s*(.+)/i)?.[1] || "",
+                            lieu: block.match(/Lieu\s*:\s*(.+)/i)?.[1] || "",
+                            client: block.match(/Client\s*:\s*(.+)/i)?.[1] || "",
+                            etat: block.match(/(?:État|Etat)\s*:\s*(.+)/i)?.[1] || "",
+                            budget: block.match(/Budget\s*:\s*(.+)/i)?.[1] || "",
+                            surface: block.match(/Surface\s*:\s*(.+)/i)?.[1] || "",
+                            sousTitre: block.match(/Sous-titre\s*:\s*(.+)/i)?.[1] || "",
+                            nbImages: parseInt(block.match(/Nombre d'images\s*:\s*(\d+)/i)?.[1] || "3"),
+                            paragraphs: (block.match(/Texte\s*:\s*([\s\S]+)/i)?.[1] || "").trim().split(/\n\s*\n/).map(p => `<p>${p.trim().replace(/\n/g, '<br>')}</p>`).join('')
+                        };
+                        allProjects.push(project);
+                    }
+                });
+
+                renderTableOfContents();
+                renderVignettesCarousel();
+                if (allProjects.length > 0) {
+                    showProject(allProjects[0].id);
+                }
+            });
+        }
+
+        function sortTable(column) {
+            if (currentSortColumn === column) {
+                sortDirection *= -1; 
+            } else {
+                sortDirection = 1;
+                currentSortColumn = column;
+            }
+
+            allProjects.sort((a, b) => {
+                let valA = a[column];
+                let valB = b[column];
+                
+                if (!isNaN(valA) && !isNaN(valB)) {
+                    return (parseFloat(valA) - parseFloat(valB)) * sortDirection;
+                }
+                
+                valA = valA.toString().toLowerCase();
+                valB = valB.toString().toLowerCase();
+                if (valA < valB) return -1 * sortDirection;
+                if (valA > valB) return 1 * sortDirection;
+                return 0;
+            });
+
+            renderTableOfContents(); 
+        }
+
+        function renderTableOfContents() {
+            const tableBody = document.getElementById('table-body-projets');
+            tableBody.innerHTML = '';
+            
+            allProjects.forEach(p => {
+                const activeClass = (p.id === currentProjectId) ? 'active-row' : '';
+                tableBody.innerHTML += `<tr class="work-link ${activeClass}" onclick="switchPage('projets'); showProject('${p.id}')"><td>${p.id}</td><td>${p.titre}</td><td>${p.type}</td><td>${p.lieu}</td><td>${p.annee}</td></tr>`;
+            });
+        }
+
+        function showProject(id) {
+            currentProjectId = id;
+            renderTableOfContents(); 
+            
+            const p = allProjects.find(proj => proj.id === id);
+            if(!p) return;
+            
+            let slidesHtml = '';
+            for (let i = 0; i < p.nbImages; i++) {
+                slidesHtml += `<div class="slide"><img src="Images/Projet/Projet ${p.id}/${i}.jpg" onerror="this.style.display='none'; this.parentNode.innerHTML='IMAGE ${p.id}.${i}'"></div>`;
+            }
+
+            const container = document.getElementById('current-project-container');
+            container.innerHTML = `
+                <article class="project" id="project-${p.id}">
+                    <div class="project-header"><div>${p.id}</div><div>${p.titre}</div><div>${p.type}</div><div>${p.lieu}</div><div>${p.annee}</div></div>
+                    
+                    <div class="carousel-viewport" style="margin-bottom:15px;" data-current-index="0" data-is-animating="false">
+                        <div class="click-zone zone-left" onclick="moveCarousel(this, -1)">
+                            <div class="arrow-icon icon-left"></div>
+                        </div>
+                        <div class="click-zone zone-right" onclick="moveCarousel(this, 1)">
+                            <div class="arrow-icon icon-right"></div>
+                        </div>
+                        <div class="carousel-track">${slidesHtml}</div>
+                    </div>
+                    
+                    <div class="project-desc">
+                        <div class="project-desc-id">${p.sousTitre}</div>
+                        <div class="key-points">
+                            ${p.client ? `<div class="key-item"><div class="dot"></div> CLIENT : ${p.client}</div>` : ''}
+                            ${p.etat ? `<div class="key-item"><div class="dot"></div> ÉTAT : ${p.etat}</div>` : ''}
+                            ${p.budget ? `<div class="key-item"><div class="dot"></div> BUDGET : ${p.budget}</div>` : ''}
+                            ${p.surface ? `<div class="key-item"><div class="dot"></div> SURFACE : ${p.surface}</div>` : ''}
+                        </div>
+                        <div class="project-text">${p.paragraphs}</div>
+                    </div>
+                </article>`;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderVignettesCarousel() {
+            const wrapper = document.getElementById('bottom-carousel-wrapper');
+            const track = document.getElementById('vignettes-track');
+            track.innerHTML = '';
+            
+            if(allProjects.length === 0) {
+                wrapper.style.display = 'none';
+                return;
+            }
+            wrapper.style.display = 'flex';
+
+            allProjects.forEach(p => {
+                track.innerHTML += `
+                    <div class="vignette-slide" onclick="showProject('${p.id}')">
+                        <div class="vignette-img-container">
+                            <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.jpg" onerror="this.src=''">
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function loadTeamProfiles() {
+            fetch('Texte/equipe.txt').then(r => r.text()).then(text => {
+                const container = document.getElementById('team-grid-container');
+                container.innerHTML = "";
+                text.split(/Profil \d+/i).filter(b => b.trim() !== "").forEach((block, i) => {
+                    const name = block.match(/prénom et nom\s*:\s*(.+)/i)?.[1] || "NOM";
+                    const bio = block.match(/présentation\s*:\s*([\s\S]+)/i)?.[1] || "";
+                    const indexProfil = i + 1;
+                    container.innerHTML += `
+                        <div class="team-member" id="team-member-${indexProfil}">
+                            <div class="blue-frame"><div class="portrait-placeholder"><img src="Images/Equipe/Profil_${indexProfil}.jpg" alt="${name}" onerror="this.style.display='none'; this.parentNode.innerHTML='PHOTO ${indexProfil}'"></div></div>
+                            <div class="member-name">${name}</div><div class="member-cv">${bio.replace(/\n/g, '<br>')}</div>
+                        </div>`;
+                });
+            });
+        }
+
+        function switchPage(pageName) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active-page'));
+            document.getElementById('section-' + pageName).classList.add('active-page');
+            document.getElementById('nav-projets').classList.toggle('active', pageName === 'projets');
+            document.getElementById('nav-colline').classList.toggle('active', pageName === 'colline');
+            
+            document.getElementById('dynamic-table-works').style.display = (pageName === 'projets') ? 'block' : 'none';
+            
+            history.pushState(null, null, '#' + pageName);
+            updateSEO();
+            window.scrollTo(0,0);
+        }
+
+        function moveCarousel(clickedZone, dir) {
+            const vp = clickedZone.closest('.carousel-viewport');
+            const track = vp.querySelector('.carousel-track');
+            
+            if (vp.getAttribute('data-is-animating') === 'true' || track.children.length <= 1) return;
+            vp.setAttribute('data-is-animating', 'true');
+
+            if (dir === 1) { 
+                track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+                track.style.transform = 'translateX(-100%)';
+                setTimeout(() => {
+                    track.style.transition = 'none';
+                    track.appendChild(track.firstElementChild); 
+                    track.style.transform = 'translateX(0)';
+                    vp.setAttribute('data-is-animating', 'false');
+                }, 400); 
+            } else { 
+                track.style.transition = 'none';
+                track.insertBefore(track.lastElementChild, track.firstElementChild); 
+                track.style.transform = 'translateX(-100%)'; 
+                void track.offsetWidth; 
+                track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+                track.style.transform = 'translateX(0)'; 
+                setTimeout(() => { vp.setAttribute('data-is-animating', 'false'); }, 400);
+            }
+        }
+
+        function moveVignettes(dir) {
+            const vp = document.querySelector('.vignettes-viewport');
+            const track = document.getElementById('vignettes-track');
+            
+            if (vp.getAttribute('data-is-animating') === 'true' || track.children.length <= 3) return;
+            vp.setAttribute('data-is-animating', 'true');
+
+            if (dir === 1) {
+                track.style.transition = 'transform 0.6s ease-in-out';
+                track.style.transform = 'translateX(-100%)'; 
+                setTimeout(() => {
+                    track.style.transition = 'none';
+                    for(let i=0; i<3; i++) { track.appendChild(track.firstElementChild); }
+                    track.style.transform = 'translateX(0)';
+                    vp.setAttribute('data-is-animating', 'false');
+                }, 600);
+            } else {
+                track.style.transition = 'none';
+                for(let i=0; i<3; i++) { track.insertBefore(track.lastElementChild, track.firstElementChild); }
+                track.style.transform = 'translateX(-100%)';
+                void track.offsetWidth;
+                track.style.transition = 'transform 0.6s ease-in-out';
+                track.style.transform = 'translateX(0)';
+                setTimeout(() => { vp.setAttribute('data-is-animating', 'false'); }, 600);
+            }
+        }
+
+        window.onload = () => { 
+            setupIntro();
+            loadSEO(); 
+            loadTypo(); 
+            loadColors(); 
+            loadContact(); 
+            loadAllTexts(); 
+            loadTeamProfiles();
+            
+            if(window.location.hash.replace('#', '') !== '') {
+                switchPage(window.location.hash.replace('#', ''));
+            }
+        };
+    </script>
+</body>
+</html>
