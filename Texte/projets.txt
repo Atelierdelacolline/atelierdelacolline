@@ -18,23 +18,25 @@ Texte : Situé dans une vallée reculée de la région des Volcans d'Auvergne da
 La pratique du sauna marquée par le contraste chaud/froid est ici matérialisée par la porte noire qui souligne la connexion entre un intérieur en bois chaleureux et abrité où l'on transpire à la chaleur d'un feu et un extérieur métallique froid soumis aux intempéries où l'on se rafraîchit à l'eau glaciale.
 
 Section Projets - Projet 2 :
-Titre : Sauna 3x3
-Type : Construction
-Année : 2022
-Lieu : Le Valbeleix (63)
+Titre : Artouillat
+Type : Permis de Construire
+Année : 2025
+Lieu : Chailles (41)
 
-Sous-titre : Auto-construction d'un sauna à bois autonome pour des particuliers en Auvergne.
+Sous-titre : Conception d'un atelier de menuiserie en réemploi.
 
 Client : particuliers
-Etat : construit 
-Budget : 10 000 € (hors coût main-d'œuvre / auto-construction)
-Surface : 9 m²
+Etat : en cours de construction
+Budget : 110 000 €
+Surface : 236 m²
 
-Nombre d'images : 17
+Nombre d'images : 4
 
-Texte : Situé dans une vallée reculée de la région des Volcans d'Auvergne dans le centre de la France, le sauna offre une vue dégagée sur une formation rocheuse imposante, La Roche Nité. Ce monolithe est un témoin des forces incroyables qui ont façonné la vallée, à la fois d'origine glaciaire et volcanique. Le projet a été implanté en bordure de la propriété privée à une distance respectable de la maison principale.
+Texte : La structure métallique d’un ancien hangar est réemployée pour servir de charpente au nouveau projet. Celle-ci comporte une casquette au sud créant un masque solaire protégeant le bâtiment d’un risque de surchauffe. Cette casquette sert également d’abris à un espace de stockage et de manutention de panneaux de bois stockés sur des racks.
 
-La pratique du sauna marquée par le contraste chaud/froid est ici matérialisée par la porte noire qui souligne la connexion entre un intérieur en bois chaleureux et abrité où l'on transpire à la chaleur d'un feu et un extérieur métallique froid soumis aux intempéries où l'on se rafraîchit à l'eau glaciale.
+L’ossature métallique est habillée d’un bardage bois vertical en douglas avec couvre-joints.
+
+Une tôle pliée divise l’élévation en deux afin d’ordonner la façade et réduire l’aspect imposant du volume. Des pans de tôle ondulée en acier galvanisé naturel sont disposés à l’arrière des racks à bois sur la façade sud en raison de la résistance du matériau. La tôle vient également compléter la composition de la façade en localisant les espaces de stockage. La tôle se retourne également sur une partie de la façade ouest. La tôle casse ainsi la monotonie du bâtiment avec une matière différente, l’acier galvanisé et une orientation des ondes horizontales en réponse aux couvres joints verticaux.
 
 Section Projets - Projet 3 :
 Titre : Sauna 3x3

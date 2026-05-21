@@ -17,3 +17,10 @@ Sidebar - Copyright :
 Atelier de la Colline - Architectes
 
 Nombre de couvertures : 1
+
+Section Projets - 01 Sommaire :
+En-tête : 01 INDEX | PROJETS
+Texte : "Nos projets ..."
+
+Section Projets - 02 Carroussel :
+En-tête : NOS AUTRES PROJETS | A EXPLORER
