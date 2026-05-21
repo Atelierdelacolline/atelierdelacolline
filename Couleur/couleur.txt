@@ -1,11 +1,7 @@
-HEX 3100ED
-
 Couleur cadre : #ae3717
 
-Couleur action : #ae3717
+Couleur action : #f55135
 
-Couleur fond : #f0eee7
+Couleur fond : #f6f6f6
 
-Couleur texte : #000000
-
-Couleur titre : #ED6C00
+Couleur texte : #23776c
