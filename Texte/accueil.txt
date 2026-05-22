@@ -1,6 +1,7 @@
 Menu Principal :
-PROJETS
-LA COLLINE
+
+Bouton1 : PROJETS
+Bouton 2 : AGENCE
 
 Sidebar - Informations de contact (texte de secours) :
 Atelier de la Colline

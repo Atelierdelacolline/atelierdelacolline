@@ -1,19 +1,26 @@
-[General]
-Titre: Atelier de la Colline
-Description: L'Atelier de la Colline est une agence d'architecture implantée à Paris et Bordeaux. Architecte / Architect - Contactez Nous.
-Keywords: architecture, architecte, design, portfolio, atelier de la colline, projets architecturaux, urbanisme, accueil, paris, bordeaux
+[general]
+Titre : Atelier de la Colline - Architectes Paris
+Description : Présentation de l'Atelier de la Colline, agence d'architecture.
+Keywords : architecte, paris, agence, conception
+H1 : Atelier de la Colline - Architectes
+OG-Titre : Atelier de la Colline - Accueil
+OG-Description : Découvrez notre philosophie et nos réalisations.
+OG-Image : Images/Couverture/1.webp
 
-[Accueil]
-Titre: Atelier de la Colline | Agence d'Architecture
-Description: Bienvenue sur le portfolio officiel de l'Atelier de la Colline. Découvrez nos projets d'architecture innovants et l'univers de l'Atelier de la Colline.
-Keywords: architecture, architecte, design, portfolio, atelier de la colline, projets architecturaux, urbanisme, accueil
+[projets]
+Titre : Nos Projets | Atelier de la Colline
+Description : Explorez nos différentes réalisations et constructions.
+Keywords : architecte, projets, réalisations, bois, construction
+H1 : Sommaire de nos projets d'architecture
+OG-Titre : Les projets de l'Atelier de la Colline
+OG-Description : Explorez notre grille de projets architecturaux.
+OG-Image : Images/Couverture/2.webp
 
-[Projets]
-Titre: Atelier de la Colline | Nos Réalisations & Projets
-Description: Explorez les projets d'architecture signés ARHL.DS. Équipements publics, logements collectifs et design urbain à travers une sélection de nos meilleures réalisations.
-Keywords: projets architecture, réalisations architecte, portfolio projets, logements, équipements, expertise architecturale
-
-[Colline]
-Titre: Atelier de la Colline | L'Équipe & La Vision
-Description: Découvrez l'histoire de l'Atelier de la Colline, notre philosophie de conception et l'équipe d'associés passionnés derrière chaque projet.
-Keywords: agence architecture, équipe architectes, vision, approche architecturale, associés, atelier de la colline, philosophie design
+[colline]
+Titre : L'Agence | Atelier de la Colline
+Description : Notre équipe, notre approche et notre vision.
+Keywords : équipe, architectes, philosophie, approche
+H1 : Philosophie et équipe de l'agence
+OG-Titre : L'Atelier de la Colline - Notre vision
+OG-Description : Découvrez les architectes derrière nos projets.
+OG-Image : Images/Approche/photo_approche.webp
