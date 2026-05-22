@@ -6,44 +6,53 @@ Taille de base de référence : 11px
 --------------------------------------------------------------------------------
 Menu Principal (PROJETS, LA COLLINE) :
 - Police : Lato Bold
-- Taille : 1.4rem
+- Taille : 1.6rem
 - Style : Majuscules
 
 Bloc Contact (Adresse, Mail, etc.) :
 - Police : Lato Regular
-- Taille : 1.1rem
+- Taille : 1.2rem
 - Style : Majuscules
 
 Réseaux Sociaux (INSTAGRAM, LINKEDIN) :
 - Police : Lato Bold
-- Taille : 0.9rem
+- Taille : 1rem
 - Style : Majuscules
 
-Tableau des Projets (Sidebar) :
-- En-têtes (N°, TITRE...) :
-	- Police : Lato Bold
-	- Taille : 0.9rem
-	- Style : Majuscules
-
-- Cellules classiques :
-	- Police : Lato Regular
-	- Taille : 0.80rem
-	- Style : Majuscules
-
-- Titres du tableau :
-	- Police : Lato Bold
-	- Taille : 0.80rem
-	- Style : Majuscules
+Trie Projets :
+- Police : Lato Bold
+- Taille : 1.2rem
+- Style : Majuscules
 
 Copyright :
 - Police : Lato Regular
-- Taille : 0.81rem
+- Taille : 1.2rem
 - Style : Casse normale
+
+Catégorie Fiche :
+- Police : Lato Bold
+- Taille : 1.4rem
+- Style : Casse normale
+
+Texte Fiche :
+- Police : Lato Regular
+- Taille : 1.2rem
+- Style : Casse normale
+
+Bouton Retour : 
+- Police : Lato Bold
+- Taille : 1rem
+- Style : Majuscules
 
 --------------------------------------------------------------------------------
 2. ACCUEIL ET TEXTES DE MISE EN AVANT
 --------------------------------------------------------------------------------
-Slogan d'Accueil & Texte Philosophie :
+Texte Philosophie :
+- Police : Lato Light
+- Taille : 2.50rem
+- Style : Italique, Casse normale
+
+Texte Projets :
 - Police : Lato Light
 - Taille : 2.50rem
 - Style : Italique, Casse normale
@@ -51,24 +60,29 @@ Slogan d'Accueil & Texte Philosophie :
 --------------------------------------------------------------------------------
 3. PAGES DE CONTENU (PROJETS & LA COLLINE)
 --------------------------------------------------------------------------------
-En-têtes de Section :
+Titre Page :
 - Police : Lato Bold
-- Taille : 1.2rem
+- Taille : 2.5rem
 - Style : Majuscules
 
-Sous-titres de Projet :
+En-têtes de Section :
 - Police : Lato Bold
 - Taille : 1.4rem
 - Style : Majuscules
 
+Sous-titres de Projet :
+- Police : Lato Bold
+- Taille : 1.6rem
+- Style : Majuscules
+
 Points Clés (Client, Budget, Surface, État) :
 - Police : Lato Bold
-- Taille : 0.9rem
+- Taille : 1.2rem
 - Style : Majuscules
 
 Corps de Texte (Présentation, Approche, etc.) :
 - Police : Lato Regular
-- Taille : 1.20rem
+- Taille : 1.4rem
 - Style : Casse normale, Justifié
 
 --------------------------------------------------------------------------------
@@ -76,10 +90,10 @@ Corps de Texte (Présentation, Approche, etc.) :
 --------------------------------------------------------------------------------
 Nom du membre :
 - Police : Lato Black
-- Taille : 1.4rem
+- Taille : 1.6rem
 - Style : Majuscules
 
 Biographie (CV) :
 - Police : Lato Regular
-- Taille : 1.2rem
+- Taille : 1.4rem
 - Style : Casse normale
