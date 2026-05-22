@@ -87,7 +87,6 @@
             cursor: pointer;
         }
         
-        /* Focus visible pour la navigation au clavier (Accessibilité) avec la couleur d'action */
         #intro-logo-container:focus { outline: none; }
         #intro-logo-container:focus-visible {
             outline: 2px solid var(--color-action);
@@ -164,7 +163,11 @@
             .carousel-track::-webkit-scrollbar, .vignettes-track::-webkit-scrollbar { display: none; }
             .slide { scroll-snap-align: start; flex-shrink: 0; }
             .vignette-slide { scroll-snap-align: start; flex: 0 0 75%; }
+            
+            /* Sur mobile, on cache les click-zones standards, mais on les force pour la lightbox */
             .click-zone { display: none !important; }
+            .lightbox .click-zone { display: flex !important; } 
+
             .vignettes-wrapper { display: block; }
             .vignettes-viewport { width: 100%; }
         }
@@ -350,7 +353,8 @@
         .arrow-icon { width: 1.75rem; height: 1.75rem; background-color: var(--color-texte); transition: background-color 0.3s ease; margin: 0 10px; }
         .arrow-small { width: 0.875rem; height: 0.875rem; } 
         
-        .click-zone:hover .arrow-icon { background-color: var(--color-action); }
+        .click-zone:focus { outline: none; }
+        .click-zone:hover .arrow-icon, .click-zone:focus-visible .arrow-icon { background-color: var(--color-action); }
 
         .icon-left { -webkit-mask-image: url('Images/Icones/fleche_gauche.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('Images/Icones/fleche_gauche.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
         .icon-right { -webkit-mask-image: url('Images/Icones/fleche_droite.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('Images/Icones/fleche_droite.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
@@ -376,6 +380,54 @@
         .vignette-img-container { width: 100%; aspect-ratio: 1/1; overflow: hidden; }
         .vignette-img-container img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
         .vignette-slide:hover .vignette-img-container img, .vignette-slide:focus-visible .vignette-img-container img { transform: scale(1.05); }
+
+        /* --- NOUVEAU : LIGHTBOX (ZOOM) FLUIDE --- */
+        .lightbox {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 10000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        .lightbox.active {
+            opacity: 1; pointer-events: auto;
+        }
+        .lightbox-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* Assombrit la page */
+            cursor: pointer;
+        }
+        .lightbox-content {
+            position: relative; z-index: 10001; 
+            width: 90vw; height: 90vh; /* Permet à l'image de "doubler" de taille */
+            display: flex; align-items: center; justify-content: center;
+            transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .lightbox.active .lightbox-content {
+            transform: scale(1);
+        }
+        /* Style des icones dans la lightbox (sur fond noir) */
+        .lightbox .arrow-icon {
+            background-color: #ffffff; 
+        }
+        .lightbox .close-btn {
+            position: absolute; top: 20px; right: 20px; z-index: 10005; cursor: pointer;
+            width: 2rem; height: 2rem;
+        }
+        .lightbox .icon-close {
+            width: 100%; height: 100%; background-color: #ffffff;
+            -webkit-mask-image: url('Images/Icones/croix.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
+            mask-image: url('Images/Icones/croix.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .lightbox .close-btn:focus { outline: none; }
+        .lightbox .close-btn:hover .icon-close, .lightbox .close-btn:focus-visible .icon-close,
+        .lightbox .click-zone:hover .arrow-icon, .lightbox .click-zone:focus-visible .arrow-icon {
+            background-color: var(--color-action);
+        }
+
+        @media (max-width: 1300px) {
+            .lightbox .close-btn { top: -30px; right: 0; }
+        }
 
         /* Textes sous le carrousel */
         .project-desc { display: flex; flex-direction: column; gap: 10px; }
@@ -404,6 +456,7 @@
 
     <div id="intro-screen" onclick="playIntro()">
         <img id="intro-bg" src="" alt="Atelier de la Colline - Image de couverture">
+        
         <div id="intro-logo-container" role="button" tabindex="0" aria-label="Entrer sur le site" onkeydown="if(event.key === 'Enter' || event.key === ' ') { playIntro(); event.stopPropagation(); }">
             <div class="mask-logo"></div>
         </div>
@@ -503,6 +556,24 @@
         <div class="copyright dynamic-copyright"></div>
     </footer>
 
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+        <div class="lightbox-overlay" onclick="closeLightbox()"></div>
+        <div class="lightbox-content">
+            <div class="close-btn" role="button" tabindex="0" aria-label="Fermer" onclick="closeLightbox()" onkeydown="if(event.key === 'Enter') closeLightbox()">
+                <div class="icon-close"></div>
+            </div>
+            
+            <div class="click-zone zone-left" role="button" tabindex="0" aria-label="Image précédente" onclick="moveLightbox(-1)" onkeydown="if(event.key === 'Enter') moveLightbox(-1)">
+                <div class="arrow-icon icon-left"></div>
+            </div>
+            <div class="click-zone zone-right" role="button" tabindex="0" aria-label="Image suivante" onclick="moveLightbox(1)" onkeydown="if(event.key === 'Enter') moveLightbox(1)">
+                <div class="arrow-icon icon-right"></div>
+            </div>
+            
+            <img id="lightbox-img" src="" alt="Image plein écran" style="max-width:100%; max-height:100%; object-fit:contain;" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}">
+        </div>
+    </div>
+
     <script>
         const seoData = { general: { title: "", desc: "", keys: "", h1: "", ogTitle: "", ogDesc: "", ogImage: "" }, projets: { title: "", desc: "", keys: "", h1: "", ogTitle: "", ogDesc: "", ogImage: "" }, colline: { title: "", desc: "", keys: "", h1: "", ogTitle: "", ogDesc: "", ogImage: "" } };
         
@@ -512,11 +583,12 @@
         let sortDirection = 1;
         let currentSortColumn = '';
         
-        // HASHES DYNAMIQUES
         let hashBtn1 = 'projets';
         let hashBtn2 = 'colline';
         
-        // OUTIL DE CREATION D'URL PROPRES
+        // Variables pour la Lightbox
+        let currentLightboxIndex = 0;
+        
         function slugify(text) {
             return text.toString().toLowerCase()
                 .normalize('NFD') 
@@ -965,8 +1037,6 @@
                     document.getElementById('sidebar-logo').style.opacity = '1';
                     handleHash();
                 }
-                
-                // (Note : le .focus() sur l'intro-screen a été supprimé ici)
             });
         }
 
@@ -1064,9 +1134,12 @@
             
             let slidesHtml = '';
             for (let i = 0; i < p.nbImages; i++) {
+                // NOUVEAU : Clic sur l'image ouvre la Lightbox
                 slidesHtml += `
                     <div class="slide">
-                        <img src="Images/Projet/Projet ${p.id}/${i}.webp" alt="Architecture ${p.titre} - Photo ${i + 1}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.parentElement.remove();}">
+                        <img src="Images/Projet/Projet ${p.id}/${i}.webp" alt="Architecture ${p.titre} - Photo ${i + 1}" loading="lazy" 
+                             onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.parentElement.remove();}"
+                             onclick="openLightbox(${i})" style="cursor: zoom-in;" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') openLightbox(${i})">
                     </div>`;
             }
 
@@ -1107,6 +1180,51 @@
             document.getElementById('og-title').setAttribute('content', p.titre + " - Atelier de la Colline");
             if(p.sousTitre) document.getElementById('og-desc').setAttribute('content', p.sousTitre);
         }
+
+        // --- NOUVEAU : FONCTIONS LIGHTBOX ---
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            updateLightboxImage();
+            lightbox.classList.add('active');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.querySelector('.lightbox .close-btn').focus();
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            lightbox.setAttribute('aria-hidden', 'true');
+        }
+
+        function moveLightbox(dir) {
+            const p = allProjects.find(proj => proj.id === currentProjectId);
+            if(!p) return;
+            currentLightboxIndex += dir;
+            if (currentLightboxIndex < 0) currentLightboxIndex = p.nbImages - 1;
+            if (currentLightboxIndex >= p.nbImages) currentLightboxIndex = 0;
+            updateLightboxImage();
+        }
+
+        function updateLightboxImage() {
+            const p = allProjects.find(proj => proj.id === currentProjectId);
+            if(!p) return;
+            const lbImg = document.getElementById('lightbox-img');
+            
+            lbImg.dataset.tried = ''; 
+            lbImg.src = `Images/Projet/Projet ${p.id}/${currentLightboxIndex}.webp`;
+        }
+
+        // Navigation clavier pour la Lightbox
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox && lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight') moveLightbox(1);
+                if (e.key === 'ArrowLeft') moveLightbox(-1);
+            }
+        });
+        // --- FIN FONCTIONS LIGHTBOX ---
 
         function renderVignettesCarousel() {
             const wrapper = document.getElementById('bottom-carousel-wrapper');
@@ -1225,6 +1343,10 @@
             
             window.addEventListener('popstate', () => {
                 if(document.getElementById('intro-screen').style.display === 'none') {
+                    // Fermer la lightbox si on utilise "précédent" sur le navigateur
+                    if(document.getElementById('lightbox').classList.contains('active')) {
+                        closeLightbox();
+                    }
                     handleHash();
                 }
             });
