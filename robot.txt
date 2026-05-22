@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /Couleur/
+Disallow: /Typo/
+Sitemap: https://www.atelierdelacolline.fr/sitemap.xml
