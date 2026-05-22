@@ -88,16 +88,10 @@
         }
         
         #intro-logo-container:focus { outline: none; }
-        #intro-logo-container:focus-visible {
-            outline: 2px solid var(--color-action);
-            outline-offset: 8px;
-        }
+        #intro-logo-container:focus-visible { outline: 2px solid var(--color-action); outline-offset: 8px; }
         
         #sidebar-logo:focus { outline: none; }
-        #sidebar-logo:focus-visible {
-            outline: 2px solid var(--color-action);
-            outline-offset: 8px;
-        }
+        #sidebar-logo:focus-visible { outline: 2px solid var(--color-action); outline-offset: 8px; }
 
         .mask-logo {
             width: 100%; height: auto; aspect-ratio: 5/1;
@@ -151,25 +145,33 @@
             .mobile-only { display: block; }
             .mobile-footer { width: 100%; max-width: 100%; margin: 0; padding: 0 20px 40px 20px; }
             
-            /* Comportement de Swipe natif sur les carrousels (Mobile) */
-            .carousel-viewport, .vignettes-viewport { overflow: visible; }
+            /* CORRECTION: Verrouillage du débordement pour empêcher la page de glisser horizontalement */
+            .carousel-viewport, .vignettes-viewport { overflow: hidden !important; width: 100%; }
             .carousel-track, .vignettes-track {
+                width: 100%;
+                max-width: 100%;
                 overflow-x: auto;
+                overflow-y: hidden;
                 scroll-snap-type: x mandatory;
                 scroll-behavior: smooth;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
             }
             .carousel-track::-webkit-scrollbar, .vignettes-track::-webkit-scrollbar { display: none; }
-            .slide { scroll-snap-align: start; flex-shrink: 0; }
-            .vignette-slide { scroll-snap-align: start; flex: 0 0 75%; }
             
-            /* Sur mobile, on cache les click-zones standards, mais on les force pour la lightbox */
+            /* Les slides épousent parfaitement la largeur de la piste sans la forcer à s'étendre */
+            .slide { scroll-snap-align: center; flex: 0 0 100%; max-width: 100%; }
+            .vignette-slide { scroll-snap-align: center; flex: 0 0 75%; max-width: 75%; }
+            
+            /* On cache les fleches classiques mais on les garde pour la lightbox */
             .click-zone { display: none !important; }
             .lightbox .click-zone { display: flex !important; } 
 
             .vignettes-wrapper { display: block; }
             .vignettes-viewport { width: 100%; }
+            
+            /* Maintien de la croix visible sur petit écran */
+            .lightbox .close-btn { top: 15px; right: 15px; }
         }
 
         @media (max-width: 600px) {
@@ -392,25 +394,24 @@
         }
         .lightbox-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* Assombrit la page */
+            background-color: rgba(0, 0, 0, 0.85);
             cursor: pointer;
         }
         .lightbox-content {
             position: relative; z-index: 10001; 
-            width: 90vw; height: 90vh; /* Permet à l'image de "doubler" de taille */
+            width: 90vw; height: 90vh; 
             display: flex; align-items: center; justify-content: center;
             transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .lightbox.active .lightbox-content {
             transform: scale(1);
         }
-        /* Style des icones dans la lightbox (sur fond noir) */
         .lightbox .arrow-icon {
             background-color: #ffffff; 
         }
         .lightbox .close-btn {
-            position: absolute; top: 20px; right: 20px; z-index: 10005; cursor: pointer;
-            width: 2rem; height: 2rem;
+            position: fixed; top: 30px; right: 30px; z-index: 10005; cursor: pointer;
+            width: 2.5rem; height: 2.5rem;
         }
         .lightbox .icon-close {
             width: 100%; height: 100%; background-color: #ffffff;
@@ -423,10 +424,6 @@
         .lightbox .close-btn:hover .icon-close, .lightbox .close-btn:focus-visible .icon-close,
         .lightbox .click-zone:hover .arrow-icon, .lightbox .click-zone:focus-visible .arrow-icon {
             background-color: var(--color-action);
-        }
-
-        @media (max-width: 1300px) {
-            .lightbox .close-btn { top: -30px; right: 0; }
         }
 
         /* Textes sous le carrousel */
@@ -456,7 +453,6 @@
 
     <div id="intro-screen" onclick="playIntro()">
         <img id="intro-bg" src="" alt="Atelier de la Colline - Image de couverture">
-        
         <div id="intro-logo-container" role="button" tabindex="0" aria-label="Entrer sur le site" onkeydown="if(event.key === 'Enter' || event.key === ' ') { playIntro(); event.stopPropagation(); }">
             <div class="mask-logo"></div>
         </div>
@@ -586,7 +582,6 @@
         let hashBtn1 = 'projets';
         let hashBtn2 = 'colline';
         
-        // Variables pour la Lightbox
         let currentLightboxIndex = 0;
         
         function slugify(text) {
@@ -1134,7 +1129,6 @@
             
             let slidesHtml = '';
             for (let i = 0; i < p.nbImages; i++) {
-                // NOUVEAU : Clic sur l'image ouvre la Lightbox
                 slidesHtml += `
                     <div class="slide">
                         <img src="Images/Projet/Projet ${p.id}/${i}.webp" alt="Architecture ${p.titre} - Photo ${i + 1}" loading="lazy" 
@@ -1181,7 +1175,6 @@
             if(p.sousTitre) document.getElementById('og-desc').setAttribute('content', p.sousTitre);
         }
 
-        // --- NOUVEAU : FONCTIONS LIGHTBOX ---
         function openLightbox(index) {
             currentLightboxIndex = index;
             const lightbox = document.getElementById('lightbox');
@@ -1215,7 +1208,6 @@
             lbImg.src = `Images/Projet/Projet ${p.id}/${currentLightboxIndex}.webp`;
         }
 
-        // Navigation clavier pour la Lightbox
         document.addEventListener('keydown', (e) => {
             const lightbox = document.getElementById('lightbox');
             if (lightbox && lightbox.classList.contains('active')) {
@@ -1224,7 +1216,6 @@
                 if (e.key === 'ArrowLeft') moveLightbox(-1);
             }
         });
-        // --- FIN FONCTIONS LIGHTBOX ---
 
         function renderVignettesCarousel() {
             const wrapper = document.getElementById('bottom-carousel-wrapper');
@@ -1343,7 +1334,6 @@
             
             window.addEventListener('popstate', () => {
                 if(document.getElementById('intro-screen').style.display === 'none') {
-                    // Fermer la lightbox si on utilise "précédent" sur le navigateur
                     if(document.getElementById('lightbox').classList.contains('active')) {
                         closeLightbox();
                     }
