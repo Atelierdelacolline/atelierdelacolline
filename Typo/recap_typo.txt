@@ -11,7 +11,7 @@ Menu Principal (PROJETS, LA COLLINE) :
 
 Bloc Contact (Adresse, Mail, etc.) :
 - Police : Lato Regular
-- Taille : 1.2rem
+- Taille : 1.1rem
 - Style : Majuscules
 
 Réseaux Sociaux (INSTAGRAM, LINKEDIN) :
@@ -26,7 +26,7 @@ Trie Projets :
 
 Copyright :
 - Police : Lato Regular
-- Taille : 1.2rem
+- Taille : 1.10rem
 - Style : Casse normale
 
 Catégorie Fiche :
