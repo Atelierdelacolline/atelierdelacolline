@@ -1,7 +1,6 @@
 Menu Principal :
-
-Bouton1 : PROJETS
-Bouton 2 : AGENCE
+PROJETS
+LA COLLINE
 
 Sidebar - Informations de contact (texte de secours) :
 Atelier de la Colline
@@ -15,13 +14,8 @@ INSTAGRAM
 LINKEDIN
 
 Sidebar - Copyright :
-Atelier de la Colline - Architectes
+Proin sollicitudin lectus nec eleifend mattis, integer non elit.
+© 2026 ALL RIGHTS RESERVED LAST UPDATED 23-12-1947
 
-Nombre de couvertures : 1
-
-Section Projets - 01 Sommaire :
-En-tête : 01 INDEX | PROJETS
-Texte : "Nos projets ..."
-
-Section Projets - 02 Carroussel :
-En-tête : NOS AUTRES PROJETS | A EXPLORER
+Section Accueil - Slogan :
+L'ARCHITECTURE COMME RÉVÉLATEUR DU TERRITOIRE.
