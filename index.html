@@ -70,8 +70,9 @@
         h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; font-size: inherit; font-weight: inherit; font-family: inherit; line-height: inherit; text-transform: inherit; }
         .visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
 
-        /* MODIFICATION SAFARI : On s'assure que le body ne déborde jamais horizontalement */
-        body { font-family: 'Lato', sans-serif; font-weight: 400; font-size: 1rem; background-color: var(--color-fond); color: var(--color-texte); line-height: 1.4; display: flex; min-height: 100vh; text-transform: uppercase; transition: background-color 0.3s, color 0.3s; overflow-x: hidden; width: 100%; max-width: 100vw; }
+        body { font-family: 'Lato', sans-serif; font-weight: 400; font-size: 1rem; background-color: var(--color-fond); color: var(--color-texte); line-height: 1.4; display: flex; min-height: 100vh; text-transform: uppercase; transition: background-color 0.3s, color 0.3s; overflow-x: hidden; overflow-y: auto; width: 100%; }
+        
+        body.no-scroll { overflow: hidden !important; }
 
         /* --- ÉCRAN D'INTRODUCTION --- */
         #intro-screen {
@@ -79,13 +80,21 @@
             background-color: var(--color-fond); cursor: pointer; overflow: hidden; display: flex;
         }
         #intro-bg {
-            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
+        
+        #intro-band {
+            position: absolute; top: 0; left: 0; width: 100%;
+            height: calc(40px + 3.27rem);
+            background-color: rgba(255, 255, 255, 0.7); 
+            z-index: 1; transition: opacity 0.8s;
+        }
+
         #intro-logo-container {
             position: absolute; right: 30px; top: 20px;
             width: 16.36rem; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), width 0.8s;
-            cursor: pointer;
+            cursor: pointer; z-index: 2;
         }
         
         #intro-logo-container:focus { outline: none; }
@@ -119,8 +128,6 @@
            2. LAYOUT : COLONNES ET GABARIT (DESKTOP)
            ========================================================================== */
         .sidebar { width: var(--sidebar-width); flex-shrink: 0; padding: 20px 30px; position: fixed; left: 0; top: 0; z-index: 100; height: 100vh; max-height: 100vh; overflow: hidden; border-right: 5px solid transparent; display: flex; flex-direction: column; }
-        
-        /* MODIFICATION SAFARI : min-width: 0 ajouté aux flex-items principaux pour éviter le stretch horizontal */
         .main-content { margin-left: 0; width: 100%; display: flex; justify-content: center; padding: 20px var(--sidebar-width); position: relative; min-width: 0; }
         .page-section { width: 1500px; max-width: 100%; padding: 0 30px; display: none; animation: fadeIn 0.4s ease-in-out; min-width: 0; }
 
@@ -148,7 +155,15 @@
             .mobile-only { display: block; }
             .mobile-footer { width: 100%; max-width: 100%; margin: 0; padding: 0 20px 40px 20px; }
             
-            /* MODIFICATION SAFARI : Conteneurs de carrousel blindés */
+            .project-card:hover { 
+                transform: none !important; 
+                border-color: var(--color-texte) !important; 
+            }
+            .project-card:focus-visible { 
+                transform: translateY(-5px) !important; 
+                border-color: var(--color-action) !important; 
+            }
+            
             .carousel-viewport, .vignettes-viewport { 
                 overflow: hidden !important; 
                 width: 100%; 
@@ -156,15 +171,9 @@
                 max-width: 100vw; 
             }
             .carousel-track, .vignettes-track {
-                width: 100%;
-                max-width: 100%;
-                overflow-x: auto;
-                overflow-y: hidden;
-                scroll-snap-type: x mandatory;
-                scroll-behavior: smooth;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                flex-wrap: nowrap; /* EMPÊCHE SAFARI DE S'EMMÊLER LES PINCEAUX */
+                width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden;
+                scroll-snap-type: x mandatory; scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap;
             }
             .carousel-track::-webkit-scrollbar, .vignettes-track::-webkit-scrollbar { display: none; }
             .slide { scroll-snap-align: center; flex: 0 0 100%; width: 100%; max-width: 100%; }
@@ -297,7 +306,7 @@
         }
 
         .card-subtitle-line {
-            display: flex; justify-content: space-between; align-items: flex-start;
+            display: flex; justify-content: flex-start; align-items: flex-start;
             border-bottom: 1px dotted rgba(0,0,0,0.2); 
             padding: 4px 0; 
         }
@@ -309,7 +318,8 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 65%;
+            max-width: 100%;
+            text-align: left;
             line-height: 1.3;
             height: calc(1.3em * 2); 
         }
@@ -414,10 +424,15 @@
         .lightbox .arrow-icon {
             background-color: #ffffff; 
         }
+        
         .lightbox .close-btn {
-            position: fixed; top: 30px; right: 30px; z-index: 10005; cursor: pointer;
-            width: 2.5rem; height: 2.5rem;
+            position: absolute; 
+            top: -3rem; 
+            right: 10px; 
+            z-index: 10005; cursor: pointer;
+            width: 1.75rem; height: 1.75rem; 
         }
+        
         .lightbox .icon-close {
             width: 100%; height: 100%; background-color: #ffffff;
             -webkit-mask-image: url('Images/Icones/croix.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
@@ -452,13 +467,48 @@
         .member-cv { font-family: var(--font-cv); font-size: var(--size-cv); font-weight: var(--weight-cv); text-transform: var(--transform-cv); font-style: var(--style-cv); color: var(--color-texte); }
     </style>
 </head>
-<body>
+<body class="no-scroll">
 
     <h1 id="dynamic-h1" class="visually-hidden">Atelier de la Colline</h1>
 
+    <script>
+        if(window.location.hash.replace('#', '') === '') {
+            fetch('Texte/accueil.txt').then(r => r.text()).then(text => {
+                const match = text.match(/Nombre de couvertures\s*:\s*(\d+)/i);
+                const nbCouv = match ? parseInt(match[1]) : 3;
+                const rand = Math.floor(Math.random() * nbCouv) + 1;
+                const introBg = document.createElement('img');
+                introBg.id = 'intro-bg';
+                introBg.alt = 'Atelier de la Colline - Image de couverture';
+                introBg.setAttribute('fetchpriority', 'high');
+                introBg.dataset.tried = '';
+                introBg.onerror = function() {
+                    if(!this.dataset.tried) {
+                        this.dataset.tried = '1';
+                        this.src = `Images/Couverture/${rand}.jpg`;
+                    } else {
+                        this.onerror = null;
+                        this.style.display = 'none';
+                    }
+                };
+                introBg.src = `Images/Couverture/${rand}.webp`;
+                document.getElementById('intro-screen').insertBefore(introBg, document.getElementById('intro-band'));
+            }).catch(e => {
+                const fallbackImg = document.createElement('img');
+                fallbackImg.id = 'intro-bg';
+                fallbackImg.src = 'Images/Couverture/1.jpg';
+                document.getElementById('intro-screen').insertBefore(fallbackImg, document.getElementById('intro-band'));
+            });
+        } else {
+            document.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('intro-screen').style.display = 'none';
+                document.body.classList.remove('no-scroll');
+            });
+        }
+    </script>
+
     <div id="intro-screen" onclick="playIntro()">
-        <img id="intro-bg" src="" alt="Atelier de la Colline - Image de couverture">
-        
+        <div id="intro-band"></div>
         <div id="intro-logo-container" role="button" tabindex="0" aria-label="Entrer sur le site" onkeydown="if(event.key === 'Enter' || event.key === ' ') { playIntro(); event.stopPropagation(); }">
             <div class="mask-logo"></div>
         </div>
@@ -537,7 +587,7 @@
                 <div class="text-block" id="colline-approche-1"></div>
                 <div id="photo-approche">
                     <div class="blue-frame image-placeholder">
-                        <img src="Images/Approche/photo_approche.webp" alt="Atelier de la Colline - Notre approche et vision de l'architecture" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.style.display='none';}">
+                        <img src="Images/Approche/photo_approche.webp" alt="Atelier de la Colline - Notre approche et vision de l'architecture" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none';}">
                     </div>
                 </div>
                 <div class="text-block" style="margin-top: 20px;" id="colline-approche-2"></div>
@@ -572,7 +622,7 @@
                 <div class="arrow-icon icon-right"></div>
             </div>
             
-            <img id="lightbox-img" src="" alt="Image plein écran" style="max-width:100%; max-height:100%; object-fit:contain;" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}">
+            <img id="lightbox-img" src="" alt="Image plein écran" style="max-width:100%; max-height:100%; object-fit:contain;" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null;}">
         </div>
     </div>
 
@@ -585,7 +635,6 @@
         let sortDirection = 1;
         let currentSortColumn = '';
         
-        // HASHES DYNAMIQUES
         let hashBtn1 = 'projets';
         let hashBtn2 = 'colline';
         
@@ -606,46 +655,32 @@
             if(window.location.hash.replace('#', '') !== '') {
                 document.getElementById('intro-screen').style.display = 'none';
                 document.getElementById('sidebar-logo').style.opacity = '1';
+                document.body.classList.remove('no-scroll');
                 return;
             }
             
             document.getElementById('section-projets').classList.add('active-page');
             document.getElementById('nav-projets').classList.add('active');
-
-            fetch('Texte/accueil.txt').then(r => r.text()).then(text => {
-                const match = text.match(/Nombre de couvertures\s*:\s*(\d+)/i);
-                const nbCouv = match ? parseInt(match[1]) : 3;
-                const rand = Math.floor(Math.random() * nbCouv) + 1;
-                
-                const introBg = document.getElementById('intro-bg');
-                introBg.dataset.tried = '';
-                introBg.onerror = function() {
-                    if(!this.dataset.tried) {
-                        this.dataset.tried = '1';
-                        this.src = `Images/Couverture/${rand}.jpg`;
-                    } else {
-                        this.src = `Images/Couverture/1.jpg`;
-                    }
-                };
-                introBg.src = `Images/Couverture/${rand}.webp`;
-            }).catch(e => {
-                document.getElementById('intro-bg').src = `Images/Couverture/1.jpg`; 
-            });
+            // La gestion de l'image intro est désormais dans le script du header
         }
 
         function showIntro() {
             const introScreen = document.getElementById('intro-screen');
-            const introBg = document.getElementById('intro-bg');
+            let introBg = document.getElementById('intro-bg');
             const introLogo = document.getElementById('intro-logo-container');
             const sidebarLogo = document.getElementById('sidebar-logo');
             const introMask = introLogo.querySelector('.mask-logo');
+            const introBand = document.getElementById('intro-band');
             
             history.pushState(null, null, window.location.pathname);
+            document.body.classList.add('no-scroll');
             
-            introBg.style.transition = 'none';
+            if (introBg) introBg.style.transition = 'none';
             introLogo.style.transition = 'none';
             introMask.style.transition = 'none';
             introLogo.style.opacity = '0'; 
+            introBand.style.transition = 'none';
+            introBand.style.opacity = '0';
             
             introScreen.style.display = 'flex';
             introScreen.style.backgroundColor = 'transparent'; 
@@ -655,17 +690,23 @@
                 const nbCouv = match ? parseInt(match[1]) : 3;
                 const rand = Math.floor(Math.random() * nbCouv) + 1;
                 
+                if(!introBg) {
+                    introBg = document.createElement('img');
+                    introBg.id = 'intro-bg';
+                    document.getElementById('intro-screen').insertBefore(introBg, introBand);
+                }
                 introBg.dataset.tried = '';
                 introBg.onerror = function() {
                     if(!this.dataset.tried) {
                         this.dataset.tried = '1';
                         this.src = `Images/Couverture/${rand}.jpg`;
                     } else {
-                        this.src = `Images/Couverture/1.jpg`;
+                        this.onerror = null;
+                        this.style.display = 'none';
                     }
                 };
                 introBg.src = `Images/Couverture/${rand}.webp`;
-            }).catch(e => { introBg.src = `Images/Couverture/1.jpg`; });
+            }).catch(e => { if(introBg) introBg.src = `Images/Couverture/1.jpg`; });
 
             introLogo.style.transform = 'none'; 
             introLogo.style.width = '16.36rem'; 
@@ -676,7 +717,7 @@
                 const tx = sRect.left - iRect.left;
                 const ty = sRect.top - iRect.top;
 
-                introBg.style.transform = 'translateX(-100vw)';
+                if (introBg) introBg.style.transform = 'translateX(-100vw)';
                 introLogo.style.transform = `translate(${tx}px, ${ty}px)`;
                 introLogo.style.width = `${sRect.width}px`;
                 introMask.classList.add('align-left');
@@ -687,14 +728,16 @@
                 void introScreen.offsetWidth; 
                 
                 setTimeout(() => {
-                    introBg.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+                    if (introBg) introBg.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
                     introLogo.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), width 0.8s';
                     introMask.style.transition = 'background-color 0.3s ease, -webkit-mask-position 0.8s cubic-bezier(0.25, 1, 0.5, 1), mask-position 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+                    introBand.style.transition = 'opacity 0.8s ease';
                     
-                    introBg.style.transform = 'translateX(0)';
+                    if (introBg) introBg.style.transform = 'translateX(0)';
                     introLogo.style.transform = 'none';
                     introLogo.style.width = '16.36rem';
                     introMask.classList.remove('align-left');
+                    introBand.style.opacity = '1';
 
                     setTimeout(() => {
                         introScreen.style.backgroundColor = 'var(--color-fond)';
@@ -709,28 +752,32 @@
             const introLogo = document.getElementById('intro-logo-container');
             const sidebarLogo = document.getElementById('sidebar-logo');
             const introMask = introLogo.querySelector('.mask-logo');
+            const introBand = document.getElementById('intro-band');
             
             if (!introScreen || introScreen.style.display === 'none') return;
             
             introScreen.style.backgroundColor = 'transparent';
 
-            introBg.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+            if (introBg) introBg.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
             introLogo.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), width 0.8s';
             introMask.style.transition = 'background-color 0.3s ease, -webkit-mask-position 0.8s cubic-bezier(0.25, 1, 0.5, 1), mask-position 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+            introBand.style.transition = 'opacity 0.5s ease';
 
             const sRect = sidebarLogo.getBoundingClientRect();
             const iRect = introLogo.getBoundingClientRect();
             const tx = sRect.left - iRect.left;
             const ty = sRect.top - iRect.top;
             
-            introBg.style.transform = 'translateX(-100vw)';
+            if (introBg) introBg.style.transform = 'translateX(-100vw)';
             introLogo.style.transform = `translate(${tx}px, ${ty}px)`;
             introLogo.style.width = `${sRect.width}px`; 
             introMask.classList.add('align-left');
+            introBand.style.opacity = '0';
             
             setTimeout(() => {
                 introScreen.style.display = 'none';
                 sidebarLogo.style.opacity = '1';
+                document.body.classList.remove('no-scroll');
                 
                 if(!window.location.hash.replace('#', '')) {
                     history.replaceState(null, null, '#' + hashBtn1);
@@ -927,7 +974,7 @@
                         <div class="team-member" id="team-member-${indexProfil}">
                             <div class="blue-frame">
                                 <div class="portrait-placeholder">
-                                    <img src="Images/Equipe/Profil_${indexProfil}.webp" alt="Portrait de ${name}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.style.display='none'; this.parentNode.innerHTML='PHOTO ${indexProfil}';}">
+                                    <img src="Images/Equipe/Profil_${indexProfil}.webp" alt="Portrait de ${name}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none'; this.parentNode.innerHTML='PHOTO ${indexProfil}';}">
                                 </div>
                             </div>
                             <div class="member-name">${name}</div><div class="member-cv">${bio.replace(/\n/g, '<br>')}</div>
@@ -944,10 +991,15 @@
             ]).then(([accueilText, projetsText, collineText]) => {
                 
                 if (accueilText) {
-                    const btn1Match = accueilText.match(/Bouton\s*1\s*:\s*(.+)/i) || accueilText.match(/Bouton1\s*:\s*(.+)/i);
-                    const btn2Match = accueilText.match(/Bouton\s*2\s*:\s*(.+)/i) || accueilText.match(/Bouton2\s*:\s*(.+)/i);
-                    let btn1Text = btn1Match ? btn1Match[1].trim() : "PROJETS";
-                    let btn2Text = btn2Match ? btn2Match[1].trim() : "LA COLLINE";
+                    // MODIFICATION : Lecture exclusive des deux lignes sous "Menu Principal :"
+                    const menuMatch = accueilText.match(/Menu Principal\s*:\s*[\r\n]+([^\r\n]+)[\r\n]+([^\r\n]+)/i);
+                    let btn1Text = "PROJETS";
+                    let btn2Text = "LA COLLINE";
+                    
+                    if (menuMatch) {
+                        btn1Text = menuMatch[1].trim();
+                        btn2Text = menuMatch[2].trim();
+                    }
                     
                     document.getElementById('nav-projets').innerText = btn1Text;
                     document.getElementById('nav-colline').innerText = btn2Text;
@@ -984,21 +1036,6 @@
                         document.getElementById('vignettes-header-left').innerText = parts[0] ? parts[0].trim() : '';
                         document.getElementById('vignettes-header-right').innerText = parts[1] ? parts[1].trim() : '';
                     }
-
-                    const nbCouvMatch = accueilText.match(/Nombre de couvertures\s*:\s*(\d+)/i);
-                    const nbCouv = nbCouvMatch ? parseInt(nbCouvMatch[1]) : 3;
-                    const rand = Math.floor(Math.random() * nbCouv) + 1;
-                    const introBg = document.getElementById('intro-bg');
-                    introBg.dataset.tried = '';
-                    introBg.onerror = function() {
-                        if(!this.dataset.tried) {
-                            this.dataset.tried = '1';
-                            this.src = `Images/Couverture/${rand}.jpg`;
-                        } else {
-                            this.src = `Images/Couverture/1.jpg`;
-                        }
-                    };
-                    introBg.src = `Images/Couverture/${rand}.webp`;
                 }
 
                 if (projetsText) {
@@ -1037,6 +1074,7 @@
                 if(window.location.hash.replace('#', '') !== '') {
                     document.getElementById('intro-screen').style.display = 'none';
                     document.getElementById('sidebar-logo').style.opacity = '1';
+                    document.body.classList.remove('no-scroll');
                     handleHash();
                 }
             });
@@ -1070,30 +1108,17 @@
             allProjects.forEach(p => {
                 let detailsHtml = '';
                 
-                detailsHtml += `
-                    <div class="card-line card-subtitle-line">
-                        <span class="card-label">Sous-titre</span>
-                        <span class="card-value card-value-subtitle" title="${p.sousTitre || ''}">${p.sousTitre || ''}</span>
-                    </div>`;
+                if (p.sousTitre) {
+                    detailsHtml += `
+                        <div class="card-line card-subtitle-line">
+                            <span class="card-value card-value-subtitle" title="${p.sousTitre}">${p.sousTitre}</span>
+                        </div>`;
+                }
                 
-                const addField = (label, value) => {
-                    if (value) {
-                        detailsHtml += `<div class="card-line"><span class="card-label">${label}</span><span class="card-value" title="${value}">${value}</span></div>`;
-                    }
-                };
-                
-                addField('Type', p.type);
-                addField('Année', p.annee);
-                addField('Lieu', p.lieu);
-                addField('Client', p.client);
-                addField('État', p.etat);
-                addField('Budget', p.budget);
-                addField('Surface', p.surface);
-
                 grid.innerHTML += `
                     <div class="project-card" role="button" tabindex="0" onclick="showProject('${p.id}')" onkeydown="if(event.key === 'Enter' || event.key === ' ') showProject('${p.id}')">
                         <div class="card-img-wrapper">
-                            <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.webp" alt="Projet ${p.titre}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.style.display='none';}">
+                            <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.webp" alt="Projet ${p.titre}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none';}">
                         </div>
                         <div class="card-info">
                             <div class="card-title-line">
@@ -1139,7 +1164,7 @@
                 slidesHtml += `
                     <div class="slide">
                         <img src="Images/Projet/Projet ${p.id}/${i}.webp" alt="Architecture ${p.titre} - Photo ${i + 1}" loading="lazy" 
-                             onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.parentElement.remove();}"
+                             onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.parentElement.remove();}"
                              onclick="openLightbox(${i})" style="cursor: zoom-in;" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') openLightbox(${i})">
                     </div>`;
             }
@@ -1244,7 +1269,7 @@
                 track.innerHTML += `
                     <div class="vignette-slide" role="button" tabindex="0" onclick="showProject('${p.id}')" onkeydown="if(event.key === 'Enter' || event.key === ' ') showProject('${p.id}')">
                         <div class="vignette-img-container">
-                            <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.webp" alt="Parcourir le projet ${p.titre}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.src='Custom/fallback.jpg';}">
+                            <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.webp" alt="Parcourir le projet ${p.titre}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.closest('.vignette-slide').remove();}">
                         </div>
                     </div>`;
             });
