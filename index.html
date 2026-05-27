@@ -63,7 +63,7 @@
         /* ==========================================================================
            1. RESPONSIVITÉ HOMOTHÉTIQUE ET MOBILE
            ========================================================================== */
-        html { font-size: 11px; } 
+        html { font-size: 11px; overflow-y: scroll; } 
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
@@ -72,7 +72,7 @@
 
         body { font-family: 'Lato', sans-serif; font-weight: 400; font-size: 1rem; background-color: var(--color-fond); color: var(--color-texte); line-height: 1.4; display: flex; min-height: 100vh; text-transform: uppercase; transition: background-color 0.3s, color 0.3s; overflow-x: hidden; overflow-y: auto; width: 100%; }
         
-        body.no-scroll { overflow: hidden !important; }
+        body.no-scroll { overflow: hidden !important; height: 100vh; }
 
         /* --- ÉCRAN D'INTRODUCTION --- */
         #intro-screen {
@@ -311,11 +311,11 @@
             padding: 4px 0; 
         }
         
-.card-value-subtitle {
+        .card-value-subtitle {
             white-space: normal; 
             display: -webkit-box;
             -webkit-line-clamp: 2; 
-            line-clamp: 2; /* Ajout du standard pour calmer VS Code */
+            line-clamp: 2; 
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -472,48 +472,20 @@
 
     <h1 id="dynamic-h1" class="visually-hidden">Atelier de la Colline</h1>
 
-    <script>
-        if(window.location.hash.replace('#', '') === '') {
-            fetch('Texte/accueil.txt').then(r => r.text()).then(text => {
-                const match = text.match(/Nombre de couvertures\s*:\s*(\d+)/i);
-                const nbCouv = match ? parseInt(match[1]) : 3;
-                const rand = Math.floor(Math.random() * nbCouv) + 1;
-                const introBg = document.createElement('img');
-                introBg.id = 'intro-bg';
-                introBg.alt = 'Atelier de la Colline - Image de couverture';
-                introBg.setAttribute('fetchpriority', 'high');
-                introBg.dataset.tried = '';
-                introBg.onerror = function() {
-                    if(!this.dataset.tried) {
-                        this.dataset.tried = '1';
-                        this.src = `Images/Couverture/${rand}.jpg`;
-                    } else {
-                        this.onerror = null;
-                        this.style.display = 'none';
-                    }
-                };
-                introBg.src = `Images/Couverture/${rand}.webp`;
-                document.getElementById('intro-screen').insertBefore(introBg, document.getElementById('intro-band'));
-            }).catch(e => {
-                const fallbackImg = document.createElement('img');
-                fallbackImg.id = 'intro-bg';
-                fallbackImg.src = 'Images/Couverture/1.jpg';
-                document.getElementById('intro-screen').insertBefore(fallbackImg, document.getElementById('intro-band'));
-            });
-        } else {
-            document.addEventListener('DOMContentLoaded', () => {
-                document.getElementById('intro-screen').style.display = 'none';
-                document.body.classList.remove('no-scroll');
-            });
-        }
-    </script>
-
     <div id="intro-screen" onclick="playIntro()">
+        <img id="intro-bg" src="Images/Couverture/1.webp" alt="Atelier de la Colline - Image de couverture" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src='Images/Couverture/1.jpg';}else{this.onerror=null;}">
         <div id="intro-band"></div>
         <div id="intro-logo-container" role="button" tabindex="0" aria-label="Entrer sur le site" onkeydown="if(event.key === 'Enter' || event.key === ' ') { playIntro(); event.stopPropagation(); }">
             <div class="mask-logo"></div>
         </div>
     </div>
+
+    <script>
+        if(window.location.hash.replace('#', '') !== '') {
+            document.getElementById('intro-screen').style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        }
+    </script>
 
     <aside class="sidebar">
         <a id="sidebar-logo" role="button" tabindex="0" onclick="showIntro()" onkeydown="if(event.key === 'Enter') showIntro()"><div class="mask-logo"></div></a>
@@ -636,6 +608,7 @@
         let sortDirection = 1;
         let currentSortColumn = '';
         
+        // HASHES DYNAMIQUES
         let hashBtn1 = 'projets';
         let hashBtn2 = 'colline';
         
@@ -650,19 +623,6 @@
                 .replace(/\-\-+/g, '-') 
                 .replace(/^-+/, '') 
                 .replace(/-+$/, ''); 
-        }
-
-        function setupIntro() {
-            if(window.location.hash.replace('#', '') !== '') {
-                document.getElementById('intro-screen').style.display = 'none';
-                document.getElementById('sidebar-logo').style.opacity = '1';
-                document.body.classList.remove('no-scroll');
-                return;
-            }
-            
-            document.getElementById('section-projets').classList.add('active-page');
-            document.getElementById('nav-projets').classList.add('active');
-            // La gestion de l'image intro est désormais dans le script du header
         }
 
         function showIntro() {
@@ -688,26 +648,14 @@
 
             fetch('Texte/accueil.txt').then(r => r.text()).then(text => {
                 const match = text.match(/Nombre de couvertures\s*:\s*(\d+)/i);
-                const nbCouv = match ? parseInt(match[1]) : 3;
+                const nbCouv = match ? parseInt(match[1]) : 1;
                 const rand = Math.floor(Math.random() * nbCouv) + 1;
                 
-                if(!introBg) {
-                    introBg = document.createElement('img');
-                    introBg.id = 'intro-bg';
-                    document.getElementById('intro-screen').insertBefore(introBg, introBand);
+                if (introBg && rand !== 1) {
+                    introBg.dataset.tried = '';
+                    introBg.src = `Images/Couverture/${rand}.webp`;
                 }
-                introBg.dataset.tried = '';
-                introBg.onerror = function() {
-                    if(!this.dataset.tried) {
-                        this.dataset.tried = '1';
-                        this.src = `Images/Couverture/${rand}.jpg`;
-                    } else {
-                        this.onerror = null;
-                        this.style.display = 'none';
-                    }
-                };
-                introBg.src = `Images/Couverture/${rand}.webp`;
-            }).catch(e => { if(introBg) introBg.src = `Images/Couverture/1.jpg`; });
+            }).catch(e => { /* Laisse l'image par defaut 1.webp */ });
 
             introLogo.style.transform = 'none'; 
             introLogo.style.width = '16.36rem'; 
@@ -992,7 +940,6 @@
             ]).then(([accueilText, projetsText, collineText]) => {
                 
                 if (accueilText) {
-                    // MODIFICATION : Lecture exclusive des deux lignes sous "Menu Principal :"
                     const menuMatch = accueilText.match(/Menu Principal\s*:\s*[\r\n]+([^\r\n]+)[\r\n]+([^\r\n]+)/i);
                     let btn1Text = "PROJETS";
                     let btn2Text = "LA COLLINE";
@@ -1036,6 +983,18 @@
                         const parts = carrouselMatch[1].split('|');
                         document.getElementById('vignettes-header-left').innerText = parts[0] ? parts[0].trim() : '';
                         document.getElementById('vignettes-header-right').innerText = parts[1] ? parts[1].trim() : '';
+                    }
+
+                    const nbCouvMatch = accueilText.match(/Nombre de couvertures\s*:\s*(\d+)/i);
+                    const nbCouv = nbCouvMatch ? parseInt(nbCouvMatch[1]) : 1;
+                    const introBg = document.getElementById('intro-bg');
+                    
+                    if (introBg && nbCouv > 1 && window.location.hash.replace('#', '') === '') {
+                        const rand = Math.floor(Math.random() * nbCouv) + 1;
+                        if (rand !== 1) {
+                            introBg.dataset.tried = '';
+                            introBg.src = `Images/Couverture/${rand}.webp`;
+                        }
                     }
                 }
 
@@ -1116,6 +1075,16 @@
                         </div>`;
                 }
                 
+                const addField = (label, value) => {
+                    if (value) {
+                        detailsHtml += `<div class="card-line"><span class="card-label">${label}</span><span class="card-value" title="${value}">${value}</span></div>`;
+                    }
+                };
+                
+                addField('Type', p.type);
+                addField('Lieu', p.lieu);
+                addField('Année', p.annee);
+
                 grid.innerHTML += `
                     <div class="project-card" role="button" tabindex="0" onclick="showProject('${p.id}')" onkeydown="if(event.key === 'Enter' || event.key === ' ') showProject('${p.id}')">
                         <div class="card-img-wrapper">
