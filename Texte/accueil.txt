@@ -15,3 +15,9 @@ LINKEDIN
 
 Sidebar - Copyright :
 Atelier de la Colline | Architecture
+
+Bouton chargement cartes :
+VOIR D'AVANTAGE
+
+Bouton retour projet :
+RETOUR
