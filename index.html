@@ -175,17 +175,26 @@
                 min-width: 0; 
                 max-width: 100vw; 
             }
-            .carousel-track, .vignettes-track {
+            
+            /* Vignettes (gardent le défilement natif si on ne veut pas tout casser, mais ici on le passe aussi en mode fluide pour plus de robustesse si besoin, je garde le natif pour les vignettes par défaut) */
+            .vignettes-track {
                 width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden;
                 scroll-snap-type: x mandatory; scroll-behavior: smooth;
                 -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap;
             }
-            .carousel-track::-webkit-scrollbar, .vignettes-track::-webkit-scrollbar { display: none; }
-            .slide { scroll-snap-align: center; flex: 0 0 100%; width: 100%; max-width: 100%; }
+            .vignettes-track::-webkit-scrollbar { display: none; }
+            
+            /* CARROUSEL PRINCIPAL : on supprime le scroll natif mobile pour utiliser la mécanique JS (qui gère la boucle parfaite) */
+            .carousel-track {
+                width: 100%; max-width: 100%; display: flex; flex-wrap: nowrap;
+            }
+
+            .slide { flex: 0 0 100%; width: 100%; max-width: 100%; }
             .vignette-slide { scroll-snap-align: center; flex: 0 0 75%; max-width: 75%; }
             
-            /* Réduction de la zone de clic pour autoriser le glissement tactile */
-            .carousel-viewport .click-zone { width: 40px; }
+            /* Affichage des zones de clics (flèches) partout sur mobile */
+            .click-zone { display: flex !important; }
+            .carousel-viewport .click-zone { width: 40px; } /* Moins large pour pouvoir scroller/swiper au centre */
             
             .lightbox .close-btn { top: 15px; right: 15px; }
         }
@@ -635,6 +644,47 @@
         let projectsDisplayed = 6;
         let textBtnLoadMore = "VOIR D'AVANTAGE";
         let textBtnRetour = "RETOUR";
+
+        // GESTION DU SWIPE TACTILE
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, {passive: true});
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe(e);
+        }, {passive: true});
+
+        function handleSwipe(e) {
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
+            
+            // On s'assure qu'il s'agit bien d'un glissement horizontal (et d'au moins 40px)
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+                // Si on est dans le carrousel plein écran (Lightbox)
+                const lightbox = document.getElementById('lightbox');
+                if (lightbox && lightbox.classList.contains('active')) {
+                    if (diffX < 0) moveLightbox(1); // Swipe gauche = suivant
+                    if (diffX > 0) moveLightbox(-1); // Swipe droite = précédent
+                    return;
+                }
+                
+                // Si on est dans le carrousel principal du projet
+                const carouselViewport = e.target.closest('.carousel-viewport');
+                if (carouselViewport) {
+                    if (diffX < 0) moveCarousel(carouselViewport, 1);
+                    if (diffX > 0) moveCarousel(carouselViewport, -1);
+                    return;
+                }
+            }
+        }
         
         function slugify(text) {
             return text.toString().toLowerCase()
@@ -1201,10 +1251,10 @@
                     </h2>
                     
                     <div class="carousel-viewport" style="margin-bottom:15px;" data-current-index="0" data-is-animating="false">
-                        <div class="click-zone zone-left" onclick="moveCarousel(this, -1)">
+                        <div class="click-zone zone-left" onclick="moveCarousel(this.closest('.carousel-viewport'), -1)">
                             <div class="arrow-icon icon-left"></div>
                         </div>
-                        <div class="click-zone zone-right" onclick="moveCarousel(this, 1)">
+                        <div class="click-zone zone-right" onclick="moveCarousel(this.closest('.carousel-viewport'), 1)">
                             <div class="arrow-icon icon-right"></div>
                         </div>
                         <div class="carousel-track">${slidesHtml}</div>
@@ -1242,19 +1292,10 @@
             slides.sort((a, b) => parseInt(a.dataset.index) - parseInt(b.dataset.index));
             let rotated = slides.slice(currentLightboxIndex).concat(slides.slice(0, currentLightboxIndex));
             
-            const oldBehavior = track.style.scrollBehavior;
-            track.style.scrollBehavior = 'auto';
-            
             track.innerHTML = '';
             rotated.forEach(s => track.appendChild(s));
-            
-            track.scrollLeft = 0; 
             track.style.transform = 'translateX(0)';
             track.style.transition = 'none';
-
-            setTimeout(() => {
-                track.style.scrollBehavior = oldBehavior || '';
-            }, 50);
         }
 
         function openLightbox(index) {
@@ -1362,35 +1403,11 @@
             window.scrollTo(0,0);
         }
 
-        function moveCarousel(clickedZone, dir) {
-            const vp = clickedZone.closest('.carousel-viewport');
+        function moveCarousel(vp, dir) {
             const track = vp.querySelector('.carousel-track');
             
             if (vp.getAttribute('data-is-animating') === 'true' || track.children.length <= 1) return;
             vp.setAttribute('data-is-animating', 'true');
-
-            if (window.innerWidth <= 1300) {
-                const slideWidth = vp.clientWidth;
-                if (dir === 1 && Math.abs(track.scrollWidth - track.clientWidth - track.scrollLeft) < 10) {
-                    track.style.scrollBehavior = 'auto';
-                    track.appendChild(track.firstElementChild);
-                    track.scrollLeft -= slideWidth;
-                    void track.offsetWidth;
-                    track.style.scrollBehavior = 'smooth';
-                    track.scrollBy({ left: slideWidth, behavior: 'smooth' });
-                } else if (dir === -1 && track.scrollLeft <= 10) {
-                    track.style.scrollBehavior = 'auto';
-                    track.insertBefore(track.lastElementChild, track.firstElementChild);
-                    track.scrollLeft += slideWidth;
-                    void track.offsetWidth;
-                    track.style.scrollBehavior = 'smooth';
-                    track.scrollBy({ left: -slideWidth, behavior: 'smooth' });
-                } else {
-                    track.scrollBy({ left: dir * slideWidth, behavior: 'smooth' });
-                }
-                setTimeout(() => { vp.setAttribute('data-is-animating', 'false'); }, 400);
-                return;
-            }
 
             if (dir === 1) { 
                 track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
