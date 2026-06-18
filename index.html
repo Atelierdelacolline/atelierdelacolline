@@ -184,11 +184,8 @@
             .slide { scroll-snap-align: center; flex: 0 0 100%; width: 100%; max-width: 100%; }
             .vignette-slide { scroll-snap-align: center; flex: 0 0 75%; max-width: 75%; }
             
-            .click-zone { display: none !important; }
-            .lightbox .click-zone { display: flex !important; } 
-
-            .vignettes-wrapper { display: block; }
-            .vignettes-viewport { width: 100%; }
+            /* Réduction de la zone de clic pour autoriser le glissement tactile */
+            .carousel-viewport .click-zone { width: 40px; }
             
             .lightbox .close-btn { top: 15px; right: 15px; }
         }
@@ -1240,13 +1237,24 @@
         function syncBackgroundCarousel() {
             const track = document.querySelector('.carousel-track');
             if(!track) return;
+            
             let slides = Array.from(track.children);
             slides.sort((a, b) => parseInt(a.dataset.index) - parseInt(b.dataset.index));
             let rotated = slides.slice(currentLightboxIndex).concat(slides.slice(0, currentLightboxIndex));
+            
+            const oldBehavior = track.style.scrollBehavior;
+            track.style.scrollBehavior = 'auto';
+            
             track.innerHTML = '';
             rotated.forEach(s => track.appendChild(s));
+            
+            track.scrollLeft = 0; 
             track.style.transform = 'translateX(0)';
             track.style.transition = 'none';
+
+            setTimeout(() => {
+                track.style.scrollBehavior = oldBehavior || '';
+            }, 50);
         }
 
         function openLightbox(index) {
@@ -1361,6 +1369,29 @@
             if (vp.getAttribute('data-is-animating') === 'true' || track.children.length <= 1) return;
             vp.setAttribute('data-is-animating', 'true');
 
+            if (window.innerWidth <= 1300) {
+                const slideWidth = vp.clientWidth;
+                if (dir === 1 && Math.abs(track.scrollWidth - track.clientWidth - track.scrollLeft) < 10) {
+                    track.style.scrollBehavior = 'auto';
+                    track.appendChild(track.firstElementChild);
+                    track.scrollLeft -= slideWidth;
+                    void track.offsetWidth;
+                    track.style.scrollBehavior = 'smooth';
+                    track.scrollBy({ left: slideWidth, behavior: 'smooth' });
+                } else if (dir === -1 && track.scrollLeft <= 10) {
+                    track.style.scrollBehavior = 'auto';
+                    track.insertBefore(track.lastElementChild, track.firstElementChild);
+                    track.scrollLeft += slideWidth;
+                    void track.offsetWidth;
+                    track.style.scrollBehavior = 'smooth';
+                    track.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+                } else {
+                    track.scrollBy({ left: dir * slideWidth, behavior: 'smooth' });
+                }
+                setTimeout(() => { vp.setAttribute('data-is-animating', 'false'); }, 400);
+                return;
+            }
+
             if (dir === 1) { 
                 track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
                 track.style.transform = 'translateX(-100%)';
@@ -1387,6 +1418,29 @@
             
             if (vp.getAttribute('data-is-animating') === 'true' || track.children.length <= 3) return;
             vp.setAttribute('data-is-animating', 'true');
+
+            if (window.innerWidth <= 1300) {
+                const slideWidth = track.querySelector('.vignette-slide').clientWidth;
+                if (dir === 1 && Math.abs(track.scrollWidth - track.clientWidth - track.scrollLeft) < 10) {
+                    track.style.scrollBehavior = 'auto';
+                    track.appendChild(track.firstElementChild);
+                    track.scrollLeft -= slideWidth;
+                    void track.offsetWidth;
+                    track.style.scrollBehavior = 'smooth';
+                    track.scrollBy({ left: slideWidth, behavior: 'smooth' });
+                } else if (dir === -1 && track.scrollLeft <= 10) {
+                    track.style.scrollBehavior = 'auto';
+                    track.insertBefore(track.lastElementChild, track.firstElementChild);
+                    track.scrollLeft += slideWidth;
+                    void track.offsetWidth;
+                    track.style.scrollBehavior = 'smooth';
+                    track.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+                } else {
+                    track.scrollBy({ left: dir * slideWidth, behavior: 'smooth' });
+                }
+                setTimeout(() => { vp.setAttribute('data-is-animating', 'false'); }, 400);
+                return;
+            }
 
             if (dir === 1) {
                 track.style.transition = 'transform 0.6s ease-in-out';
