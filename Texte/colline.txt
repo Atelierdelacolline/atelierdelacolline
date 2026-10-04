@@ -6,9 +6,24 @@ Texte : "La couture épaisse comme espace d'architecture."
 
 Section La Colline - 02 Notre Approche :
 En-tête : 02 NOTRE APPROCHE | VISION
-Texte bloc 1 : L'Atelier de la Colline s'ancre dans une lecture radicale du contexte. Nous ne cherchons pas à imposer une forme, mais à révéler les forces d'un site par une soustraction rigoureuse.
-Chaque projet est un prototype. Nous privilégions les matériaux bruts, laissés dans leur état naturel.
-Texte bloc 2 : C'est dans cet interstice, entre la rudesse de la matière et la finesse du détail, que naît l'identité de nos architectures. Notre travail se concentre sur la lumière comme matériau de construction à part entière.
+Titre Page : L'Atelier de la Colline
+
+Section La Colline - 01 Philosophie :
+En-tête : 01 PHILOSOPHIE | AGENCE
+Texte : "La couture épaisse comme espace d'architecture."
+
+Section La Colline - 02 Notre Approche :
+En-tête : 02 NOTRE APPROCHE | VISION
+Texte bloc 1 : L'Atelier de la Colline est né d'une réalité de terrain : notre rencontre, sur un chantier. À l'image de la Butte Bergeyre où tout a commencé, notre architecture s'ancre dans le dur, dans l'épaisseur du sol et la réalité de la matière. Notre démarche ne part jamais d'une page blanche ou d'un geste formel a priori, mais d'une lecture exigeante et radicale du contexte. Nous concevons chaque projet comme un prototype, cherchant moins à imposer une forme qu'à révéler la justesse d'un site par une résolution constructive rigoureuse.
+
+Notre pratique se concentre sur l'intervention sur l'existant, orientée par un concept central : l'architecture de la « couture épaisse ». Face à un bâtiment historique, nous refusons la facilité du collage, du mimétisme ou du contraste gratuit. Pour nous, la rencontre entre l'ancien et le contemporain n'est pas une simple ligne de démarcation sur un plan, mais un espace architectural à part entière. Cette épaisseur revendiquée matérialise l'intelligence de la mise en œuvre : c'est le traitement du joint, la mise à distance et la transition nécessaires pour assembler de manière cohérente deux temporalités distinctes.
+
+Texte bloc 2 : Inspirée par la culture tectonique, notre approche pose le nœud constructif comme l'essence même du projet. La vérité de nos architectures réside dans l'art de l'assemblage et le traitement des matériaux francs — la masse minérale de la pierre, la chaleur du bois, la tension du métal — laissés dans leur état naturel. C'est dans cet interstice, entre la rudesse de la matière et le réglage millimétrique du détail, que se forge notre identité. Nous dessinons la jonction complexe entre une maçonnerie ancienne et une ossature contemporaine avec la même exigence et la même précision que le plan de masse.
+
+Cette culture du détail fait de nous des architectes fondamentalement opérationnels. Plutôt que de fuir ou de subir la complexité du chantier, nous la concevons en amont pour atteindre l'élégance d'une technique invisible. En maîtrisant la « couture » jusque dans ses interfaces structurelles, thermiques et acoustiques les plus enfouies, nous garantissons à nos maîtres d'ouvrage des espaces où l'esthétique n'est jamais un simple placage décoratif. Elle s'impose comme le résultat direct, sain et pérenne d'une construction évidente.
+
+Section La Colline - 03 L'équipe :
+En-tête : 03 L'ÉQUIPE | ASSOCIES
 
 Section La Colline - 03 L'équipe :
 En-tête : 03 L'ÉQUIPE | ASSOCIES
