@@ -11,7 +11,7 @@ Etat : construit
 Budget : 10 000 € (hors coût main-d'œuvre / auto-construction)
 Surface : 9 m²
 
-Nombre d'images : 17
+Nombre d'images : 18
 
 Texte : Situé dans une vallée reculée de la région des Volcans d'Auvergne dans le centre de la France, le sauna offre une vue dégagée sur une formation rocheuse imposante, La Roche Nité. Ce monolithe est un témoin des forces incroyables qui ont façonné la vallée, à la fois d'origine glaciaire et volcanique. Le projet a été implanté en bordure de la propriété privée à une distance respectable de la maison principale.
 
@@ -51,7 +51,7 @@ Etat : non retenu
 Budget : -
 Surface : 2230 m² SDP / 1905 m² SHAB (hors annexe)
 
-Nombre d'images : 15
+Nombre d'images : 16
 
 Texte : Recomposer avec l’existant, c’est transformer sans effacer, réinventer un patrimoine obsolète pour répondre aux défis climatiques et sociétaux de 2050. Notre projet propose une approche frugale et réversible de la réhabilitation, fondée sur le confort durable, l’économie de matière et la résilience urbaine.
 
