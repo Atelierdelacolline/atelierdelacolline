@@ -98,7 +98,7 @@ Recomposer avec l’existant, c’est produire une architecture sobre, adaptable
 
 Section Projets - Projet 4 :
 Titre : Jonas
-Type : Construction
+Type : Conception
 Année : 2026
 Lieu : Les Mureaux (78)
 
