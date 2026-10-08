@@ -123,8 +123,23 @@
             -webkit-mask-position: left center !important;
             mask-position: left center !important;
         }
+
+        /* EXPANDABLE SECTIONS (Base & Mobile Logic) */
+        .expandable-wrapper { position: relative; }
+        .expandable-content { overflow: hidden; transition: max-height 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+        .expand-overlay { width: 100%; display: flex; flex-direction: column; align-items: center; cursor: pointer; pointer-events: none; }
+        .expand-overlay.mobile-only { display: none; }
+        .expand-gradient { width: 100%; height: 80px; background: linear-gradient(to bottom, transparent, var(--color-fond)); margin-top: -80px; position: relative; z-index: 1; transition: opacity 0.3s ease; }
+        .expand-btn { width: 100%; display: flex; justify-content: center; padding: 10px 0 20px 0; z-index: 2; position: relative; pointer-events: auto; }
+        .expand-btn.solid-bg { background-color: var(--color-fond); }
+        .expand-overlay:focus { outline: none; }
+        .expand-overlay:focus-visible .arrow-icon { background-color: var(--color-action); }
+        .expandable-wrapper.expanded .expand-gradient { opacity: 0; pointer-events: none; }
+        .expandable-wrapper.expanded .icon-down { display: none; }
         
-        .type-mobile-only { display: none; }
+        .icon-up { display: none; -webkit-mask-image: url('Images/Icones/fleche_haut.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('Images/Icones/fleche_haut.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
+        .expandable-wrapper.expanded .icon-up { display: block; }
+        .icon-down { -webkit-mask-image: url('Images/Icones/fleche_bas.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('Images/Icones/fleche_bas.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
 
         /* ==========================================================================
            2. LAYOUT : COLONNES ET GABARIT (DESKTOP)
@@ -132,11 +147,6 @@
         .sidebar { width: var(--sidebar-width); flex-shrink: 0; padding: 20px 30px; position: fixed; left: 0; top: 0; z-index: 100; height: 100vh; max-height: 100vh; overflow: hidden; border-right: 5px solid transparent; display: flex; flex-direction: column; }
         .main-content { margin-left: 0; width: 100%; display: flex; justify-content: center; padding: 20px var(--sidebar-width); position: relative; min-width: 0; }
         .page-section { width: 1500px; max-width: 100%; padding: 0 30px; display: none; animation: fadeIn 0.4s ease-in-out; min-width: 0; }
-
-        @media (min-width: 1301px) {
-            #section-projet-detail, #section-colline { max-width: 1010px; margin: 0 auto; }
-            #section-colline .team-grid { gap: 30px; }
-        }
 
         .mobile-only { display: none; }
         .desktop-only { display: block; margin-top: auto; }
@@ -151,23 +161,25 @@
             .main-content { width: 100%; margin-left: 0; padding: 20px 0; }
             .page-section { padding: 0 20px; width: 100%; }
             
-            .team-grid { grid-template-columns: 1fr; gap: 20px; }
+            .team-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
             .projects-grid { grid-template-columns: 1fr 1fr !important; } 
             
             .main-nav { flex-wrap: wrap; }
-            
-            .project-header { flex-wrap: nowrap !important; }
-            .ph-id, .ph-type { display: none !important; }
-            .ph-titre { text-align: left; flex: 1; }
-            .ph-lieu { text-align: center; flex: 1; }
-            .ph-annee { text-align: right; flex: 1; }
-            .type-mobile-only { display: flex !important; }
-            
+            .project-header { flex-wrap: wrap; }
             .image-placeholder { height: 300px; } 
 
             .desktop-only { display: none !important; }
             .mobile-only { display: block; }
             .mobile-footer { width: 100%; max-width: 100%; margin: 0; padding: 0 20px 40px 20px; }
+            
+            .project-card:hover { 
+                transform: none !important; 
+                border-color: var(--color-texte) !important; 
+            }
+            .project-card:focus-visible { 
+                transform: translateY(-5px) !important; 
+                border-color: var(--color-action) !important; 
+            }
             
             .carousel-viewport, .vignettes-viewport { 
                 overflow: hidden !important; 
@@ -175,28 +187,26 @@
                 min-width: 0; 
                 max-width: 100vw; 
             }
-            
-            /* Vignettes (gardent le défilement natif si on ne veut pas tout casser, mais ici on le passe aussi en mode fluide pour plus de robustesse si besoin, je garde le natif pour les vignettes par défaut) */
-            .vignettes-track {
+            .carousel-track, .vignettes-track {
                 width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden;
                 scroll-snap-type: x mandatory; scroll-behavior: smooth;
                 -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap;
             }
-            .vignettes-track::-webkit-scrollbar { display: none; }
-            
-            /* CARROUSEL PRINCIPAL : on supprime le scroll natif mobile pour utiliser la mécanique JS (qui gère la boucle parfaite) */
-            .carousel-track {
-                width: 100%; max-width: 100%; display: flex; flex-wrap: nowrap;
-            }
-
-            .slide { flex: 0 0 100%; width: 100%; max-width: 100%; }
+            .carousel-track::-webkit-scrollbar, .vignettes-track::-webkit-scrollbar { display: none; }
+            .slide { scroll-snap-align: center; flex: 0 0 100%; width: 100%; max-width: 100%; }
             .vignette-slide { scroll-snap-align: center; flex: 0 0 75%; max-width: 75%; }
             
-            /* Affichage des zones de clics (flèches) partout sur mobile */
-            .click-zone { display: flex !important; }
-            .carousel-viewport .click-zone { width: 40px; } /* Moins large pour pouvoir scroller/swiper au centre */
+            .click-zone { display: none !important; }
+            .lightbox .click-zone { display: flex !important; width: 50px; } 
+
+            .vignettes-wrapper { display: block; }
+            .vignettes-viewport { width: 100%; }
             
             .lightbox .close-btn { top: 15px; right: 15px; }
+
+            .expand-overlay.mobile-only { display: flex; }
+            .text-expandable-content { max-height: 180px; }
+            .cv-content { max-height: 150px; }
         }
 
         @media (max-width: 600px) {
@@ -247,7 +257,7 @@
         .sort-btn:focus-visible { color: var(--color-action); outline: none; }
 
         /* --- GRILLE DE FICHES PROJETS --- */
-        .projects-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .projects-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; margin-bottom: 80px; }
         
         .project-card { 
             display: flex; flex-direction: column; 
@@ -379,7 +389,7 @@
         .zone-left { left: 0; justify-content: flex-start; }
         .zone-right { right: 0; justify-content: flex-end; }
         
-        .arrow-icon { width: 1.75rem; height: 1.75rem; background-color: var(--color-texte); transition: background-color 0.3s ease; margin: 0 10px; }
+        .arrow-icon { width: 1.75rem; height: 1.75rem; background-color: var(--color-texte); transition: background-color 0.3s ease; margin: 0 10px; flex-shrink: 0; }
         .arrow-small { width: 0.875rem; height: 0.875rem; } 
         
         .click-zone:focus { outline: none; }
@@ -387,6 +397,10 @@
 
         .icon-left { -webkit-mask-image: url('Images/Icones/fleche_gauche.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('Images/Icones/fleche_gauche.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
         .icon-right { -webkit-mask-image: url('Images/Icones/fleche_droite.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('Images/Icones/fleche_droite.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
+
+        /* ZONES DE CLICS EN LIGNE (Lightbox Equipe) */
+        .click-zone-inline { cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 10px; outline: none; }
+        .click-zone-inline:hover .arrow-icon, .click-zone-inline:focus-visible .arrow-icon { background-color: var(--color-action) !important; }
 
         .back-btn-container { display: flex; justify-content: center; margin-top: 40px; margin-bottom: 40px; }
         
@@ -458,6 +472,31 @@
             background-color: var(--color-action);
         }
 
+        /* --- LIGHTBOX EQUIPE (ZOOM PROFIL) --- */
+        .team-lightbox-content {
+            position: relative; z-index: 10001; 
+            width: 90vw; height: 90vh; 
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+            transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .lightbox.active .team-lightbox-content {
+            transform: scale(1);
+        }
+        .team-lightbox-card {
+            width: 100%; height: 100%; max-height: 100%;
+            overflow-y: auto; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+            scrollbar-width: none; -ms-overflow-style: none;
+        }
+        .team-lightbox-card::-webkit-scrollbar { display: none; }
+        
+        .team-lightbox-card .member-name {
+            font-family: var(--font-team-name); font-size: var(--size-team-name); font-weight: var(--weight-team-name); text-transform: var(--transform-team-name); font-style: var(--style-team-name); border-bottom: 1px solid #ffffff; padding-bottom: 5px; margin-bottom: 15px; color: #ffffff; width: 100%; text-align: left;
+        }
+        .team-lightbox-card .member-cv {
+            font-family: var(--font-cv); font-size: var(--size-cv); font-weight: var(--weight-cv); text-transform: var(--transform-cv); font-style: var(--style-cv); color: #ffffff; width: 100%; text-align: justify;
+        }
+
         /* HOVER SUR DESKTOP UNIQUEMENT */
         @media (hover: hover) {
             #sidebar-logo:hover .mask-logo { background-color: var(--color-action); }
@@ -469,6 +508,8 @@
             .back-btn:hover { background-color: var(--color-action); color: var(--color-fond); border-color: var(--color-action); outline: none; }
             .vignette-slide:hover .vignette-img-container img { transform: scale(1.05); }
             .lightbox .close-btn:hover .icon-close, .lightbox .click-zone:hover .arrow-icon { background-color: var(--color-action); }
+            .expand-overlay:hover .arrow-icon { background-color: var(--color-action); }
+            .team-member:hover { transform: translateY(-5px); }
         }
 
         /* Textes sous le carrousel */
@@ -488,6 +529,8 @@
         #section-colline .portrait-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .team-member { cursor: pointer; transition: transform 0.3s ease; }
+        .team-member:focus-visible { outline: 2px solid var(--color-action); outline-offset: 4px; }
         .member-name { font-family: var(--font-team-name); font-size: var(--size-team-name); font-weight: var(--weight-team-name); text-transform: var(--transform-team-name); font-style: var(--style-team-name); border-bottom: 1px solid var(--color-texte); padding-bottom: 5px; margin-bottom: 10px; color: var(--color-texte); }
         .member-cv { font-family: var(--font-cv); font-size: var(--size-cv); font-weight: var(--weight-cv); text-transform: var(--transform-cv); font-style: var(--style-cv); color: var(--color-texte); }
     </style>
@@ -550,9 +593,6 @@
             </h2>
 
             <div class="projects-grid" id="projects-grid"></div>
-            <div id="load-more-container" class="back-btn-container" style="display:none; margin-top:0;">
-                <a class="back-btn" role="button" tabindex="0" onclick="loadMoreProjects()" onkeydown="if(event.key === 'Enter') this.click()"></a>
-            </div>
         </div>
 
         <div id="section-projet-detail" class="page-section">
@@ -590,7 +630,19 @@
                         <img src="Images/Approche/photo_approche.webp" alt="Atelier de la Colline - Notre approche et vision de l'architecture" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none';}">
                     </div>
                 </div>
-                <div class="text-block" style="margin-top: 20px;" id="colline-approche-2"></div>
+                
+                <div class="expandable-wrapper">
+                    <div class="expandable-content text-expandable-content">
+                        <div class="text-block" style="margin-top: 20px;" id="colline-approche-2"></div>
+                    </div>
+                    <div class="expand-overlay mobile-only" role="button" tabindex="0" onclick="toggleSection(this)" onkeydown="if(event.key === 'Enter') toggleSection(this)">
+                        <div class="expand-gradient"></div>
+                        <div class="expand-btn solid-bg">
+                            <div class="arrow-icon icon-down"></div>
+                            <div class="arrow-icon icon-up"></div>
+                        </div>
+                    </div>
+                </div>
             </section>
             
             <section class="about-section">
@@ -608,6 +660,7 @@
         <div class="copyright dynamic-copyright"></div>
     </footer>
 
+    <!-- LIGHTBOX PROJETS -->
     <div id="lightbox" class="lightbox" aria-hidden="true">
         <div class="lightbox-overlay" onclick="closeLightbox()"></div>
         <div class="lightbox-content">
@@ -625,12 +678,27 @@
             <img id="lightbox-img" src="" alt="Image plein écran" style="max-width:100%; max-height:100%; object-fit:contain;" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null;}">
         </div>
     </div>
+    
+    <!-- LIGHTBOX EQUIPE (ZOOM PROFIL) -->
+    <div id="team-lightbox" class="lightbox" aria-hidden="true">
+        <div class="lightbox-overlay" onclick="closeTeamLightbox()"></div>
+        <div class="team-lightbox-content">
+            <div class="close-btn" role="button" tabindex="0" aria-label="Fermer" onclick="closeTeamLightbox()" onkeydown="if(event.key === 'Enter') closeTeamLightbox()">
+                <div class="icon-close"></div>
+            </div>
+            
+            <div class="team-lightbox-card" id="team-lightbox-card"></div>
+        </div>
+    </div>
 
     <script>
         const seoData = { general: { title: "", desc: "", keys: "", h1: "", ogTitle: "", ogDesc: "", ogImage: "" }, projets: { title: "", desc: "", keys: "", h1: "", ogTitle: "", ogDesc: "", ogImage: "" }, colline: { title: "", desc: "", keys: "", h1: "", ogTitle: "", ogDesc: "", ogImage: "" } };
         
         let allProjects = []; 
         let currentProjectId = null; 
+        
+        let allTeamMembers = [];
+        let currentTeamIndex = 0;
         
         let sortDirection = 1;
         let currentSortColumn = '';
@@ -641,9 +709,24 @@
         
         let currentLightboxIndex = 0;
         let lastHashBeforeIntro = '';
-        let projectsDisplayed = 6;
-        let textBtnLoadMore = "VOIR D'AVANTAGE";
-        let textBtnRetour = "RETOUR";
+        
+        let savedScrollPosition = 0;
+
+        function lockScroll() {
+            savedScrollPosition = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${savedScrollPosition}px`;
+            document.body.style.width = '100%';
+            document.body.style.overflowY = 'scroll';
+        }
+
+        function unlockScroll() {
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflowY = '';
+            window.scrollTo(0, savedScrollPosition);
+        }
 
         // GESTION DU SWIPE TACTILE
         let touchStartX = 0;
@@ -666,17 +749,21 @@
             const diffX = touchEndX - touchStartX;
             const diffY = touchEndY - touchStartY;
             
-            // On s'assure qu'il s'agit bien d'un glissement horizontal (et d'au moins 40px)
             if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
-                // Si on est dans le carrousel plein écran (Lightbox)
                 const lightbox = document.getElementById('lightbox');
                 if (lightbox && lightbox.classList.contains('active')) {
-                    if (diffX < 0) moveLightbox(1); // Swipe gauche = suivant
-                    if (diffX > 0) moveLightbox(-1); // Swipe droite = précédent
+                    if (diffX < 0) moveLightbox(1); 
+                    if (diffX > 0) moveLightbox(-1); 
                     return;
                 }
                 
-                // Si on est dans le carrousel principal du projet
+                const teamLightbox = document.getElementById('team-lightbox');
+                if (teamLightbox && teamLightbox.classList.contains('active')) {
+                    if (diffX < 0) moveTeamLightbox(1); 
+                    if (diffX > 0) moveTeamLightbox(-1); 
+                    return;
+                }
+                
                 const carouselViewport = e.target.closest('.carousel-viewport');
                 if (carouselViewport) {
                     if (diffX < 0) moveCarousel(carouselViewport, 1);
@@ -990,20 +1077,38 @@
             fetch('Texte/equipe.txt').then(r => r.text()).then(text => {
                 const container = document.getElementById('team-grid-container');
                 container.innerHTML = "";
+                allTeamMembers = [];
+                let indexArray = 0;
                 text.split(/Profil \d+/i).filter(b => b.trim() !== "").forEach((block, i) => {
                     const name = block.match(/prénom et nom\s*:\s*(.+)/i)?.[1] || "NOM";
                     const bio = block.match(/présentation\s*:\s*([\s\S]+)/i)?.[1] || "";
                     const indexProfil = i + 1;
                     
+                    allTeamMembers.push({ name, bio, index: indexProfil });
+                    
                     container.innerHTML += `
-                        <div class="team-member" id="team-member-${indexProfil}">
+                        <div class="team-member" id="team-member-${indexProfil}" role="button" tabindex="0" onclick="openTeamLightbox(${indexArray})" onkeydown="if(event.key === 'Enter' || event.key === ' ') openTeamLightbox(${indexArray})">
                             <div class="blue-frame">
                                 <div class="portrait-placeholder">
                                     <img src="Images/Equipe/Profil_${indexProfil}.webp" alt="Portrait de ${name}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none'; this.parentNode.innerHTML='PHOTO ${indexProfil}';}">
                                 </div>
                             </div>
-                            <div class="member-name">${name}</div><div class="member-cv">${bio.replace(/\n/g, '<br>')}</div>
+                            <div class="member-name">${name}</div>
+                            
+                            <div class="expandable-wrapper">
+                                <div class="expandable-content cv-content">
+                                    <div class="member-cv">${bio.replace(/\n/g, '<br>')}</div>
+                                </div>
+                                <div class="expand-overlay mobile-only">
+                                    <div class="expand-gradient"></div>
+                                    <div class="expand-btn">
+                                        <div class="arrow-icon icon-down"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>`;
+                    indexArray++;
                 });
             });
         }
@@ -1072,12 +1177,6 @@
                             introBg.src = `Images/Couverture/${rand}.webp`;
                         }
                     }
-
-                    const loadMoreMatch = accueilText.match(/Bouton chargement cartes\s*:\s*([^\r\n]+)/i);
-                    if (loadMoreMatch) textBtnLoadMore = loadMoreMatch[1].trim();
-
-                    const retourMatch = accueilText.match(/Bouton retour projet\s*:\s*([^\r\n]+)/i);
-                    if (retourMatch) textBtnRetour = retourMatch[1].trim();
                 }
 
                 if (projetsText) {
@@ -1147,9 +1246,7 @@
             const grid = document.getElementById('projects-grid');
             grid.innerHTML = '';
             
-            let displayedProjects = allProjects.slice(0, projectsDisplayed);
-            
-            displayedProjects.forEach(p => {
+            allProjects.forEach(p => {
                 let detailsHtml = '';
                 
                 if (p.sousTitre) {
@@ -1182,21 +1279,6 @@
                         </div>
                     </div>`;
             });
-            
-            const btnContainer = document.getElementById('load-more-container');
-            if (btnContainer) {
-                if (projectsDisplayed < allProjects.length) {
-                    btnContainer.style.display = 'flex';
-                    btnContainer.querySelector('a').innerText = textBtnLoadMore;
-                } else {
-                    btnContainer.style.display = 'none';
-                }
-            }
-        }
-
-        function loadMoreProjects() {
-            projectsDisplayed += 6;
-            renderProjectsGrid();
         }
 
         function sortTable(column) {
@@ -1217,7 +1299,6 @@
                 return 0;
             });
             
-            projectsDisplayed = 6;
             renderProjectsGrid(); 
         }
 
@@ -1232,7 +1313,7 @@
             let slidesHtml = '';
             for (let i = 0; i < p.nbImages; i++) {
                 slidesHtml += `
-                    <div class="slide" data-index="${i}">
+                    <div class="slide">
                         <img src="Images/Projet/Projet ${p.id}/${i}.webp" alt="Architecture ${p.titre} - Photo ${i + 1}" loading="lazy" 
                              onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.parentElement.remove();}"
                              onclick="openLightbox(${i})" style="cursor: zoom-in;" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') openLightbox(${i})">
@@ -1242,19 +1323,13 @@
             const container = document.getElementById('current-project-container');
             container.innerHTML = `
                 <article class="project" id="project-${p.id}">
-                    <h2 class="project-header">
-                        <div class="ph-id">${p.id}</div>
-                        <div class="ph-titre">${p.titre}</div>
-                        <div class="ph-type">${p.type}</div>
-                        <div class="ph-lieu">${p.lieu}</div>
-                        <div class="ph-annee">${p.annee}</div>
-                    </h2>
+                    <h2 class="project-header"><div>${p.id}</div><div>${p.titre}</div><div>${p.type}</div><div>${p.lieu}</div><div>${p.annee}</div></h2>
                     
                     <div class="carousel-viewport" style="margin-bottom:15px;" data-current-index="0" data-is-animating="false">
-                        <div class="click-zone zone-left" onclick="moveCarousel(this.closest('.carousel-viewport'), -1)">
+                        <div class="click-zone zone-left" onclick="moveCarousel(this, -1)">
                             <div class="arrow-icon icon-left"></div>
                         </div>
-                        <div class="click-zone zone-right" onclick="moveCarousel(this.closest('.carousel-viewport'), 1)">
+                        <div class="click-zone zone-right" onclick="moveCarousel(this, 1)">
                             <div class="arrow-icon icon-right"></div>
                         </div>
                         <div class="carousel-track">${slidesHtml}</div>
@@ -1267,12 +1342,11 @@
                             ${p.etat ? `<div class="key-item"><div class="dot"></div> ÉTAT : ${p.etat}</div>` : ''}
                             ${p.budget ? `<div class="key-item"><div class="dot"></div> BUDGET : ${p.budget}</div>` : ''}
                             ${p.surface ? `<div class="key-item"><div class="dot"></div> SURFACE : ${p.surface}</div>` : ''}
-                            ${p.type ? `<div class="key-item type-mobile-only"><div class="dot"></div> TYPE : ${p.type}</div>` : ''}
                         </div>
                         <div class="project-text">${p.paragraphs}</div>
                         
                         <div class="back-btn-container">
-                            <a class="back-btn" role="button" tabindex="0" onclick="switchPage('projets', hashBtn1)" onkeydown="if(event.key === 'Enter') this.click()">${textBtnRetour}</a>
+                            <a class="back-btn" role="button" tabindex="0" onclick="switchPage('projets', hashBtn1)" onkeydown="if(event.key === 'Enter') this.click()">Retour à l'index</a>
                         </div>
                     </div>
                 </article>`;
@@ -1284,20 +1358,6 @@
             if(p.sousTitre) document.getElementById('og-desc').setAttribute('content', p.sousTitre);
         }
 
-        function syncBackgroundCarousel() {
-            const track = document.querySelector('.carousel-track');
-            if(!track) return;
-            
-            let slides = Array.from(track.children);
-            slides.sort((a, b) => parseInt(a.dataset.index) - parseInt(b.dataset.index));
-            let rotated = slides.slice(currentLightboxIndex).concat(slides.slice(0, currentLightboxIndex));
-            
-            track.innerHTML = '';
-            rotated.forEach(s => track.appendChild(s));
-            track.style.transform = 'translateX(0)';
-            track.style.transition = 'none';
-        }
-
         function openLightbox(index) {
             currentLightboxIndex = index;
             const lightbox = document.getElementById('lightbox');
@@ -1305,12 +1365,14 @@
             lightbox.classList.add('active');
             lightbox.setAttribute('aria-hidden', 'false');
             document.querySelector('.lightbox .close-btn').focus();
+            lockScroll();
         }
 
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.remove('active');
             lightbox.setAttribute('aria-hidden', 'true');
+            unlockScroll();
         }
 
         function moveLightbox(dir) {
@@ -1329,16 +1391,68 @@
             
             lbImg.dataset.tried = ''; 
             lbImg.src = `Images/Projet/Projet ${p.id}/${currentLightboxIndex}.webp`;
+        }
+        
+        function openTeamLightbox(index) {
+            currentTeamIndex = index;
+            const lightbox = document.getElementById('team-lightbox');
+            updateTeamLightbox();
+            lightbox.classList.add('active');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.querySelector('#team-lightbox .close-btn').focus();
+            lockScroll();
+        }
+
+        function closeTeamLightbox() {
+            const lightbox = document.getElementById('team-lightbox');
+            lightbox.classList.remove('active');
+            lightbox.setAttribute('aria-hidden', 'true');
+            unlockScroll();
+        }
+
+        function moveTeamLightbox(dir) {
+            currentTeamIndex += dir;
+            if (currentTeamIndex < 0) currentTeamIndex = allTeamMembers.length - 1;
+            if (currentTeamIndex >= allTeamMembers.length) currentTeamIndex = 0;
+            updateTeamLightbox();
+        }
+
+        function updateTeamLightbox() {
+            const member = allTeamMembers[currentTeamIndex];
+            if (!member) return;
+            const card = document.getElementById('team-lightbox-card');
             
-            syncBackgroundCarousel();
+            card.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 25px;">
+                    <div class="click-zone-inline" role="button" tabindex="0" onclick="moveTeamLightbox(-1); event.stopPropagation();" onkeydown="if(event.key === 'Enter') { moveTeamLightbox(-1); event.stopPropagation(); }">
+                        <div class="arrow-icon icon-left" style="background-color: #ffffff;"></div>
+                    </div>
+                    
+                    <div class="portrait-placeholder" style="width: 100%; max-width: 300px; aspect-ratio: 1 / 1; background: transparent;">
+                        <img src="Images/Equipe/Profil_${member.index}.webp" alt="Portrait de ${member.name}" style="object-fit: cover; width: 100%; height: 100%;" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none'; this.parentNode.innerHTML='PHOTO ${member.index}';}">
+                    </div>
+                    
+                    <div class="click-zone-inline" role="button" tabindex="0" onclick="moveTeamLightbox(1); event.stopPropagation();" onkeydown="if(event.key === 'Enter') { moveTeamLightbox(1); event.stopPropagation(); }">
+                        <div class="arrow-icon icon-right" style="background-color: #ffffff;"></div>
+                    </div>
+                </div>
+                <div class="member-name">${member.name}</div>
+                <div class="member-cv">${member.bio.replace(/\n/g, '<br>')}</div>
+            `;
+            card.scrollTop = 0;
         }
 
         document.addEventListener('keydown', (e) => {
             const lightbox = document.getElementById('lightbox');
+            const teamLightbox = document.getElementById('team-lightbox');
             if (lightbox && lightbox.classList.contains('active')) {
                 if (e.key === 'Escape') closeLightbox();
                 if (e.key === 'ArrowRight') moveLightbox(1);
                 if (e.key === 'ArrowLeft') moveLightbox(-1);
+            } else if (teamLightbox && teamLightbox.classList.contains('active')) {
+                if (e.key === 'Escape') closeTeamLightbox();
+                if (e.key === 'ArrowRight') moveTeamLightbox(1);
+                if (e.key === 'ArrowLeft') moveTeamLightbox(-1);
             }
         });
 
@@ -1358,25 +1472,13 @@
             wrapper.style.display = 'flex';
             document.getElementById('vignettes-header').style.display = 'flex';
 
-            let slidesData = [...otherProjects];
-            while (slidesData.length > 0 && slidesData.length < 3) {
-                slidesData.push({ isEmpty: true });
-            }
-
-            slidesData.forEach(p => {
-                if (p.isEmpty) {
-                    track.innerHTML += `
-                        <div class="vignette-slide">
-                            <div class="vignette-img-container" style="background-color: var(--color-fond);"></div>
-                        </div>`;
-                } else {
-                    track.innerHTML += `
-                        <div class="vignette-slide" role="button" tabindex="0" onclick="showProject('${p.id}')" onkeydown="if(event.key === 'Enter' || event.key === ' ') showProject('${p.id}')">
-                            <div class="vignette-img-container">
-                                <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.webp" alt="Parcourir le projet ${p.titre}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.closest('.vignette-slide').remove();}">
-                            </div>
-                        </div>`;
-                }
+            otherProjects.forEach(p => {
+                track.innerHTML += `
+                    <div class="vignette-slide" role="button" tabindex="0" onclick="showProject('${p.id}')" onkeydown="if(event.key === 'Enter' || event.key === ' ') showProject('${p.id}')">
+                        <div class="vignette-img-container">
+                            <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.webp" alt="Parcourir le projet ${p.titre}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.closest('.vignette-slide').remove();}">
+                        </div>
+                    </div>`;
             });
         }
 
@@ -1392,6 +1494,9 @@
             } else if (pageName === 'colline') {
                 document.getElementById('nav-colline').classList.add('active');
             }
+            else if (pageName === 'projet-detail') {
+                document.getElementById('nav-projets').classList.add('active');
+            }
             
             document.getElementById('dynamic-contact-info').style.display = (pageName === 'colline') ? 'block' : 'none';
             
@@ -1403,7 +1508,8 @@
             window.scrollTo(0,0);
         }
 
-        function moveCarousel(vp, dir) {
+        function moveCarousel(clickedZone, dir) {
+            const vp = clickedZone.closest('.carousel-viewport');
             const track = vp.querySelector('.carousel-track');
             
             if (vp.getAttribute('data-is-animating') === 'true' || track.children.length <= 1) return;
@@ -1436,29 +1542,6 @@
             if (vp.getAttribute('data-is-animating') === 'true' || track.children.length <= 3) return;
             vp.setAttribute('data-is-animating', 'true');
 
-            if (window.innerWidth <= 1300) {
-                const slideWidth = track.querySelector('.vignette-slide').clientWidth;
-                if (dir === 1 && Math.abs(track.scrollWidth - track.clientWidth - track.scrollLeft) < 10) {
-                    track.style.scrollBehavior = 'auto';
-                    track.appendChild(track.firstElementChild);
-                    track.scrollLeft -= slideWidth;
-                    void track.offsetWidth;
-                    track.style.scrollBehavior = 'smooth';
-                    track.scrollBy({ left: slideWidth, behavior: 'smooth' });
-                } else if (dir === -1 && track.scrollLeft <= 10) {
-                    track.style.scrollBehavior = 'auto';
-                    track.insertBefore(track.lastElementChild, track.firstElementChild);
-                    track.scrollLeft += slideWidth;
-                    void track.offsetWidth;
-                    track.style.scrollBehavior = 'smooth';
-                    track.scrollBy({ left: -slideWidth, behavior: 'smooth' });
-                } else {
-                    track.scrollBy({ left: dir * slideWidth, behavior: 'smooth' });
-                }
-                setTimeout(() => { vp.setAttribute('data-is-animating', 'false'); }, 400);
-                return;
-            }
-
             if (dir === 1) {
                 track.style.transition = 'transform 0.6s ease-in-out';
                 track.style.transform = 'translateX(-100%)'; 
@@ -1478,6 +1561,26 @@
                 setTimeout(() => { vp.setAttribute('data-is-animating', 'false'); }, 600);
             }
         }
+        
+        function toggleSection(btn) {
+            const wrapper = btn.closest('.expandable-wrapper');
+            const content = wrapper.querySelector('.expandable-content');
+            
+            if (!wrapper.classList.contains('expanded')) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                wrapper.classList.add('expanded');
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                void content.offsetWidth;
+                content.style.maxHeight = '';
+                wrapper.classList.remove('expanded');
+                
+                const rect = wrapper.getBoundingClientRect();
+                if (rect.top < 0) {
+                    window.scrollBy({ top: rect.top - 80, behavior: 'smooth' });
+                }
+            }
+        }
 
         window.onload = () => { 
             loadColors(); 
@@ -1492,6 +1595,9 @@
                 if(document.getElementById('intro-screen').style.display === 'none') {
                     if(document.getElementById('lightbox').classList.contains('active')) {
                         closeLightbox();
+                    }
+                    if(document.getElementById('team-lightbox') && document.getElementById('team-lightbox').classList.contains('active')) {
+                        closeTeamLightbox();
                     }
                     handleHash();
                 }
