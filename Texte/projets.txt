@@ -118,3 +118,41 @@ Nous nous appuyons sur le thème de la mer pour décliner une identité forte au
 Des vagues composées de casiers modulables délimitent les espaces à la manière de cloison fonctionnelles.
 Des voiles habillent le plafond techniques et marquent l'emplacement des différentes activités.
 Des radeaux, aménagées a la manières de cabanes à la dérive, offrent des espaces de détentes et de mise en retrait.
+
+Section Projets - Projet 5 :
+Titre : Montreuil 
+Type : Mission complète
+Année : 2020
+Lieu : Montreuil (93)
+
+Sous-titre : Réaménagement d'un appartement.
+
+Client : Privé
+Etat : Livré
+Budget : 60 000 €
+Surface : 67 m²
+
+Nombre d'images : 6
+
+Texte : L'enjeu principal du projet a consisté à créer une chambre supplémentaire dans un appartement de type haussmannien en revoyant le principe de distribution et le positionnement des pièces humides.
+
+Section Projets - Projet 6 :
+Titre : Lardennois 
+Type : Conception
+Année : 2026
+Lieu : Paris (75)
+
+Sous-titre : Aménagement d'un local commercial.
+
+Client : Privé
+Etat : En attente
+Budget : -
+Surface : 100 m²
+
+Nombre d'images : 6
+
+Texte : Réaménagement d'un local commercial, avec peu d'ouvertures, pour en faire un espace de bureaux le plus lumineux possible et pouvant offrir une réversibilité en logement.
+
+Le projet porte sur le décloisonnement des espaces initiaux et sur le redimensionnement des nouvelles unités pour qu'elles puissent accueillir 2 usages différents tout en restant qualitatives pour chacun d'eux.
+
+Une grande cloison vitrée est installée pour apporter de la lumière aux différents espaces du fond de local et créer une unité et une identité à ce mur. L'utilisation de modules simples et répétitifs ont permis de simplifier la lecture des volumes de la forme atypique du local.
