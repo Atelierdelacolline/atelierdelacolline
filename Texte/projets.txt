@@ -57,8 +57,9 @@ Texte : Recomposer avec l’existant, c’est transformer sans effacer, réinven
 
 Confort et horizon 2050 : Le confort n’est plus seulement technique : il devient sensoriel, social et environnemental. Face aux bouleversements climatiques, l’immeuble doit offrir un cadre de vie sain, adaptable et autonome. Réduire les besoins énergétiques, maîtriser l’inconfort d’été, anticiper les intempéries : autant d’enjeux qui placent la frugalité et la sobriété au cœur de la conception.
 
-Bâtir la ville résiliente : Être bailleur en 2050, c’est repenser la valeur du foncier et l’usage des bâtiments : densifier sans artificialiser, réemployer avant de reconstruire.
+Bâtir la ville résiliente : 
 
+Être bailleur en 2050, c’est repenser la valeur du foncier et l’usage des bâtiments : densifier sans artificialiser, réemployer avant de reconstruire.
 Chaque entité (infrastructure, rez-de-chaussée, corps du bâtiment, toiture) devient un levier d’innovation :
 
 - Les sous-sols se convertissent en espaces logistiques, ateliers ou zones de stockage.
@@ -66,33 +67,30 @@ Chaque entité (infrastructure, rez-de-chaussée, corps du bâtiment, toiture) d
 - Les étages accueillent des logements traversants et évolutifs.
 - Les toitures, jardins productifs ou techniques, deviennent le prolongement habité du paysage.
 
-Réversibilité et évolutivité : L’immeuble de bureau étudié, grâce à sa structure poteaux/dalles et ses grandes hauteurs sous plafond, se prête naturellement à la réversibilité.
+Réversibilité et évolutivité : 
 
-Nous défendons l’idée d’un bâtiment capable : adaptable, modulable et agile, où l’on peut aussi bien habiter que travailler.
+L’immeuble de bureau étudié, grâce à sa structure poteaux/dalles et ses grandes hauteurs sous plafond, se prête naturellement à la réversibilité. Nous défendons l’idée d’un bâtiment capable : adaptable, modulable et agile, où l’on peut aussi bien habiter que travailler. La conception flexible des trames, la standardisation des gaines et l’indépendance des refends permettent d’envisager une transformation des usages à moindre coût. Cette approche prolonge la durée de vie du bâti et maximise sa valeur d’usage.
 
-La conception flexible des trames, la standardisation des gaines et l’indépendance des refends permettent d’envisager une transformation des usages à moindre coût. Cette approche prolonge la durée de vie du bâti et maximise sa valeur d’usage.
+Système constructif et frugalité : 
 
-Système constructif et frugalité : Le projet s’appuie sur les ressources locales et les filières du réemploi : briques de terre crue du Grand Paris (Cycle Terre, Sevran), ossature bois, matériaux biosourcés et modules préfabriqués.
+Le projet s’appuie sur les ressources locales et les filières du réemploi : briques de terre crue du Grand Paris (Cycle Terre, Sevran), ossature bois, matériaux biosourcés et modules préfabriqués. Chaque élément est pensé pour être démontable, réutilisable et faiblement carboné. La performance énergétique repose sur une conception bioclimatique passive : inertie du béton apparent et des refends en terre crue, ventilation naturelle par cheminées (VNAT), protections solaires orientables (BSO), confort d’été par brasseurs d’air et surventilation nocturne (oscillo-battants). Les eaux grises et pluviales sont valorisées via un système de réutilisation intégré en infrastructure. Un échangeur de chaleur permet d’économiser l’ECS (eau chaude sanitaire).
 
-Chaque élément est pensé pour être démontable, réutilisable et faiblement carboné.
-La performance énergétique repose sur une conception bioclimatique passive : inertie du béton apparent et des refends en terre crue, ventilation naturelle par cheminées (VNAT), protections solaires orientables (BSO), confort d’été par brasseurs d’air et surventilation nocturne (oscillo-battants).
+Le site / Pantin, un paysage habité : 
 
-Les eaux grises et pluviales sont valorisées via un système de réutilisation intégré en infrastructure. Un échangeur de chaleur permet d’économiser l’ECS (eau chaude sanitaire).
+Le projet s’inscrit dans un tissu urbain poreux, entre canal et parc. Le traitement paysager prolonge cette continuité : désimperméabilisation des sols, plantation d’arbres de haute tige, création d’un RDC paysager traversant et ventilé naturellement. L’espace public se prolonge dans l’espace privé, formant un parc unifié de plus de 15 000 m².
 
-Le site / Pantin, un paysage habité : Le projet s’inscrit dans un tissu urbain poreux, entre canal et parc. Le traitement paysager prolonge cette continuité : désimperméabilisation des sols, plantation d’arbres de haute tige, création d’un RDC paysager traversant et ventilé naturellement.
+Espaces partagés et confort collectif : 
 
-L’espace public se prolonge dans l’espace privé, formant un parc unifié de plus de 15 000 m².
-
-Espaces partagés et confort collectif : Le confort, c’est aussi la possibilité de se rencontrer, jardiner, bricoler ou se réunir.
+Le confort, c’est aussi la possibilité de se rencontrer, jardiner, bricoler ou se réunir.
 Des espaces partagés, ouverts sur le paysage, sont mis à disposition des habitants pour des usages collectifs ou associatifs, selon les besoins.
 
-Toiture et sous-sol / potentiel d’avenir : Les toitures deviennent support de biodiversité et de stockage des eaux pluviales. À terme, elles pourront accueillir des jardins partagés pédagogiques.
+Toiture et sous-sol / potentiel d’avenir : 
 
-Les sous-sols, libérés partiellement du stationnement, offrent un potentiel foncier pour des usages complémentaires : stockage, ateliers, espaces communs.
+Les toitures deviennent support de biodiversité et de stockage des eaux pluviales. À terme, elles pourront accueillir des jardins partagés pédagogiques. Les sous-sols, libérés partiellement du stationnement, offrent un potentiel foncier pour des usages complémentaires : stockage, ateliers, espaces communs.
 
-Façade / mémoire et innovation : Comme un hommage à l’ancienne identité du bâtiment, l’ossature de la façade existante en aluminium est conservée ; une nouvelle peau thermique en ossature bois bardée de brique vient s’y adosser.
+Façade / mémoire et innovation : 
 
-Les matériaux de réemploi (verre, briques, gravats concassés) participent à une esthétique sobre et expressive. Préfabriquée et démontable, cette façade incarne la réversibilité et la sobriété constructive.
+Comme un hommage à l’ancienne identité du bâtiment, l’ossature de la façade existante en aluminium est conservée ; une nouvelle peau thermique en ossature bois bardée de brique vient s’y adosser. Les matériaux de réemploi (verre, briques, gravats concassés) participent à une esthétique sobre et expressive. Préfabriquée et démontable, cette façade incarne la réversibilité et la sobriété constructive.
 
 Recomposer avec l’existant, c’est produire une architecture sobre, adaptable et poétique, capable d’évoluer avec les usages et “ les climats ”. Notre projet défend une écologie du bâti et du quotidien : une manière d’habiter le temps, plus que l’espace.
 
@@ -156,3 +154,4 @@ Texte : Réaménagement d'un local commercial, avec peu d'ouvertures, pour en fa
 Le projet porte sur le décloisonnement des espaces initiaux et sur le redimensionnement des nouvelles unités pour qu'elles puissent accueillir 2 usages différents tout en restant qualitatives pour chacun d'eux.
 
 Une grande cloison vitrée est installée pour apporter de la lumière aux différents espaces du fond de local et créer une unité et une identité à ce mur. L'utilisation de modules simples et répétitifs ont permis de simplifier la lecture des volumes de la forme atypique du local.
+ 
