@@ -239,7 +239,7 @@
         }
 
         /* --- RÉSEAUX SOCIAUX --- */
-        .social-links { display: flex; gap: 15px; }
+        .social-links { display: flex; gap: 15px; flex-wrap: wrap; }
         .desktop-only .social-links { padding-top: 40px; margin-bottom: 20px; }
         .mobile-footer .social-links { margin-bottom: 20px; }
         .social-links a { text-decoration: none; color: var(--color-texte); border: 5px solid var(--color-texte); padding: 4px 8px; font-family: var(--font-social); font-size: var(--size-social); font-weight: var(--weight-social); text-transform: var(--transform-social); font-style: var(--style-social); transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
@@ -565,10 +565,7 @@
         <div class="info-block" id="dynamic-contact-info" style="display: none;"></div>
         
         <div class="desktop-only">
-            <div class="social-links" style="margin-bottom: 20px;">
-                <a href="https://www.instagram.com/atelier.de.la.colline/" target="_blank">INSTAGRAM</a>
-                <a href="https://fr.linkedin.com" target="_blank">LINKEDIN</a>
-            </div>
+            <div class="social-links" id="social-links-desktop" style="margin-bottom: 20px;"></div>
             <div class="copyright dynamic-copyright"></div>
         </div>
     </aside>
@@ -588,7 +585,8 @@
                     <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('titre')" onkeydown="if(event.key === 'Enter') this.click()">TITRE</span> | 
                     <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('type')" onkeydown="if(event.key === 'Enter') this.click()">TYPE</span> | 
                     <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('lieu')" onkeydown="if(event.key === 'Enter') this.click()">LIEU</span> | 
-                    <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('annee')" onkeydown="if(event.key === 'Enter') this.click()">ANNÉE</span>
+                    <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('annee')" onkeydown="if(event.key === 'Enter') this.click()">ANNÉE</span> <span style="margin: 0 4px;">|</span>
+                    <span class="sort-btn" role="button" tabindex="0" onclick="reverseSort()" onkeydown="if(event.key === 'Enter') this.click()" style="letter-spacing: -2px; font-weight: 900;">↑↓</span>
                 </div>
             </h2>
 
@@ -605,25 +603,25 @@
 
             <div class="vignettes-wrapper" id="bottom-carousel-wrapper" style="display: none;">
                 <div class="click-zone" onclick="moveVignettes(-1)" style="position:relative; width:auto;">
-                    <div class="arrow-icon arrow-small icon-left"></div>
+                    <div class="arrow-icon icon-left"></div>
                 </div>
                 <div class="vignettes-viewport" data-is-animating="false">
                     <div class="vignettes-track" id="vignettes-track"></div>
                 </div>
                 <div class="click-zone" onclick="moveVignettes(1)" style="position:relative; width:auto;">
-                    <div class="arrow-icon arrow-small icon-right"></div>
+                    <div class="arrow-icon icon-right"></div>
                 </div>
             </div>
         </div>
 
         <div id="section-colline" class="page-section">
             <section class="about-section">
-                <h2 class="section-header"><div>01 PHILOSOPHIE</div><div>AGENCE</div></h2>
+                <h2 class="section-header" id="philo-header"><div id="philo-header-left">01 PHILOSOPHIE</div><div id="philo-header-right">AGENCE</div></h2>
                 <div id="colline-philo"></div>
             </section>
             
             <section class="about-section" id="approche-1">
-                <h2 class="section-header"><div>02 NOTRE APPROCHE</div><div>VISION</div></h2>
+                <h2 class="section-header" id="approche-header"><div id="approche-header-left">02 NOTRE APPROCHE</div><div id="approche-header-right">VISION</div></h2>
                 <div class="text-block" id="colline-approche-1"></div>
                 <div id="photo-approche">
                     <div class="blue-frame image-placeholder">
@@ -646,17 +644,14 @@
             </section>
             
             <section class="about-section">
-                <h2 class="section-header"><div>03 L'ÉQUIPE</div><div>ASSOCIES</div></h2>
+                <h2 class="section-header" id="team-header"><div id="team-header-left">03 L'ÉQUIPE</div><div id="team-header-right">ASSOCIES</div></h2>
                 <div class="team-grid" id="team-grid-container"></div>
             </section>
         </div>
     </main>
 
     <footer class="mobile-footer mobile-only">
-        <div class="social-links">
-            <a href="https://www.instagram.com/atelier.de.la.colline/" target="_blank">INSTAGRAM</a>
-            <a href="https://fr.linkedin.com" target="_blank">LINKEDIN</a>
-        </div>
+        <div class="social-links" id="social-links-mobile"></div>
         <div class="copyright dynamic-copyright"></div>
     </footer>
 
@@ -711,6 +706,7 @@
         let lastHashBeforeIntro = '';
         
         let savedScrollPosition = 0;
+        let textBtnRetour = "RETOUR";
 
         function lockScroll() {
             savedScrollPosition = window.scrollY;
@@ -1072,6 +1068,27 @@
         function loadContact() {
             fetch('Texte/contact.txt').then(r => r.text()).then(text => document.getElementById('dynamic-contact-info').innerHTML = text.replace(/\n/g, '<br>'));
         }
+        
+        function loadReseaux() {
+            fetch('Texte/reseaux.txt?nocache=' + new Date().getTime())
+            .then(r => r.text())
+            .then(text => {
+                let html = '';
+                const regex = /([A-Z0-9\s]+)\r?\nLien\s*:\s*([^\r\n]+)\r?\nActivation\s*:\s*(oui|non)/gi;
+                let match;
+                while ((match = regex.exec(text)) !== null) {
+                    const name = match[1].trim();
+                    const link = match[2].trim();
+                    const active = match[3].trim().toLowerCase();
+                    if (active === 'oui' && name && name !== "Lien" && name !== "Activation") {
+                        html += `<a href="${link}" target="_blank">${name}</a>`;
+                    }
+                }
+                if (html !== '') {
+                    document.querySelectorAll('.social-links').forEach(el => el.innerHTML = html);
+                }
+            }).catch(e => console.log("Fichier reseaux.txt non trouvé."));
+        }
 
         function loadTeamProfiles() {
             fetch('Texte/equipe.txt').then(r => r.text()).then(text => {
@@ -1177,6 +1194,9 @@
                             introBg.src = `Images/Couverture/${rand}.webp`;
                         }
                     }
+
+                    const retourMatch = accueilText.match(/Bouton retour projet\s*:\s*([^\r\n]+)/i);
+                    if (retourMatch) textBtnRetour = retourMatch[1].trim();
                 }
 
                 if (projetsText) {
@@ -1206,10 +1226,33 @@
                 if (collineText) {
                     const philoMatch = collineText.match(/01 Philosophie[\s\S]*?Texte\s*:\s*([\s\S]*?)(?=Section La Colline - 02|$)/i);
                     if (philoMatch) document.getElementById('colline-philo').innerText = philoMatch[1].trim();
+                    
+                    const philoHeadMatch = collineText.match(/01 Philosophie[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
+                    if (philoHeadMatch) {
+                        const parts = philoHeadMatch[1].split('|');
+                        document.getElementById('philo-header-left').innerText = parts[0] ? parts[0].trim() : '';
+                        document.getElementById('philo-header-right').innerText = parts[1] ? parts[1].trim() : '';
+                    }
+
                     const appBloc1 = collineText.match(/Texte bloc 1\s*:\s*([\s\S]*?)(?=Texte bloc 2\s*:)/i);
                     if (appBloc1) document.getElementById('colline-approche-1').innerHTML = appBloc1[1].trim().replace(/\n/g, '<br>');
+                    
                     const appBloc2 = collineText.match(/Texte bloc 2\s*:\s*([\s\S]*?)(?=Section La Colline - 03|$)/i);
                     if (appBloc2) document.getElementById('colline-approche-2').innerHTML = appBloc2[1].trim().replace(/\n/g, '<br>');
+                    
+                    const appHeadMatch = collineText.match(/02 Notre approche[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
+                    if (appHeadMatch) {
+                        const parts = appHeadMatch[1].split('|');
+                        document.getElementById('approche-header-left').innerText = parts[0] ? parts[0].trim() : '';
+                        document.getElementById('approche-header-right').innerText = parts[1] ? parts[1].trim() : '';
+                    }
+                    
+                    const teamHeadMatch = collineText.match(/03 L'équipe[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
+                    if (teamHeadMatch) {
+                        const parts = teamHeadMatch[1].split('|');
+                        document.getElementById('team-header-left').innerText = parts[0] ? parts[0].trim() : '';
+                        document.getElementById('team-header-right').innerText = parts[1] ? parts[1].trim() : '';
+                    }
                 }
 
                 if(window.location.hash.replace('#', '') !== '') {
@@ -1281,6 +1324,12 @@
             });
         }
 
+        function reverseSort() {
+            sortDirection *= -1;
+            allProjects.reverse();
+            renderProjectsGrid();
+        }
+
         function sortTable(column) {
             if (currentSortColumn === column) {
                 sortDirection *= -1; 
@@ -1346,7 +1395,7 @@
                         <div class="project-text">${p.paragraphs}</div>
                         
                         <div class="back-btn-container">
-                            <a class="back-btn" role="button" tabindex="0" onclick="switchPage('projets', hashBtn1)" onkeydown="if(event.key === 'Enter') this.click()">Retour à l'index</a>
+                            <a class="back-btn" role="button" tabindex="0" onclick="switchPage('projets', hashBtn1)" onkeydown="if(event.key === 'Enter') this.click()">${textBtnRetour}</a>
                         </div>
                     </div>
                 </article>`;
@@ -1587,6 +1636,7 @@
             loadTypo(); 
             loadSEO(); 
             loadContact(); 
+            loadReseaux();
             loadTeamProfiles();
             
             loadCoreData();
