@@ -63,16 +63,26 @@
         /* ==========================================================================
            1. RESPONSIVITÉ HOMOTHÉTIQUE ET MOBILE
            ========================================================================== */
-        html { font-size: 11px; overflow-y: scroll; } 
+        html { font-size: 11px; } 
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; font-size: inherit; font-weight: inherit; font-family: inherit; line-height: inherit; text-transform: inherit; }
         .visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
 
-        body { font-family: 'Lato', sans-serif; font-weight: 400; font-size: 1rem; background-color: var(--color-fond); color: var(--color-texte); line-height: 1.4; display: flex; min-height: 100vh; text-transform: uppercase; transition: background-color 0.3s, color 0.3s; overflow-x: hidden; overflow-y: auto; width: 100%; }
+        body { font-family: 'Lato', sans-serif; font-weight: 400; font-size: 1rem; background-color: var(--color-fond); color: var(--color-texte); line-height: 1.4; display: flex; min-height: 100vh; text-transform: uppercase; transition: background-color 0.3s, color 0.3s; overflow-x: hidden; width: 100%; }
         
         body.no-scroll { overflow: hidden !important; height: 100vh; height: 100dvh; }
+
+        /* --- CHARGEMENT PROGRESSIF FLOU VERS NET --- */
+        .blur-load {
+            filter: blur(10px);
+            transition: filter 0.5s ease-in-out;
+            will-change: filter;
+        }
+        .blur-load.loaded {
+            filter: blur(0);
+        }
 
         /* --- ÉCRAN D'INTRODUCTION --- */
         #intro-screen {
@@ -99,6 +109,27 @@
         
         #intro-logo-container:focus { outline: none; }
         #intro-logo-container:focus-visible { outline: 2px solid var(--color-action); outline-offset: 8px; }
+
+        /* --- NOUVEAU BOUTON "ENTRER" --- */
+        #intro-enter-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            font-family: var(--font-nav);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-texte);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.3s ease, opacity 0.8s ease;
+        }
+        #intro-enter-btn:focus { outline: none; }
+        #intro-enter-btn:hover, #intro-enter-btn:focus-visible {
+            color: var(--color-action);
+        }
         
         #sidebar-logo:focus { outline: none; }
         #sidebar-logo:focus-visible { outline: 2px solid var(--color-action); outline-offset: 8px; }
@@ -254,6 +285,7 @@
             font-style: var(--style-sort-bar) !important;
         }
         .sort-btn { cursor: pointer; transition: color 0.3s ease; margin: 0 4px; }
+        .sort-btn.active-sort { color: var(--color-action); }
         .sort-btn:focus-visible { color: var(--color-action); outline: none; }
 
         /* --- GRILLE DE FICHES PROJETS --- */
@@ -377,9 +409,9 @@
 
         /* --- PROJETS & CARROUSEL --- */
         .project { margin-bottom: 40px; scroll-margin-top: 20px; min-width: 0; }
-        .project-header { display: flex; justify-content: space-between; border-top: 1px solid var(--color-texte); border-bottom: 1px solid var(--color-texte); padding: 4px 0; margin-bottom: 15px; font-family: var(--font-section-header); font-size: var(--size-section-header); font-weight: var(--weight-section-header); text-transform: var(--transform-section-header); font-style: var(--style-section-header); gap: 10px; color: var(--color-texte); }
+        .project-header { display: flex; justify-content: space-between; border-top: 1px solid var(--color-texte); border-bottom: 1px solid var(--color-texte); padding: 4px 0; margin-bottom: 40px; font-family: var(--font-section-header); font-size: var(--size-section-header); font-weight: var(--weight-section-header); text-transform: var(--transform-section-header); font-style: var(--style-section-header); gap: 10px; color: var(--color-texte); }
         
-        .carousel-viewport { width: 100%; max-width: 100%; min-width: 0; aspect-ratio: 1.85 / 1; height: auto; background: none; border: none; padding: 0; margin-bottom: 15px; overflow: hidden; position: relative; }
+        .carousel-viewport { width: 100%; max-width: 100%; min-width: 0; aspect-ratio: 1.85 / 1; height: auto; background: none; border: none; padding: 0; margin-bottom: 40px !important; overflow: hidden; position: relative; }
         .carousel-track { height: 100%; width: 100%; display: flex; min-width: 0; }
         .slide { flex: 0 0 100%; width: 100%; min-width: 100%; height: 100%; background: none; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .slide img { width: 100%; height: 100%; object-fit: contain; }
@@ -500,6 +532,7 @@
         /* HOVER SUR DESKTOP UNIQUEMENT */
         @media (hover: hover) {
             #sidebar-logo:hover .mask-logo { background-color: var(--color-action); }
+            #intro-enter-btn:hover { color: var(--color-action); }
             .main-nav a:hover { color: var(--color-action); border-bottom-color: var(--color-action); outline: none;}
             .social-links a:hover { background-color: var(--color-action); color: var(--color-fond); border-color: var(--color-action); outline: none;}
             .sort-btn:hover { color: var(--color-action); outline: none; }
@@ -518,10 +551,39 @@
         .key-points { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
         .key-item { display: flex; align-items: center; gap: 10px; font-family: var(--font-key-points); font-size: var(--size-key-points); font-weight: var(--weight-key-points); text-transform: var(--transform-key-points); font-style: var(--style-key-points); margin-bottom: 4px; color: var(--color-texte); }
         .dot { width: 5px; height: 5px; background-color: var(--color-texte); border-radius: 50%; flex-shrink: 0; }
-        .project-text { text-align: justify; line-height: 1.5; color: var(--color-texte); font-family: var(--font-body-text); font-size: var(--size-body-text); font-weight: var(--weight-body-text); text-transform: var(--transform-body-text); font-style: var(--style-body-text); }
+        .project-text { text-align: justify; line-height: 1.5; color: var(--color-texte); font-family: var(--font-body-text); font-size: var(--size-body-text); font-weight: var(--weight-body-text); text-transform: var(--transform-body-text); font-style: var(--style-body-text); margin-bottom: 40px; }
         .project-text p { margin-bottom: 15px; }
 
         /* --- COLLINE --- */
+        .blue-frame { background-color: var(--color-cadre); padding: 5px; position: relative; margin-bottom: 15px; transition: background-color 0.3s; }
+        
+        #colline-philo { 
+            font-family: var(--font-slogan-philo) !important; 
+            font-size: var(--size-slogan-philo) !important; 
+            font-weight: var(--weight-slogan-philo) !important; 
+            font-style: var(--style-slogan-philo) !important; 
+            text-transform: var(--transform-slogan-philo) !important; 
+            margin-top: 25px; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--color-texte); 
+        }
+        
+        #sommaire-text { 
+            font-family: var(--font-slogan-projets) !important; 
+            font-size: var(--size-slogan-projets) !important; 
+            font-weight: var(--weight-slogan-projets) !important; 
+            font-style: var(--style-slogan-projets) !important; 
+            text-transform: var(--transform-slogan-projets) !important; 
+            margin-top: 25px; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--color-texte); 
+        }
+        
+        .section-header { display: flex; justify-content: space-between; border-top: 1px solid var(--color-texte); border-bottom: 1px solid var(--color-texte); padding: 4px 0; margin-bottom: 30px; font-family: var(--font-section-header); font-size: var(--size-section-header); font-weight: var(--weight-section-header); text-transform: var(--transform-section-header); font-style: var(--style-section-header); color: var(--color-texte); }
+        .text-block { column-gap: 40px; text-align: justify; margin-bottom: 30px; color: var(--color-texte); font-family: var(--font-body-text); font-size: var(--size-body-text); font-weight: var(--weight-body-text); text-transform: var(--transform-body-text); font-style: var(--style-body-text); }
+        
+        .image-placeholder, .portrait-placeholder { background-color: var(--color-fond); filter: brightness(0.95); background-image: radial-gradient(var(--color-texte) 1px, transparent 1px); background-size: 15px 15px; display: flex; align-items: center; justify-content: center; color: var(--color-texte); text-align: center; overflow: hidden; }
+        .image-placeholder { height: 450px; font-size: 1.63rem; }
+        .portrait-placeholder { height: 400px; font-size: 1.63rem; }
+        .image-placeholder img, .portrait-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* --- COLLINE SPECIFIQUE --- */
         #section-colline .blue-frame { background-color: transparent; border: none; padding: 0; margin-bottom: 25px; }
         #section-colline .image-placeholder { height: auto; background: none; padding: 0; }
         #section-colline .image-placeholder img { width: 100%; height: auto; display: block; }
@@ -540,8 +602,9 @@
     <h1 id="dynamic-h1" class="visually-hidden">Atelier de la Colline</h1>
 
     <div id="intro-screen" onclick="playIntro()">
-        <img id="intro-bg" src="Images/Couverture/1.webp" alt="Atelier de la Colline - Image de couverture" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src='Images/Couverture/1.jpg';}else{this.onerror=null;}">
+        <img id="intro-bg" class="blur-load" onload="this.classList.add('loaded')" src="Images/Couverture/1.webp" alt="Atelier de la Colline - Image de couverture" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src='Images/Couverture/1.jpg';}else{this.onerror=null;}">
         <div id="intro-band"></div>
+        <div id="intro-enter-btn" role="button" tabindex="0" aria-label="Entrer sur le site" onkeydown="if(event.key === 'Enter' || event.key === ' ') { playIntro(); event.stopPropagation(); }">ENTRER</div>
         <div id="intro-logo-container" role="button" tabindex="0" aria-label="Entrer sur le site" onkeydown="if(event.key === 'Enter' || event.key === ' ') { playIntro(); event.stopPropagation(); }">
             <div class="mask-logo"></div>
         </div>
@@ -581,12 +644,12 @@
 
             <h2 class="section-header sort-bar-container" style="margin-bottom: 30px; border-top: none; padding-top: 0; margin-top: 0;">
                 <div>TRIER PAR : 
-                    <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('id')" onkeydown="if(event.key === 'Enter') this.click()">N°</span> | 
-                    <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('titre')" onkeydown="if(event.key === 'Enter') this.click()">TITRE</span> | 
-                    <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('type')" onkeydown="if(event.key === 'Enter') this.click()">TYPE</span> | 
-                    <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('lieu')" onkeydown="if(event.key === 'Enter') this.click()">LIEU</span> | 
-                    <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('annee')" onkeydown="if(event.key === 'Enter') this.click()">ANNÉE</span> <span style="margin: 0 4px;">|</span>
-                    <span class="sort-btn" role="button" tabindex="0" onclick="reverseSort()" onkeydown="if(event.key === 'Enter') this.click()" style="letter-spacing: -2px; font-weight: 900;">↑↓</span>
+                    <span class="sort-btn active-sort" id="sort-btn-id" role="button" tabindex="0" onclick="sortTable('id', this)" onkeydown="if(event.key === 'Enter') this.click()">N°</span> | 
+                    <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('titre', this)" onkeydown="if(event.key === 'Enter') this.click()">TITRE</span> | 
+                    <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('type', this)" onkeydown="if(event.key === 'Enter') this.click()">TYPE</span> | 
+                    <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('lieu', this)" onkeydown="if(event.key === 'Enter') this.click()">LIEU</span> | 
+                    <span class="sort-btn" role="button" tabindex="0" onclick="sortTable('annee', this)" onkeydown="if(event.key === 'Enter') this.click()">ANNÉE</span> <span style="margin: 0 4px;">|</span>
+                    <span class="sort-btn" role="button" tabindex="0" onclick="reverseSort(this)" onkeydown="if(event.key === 'Enter') this.click()" style="letter-spacing: -2px; font-weight: 900;">↑↓</span>
                 </div>
             </h2>
 
@@ -596,10 +659,10 @@
         <div id="section-projet-detail" class="page-section">
             <div id="current-project-container"></div>
             
-            <h2 class="section-header" id="vignettes-header" style="display: none; margin-top: 0;">
-                <div id="vignettes-header-left"></div>
-                <div id="vignettes-header-right"></div>
-            </h2>
+            <div id="vignettes-section-header" style="display: none;">
+                <hr style="border: none; border-top: 1px solid var(--color-texte); margin: 0 0 40px 0;">
+                <div id="nos-autres-projets-title" style="text-align: center; margin-bottom: 40px; font-family: var(--font-nav); font-size: var(--size-nav); font-weight: var(--weight-nav); text-transform: var(--transform-nav); font-style: var(--style-nav); color: var(--color-texte);">NOS AUTRES PROJETS</div>
+            </div>
 
             <div class="vignettes-wrapper" id="bottom-carousel-wrapper" style="display: none;">
                 <div class="click-zone" onclick="moveVignettes(-1)" style="position:relative; width:auto;">
@@ -625,7 +688,7 @@
                 <div class="text-block" id="colline-approche-1"></div>
                 <div id="photo-approche">
                     <div class="blue-frame image-placeholder">
-                        <img src="Images/Approche/photo_approche.webp" alt="Atelier de la Colline - Notre approche et vision de l'architecture" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none';}">
+                        <img src="Images/Approche/photo_approche.webp" class="blur-load" onload="this.classList.add('loaded')" alt="Atelier de la Colline - Notre approche et vision de l'architecture" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none';}">
                     </div>
                 </div>
                 
@@ -670,7 +733,7 @@
                 <div class="arrow-icon icon-right"></div>
             </div>
             
-            <img id="lightbox-img" src="" alt="Image plein écran" style="max-width:100%; max-height:100%; object-fit:contain;" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null;}">
+            <img id="lightbox-img" class="blur-load" onload="this.classList.add('loaded')" src="" alt="Image plein écran" style="max-width:100%; max-height:100%; object-fit:contain;" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null;}">
         </div>
     </div>
     
@@ -696,7 +759,7 @@
         let currentTeamIndex = 0;
         
         let sortDirection = 1;
-        let currentSortColumn = '';
+        let currentSortColumn = 'id';
         
         // HASHES DYNAMIQUES
         let hashBtn1 = 'projets';
@@ -713,14 +776,12 @@
             document.body.style.position = 'fixed';
             document.body.style.top = `-${savedScrollPosition}px`;
             document.body.style.width = '100%';
-            document.body.style.overflowY = 'scroll';
         }
 
         function unlockScroll() {
             document.body.style.position = '';
             document.body.style.top = '';
             document.body.style.width = '';
-            document.body.style.overflowY = '';
             window.scrollTo(0, savedScrollPosition);
         }
 
@@ -784,6 +845,7 @@
             const introScreen = document.getElementById('intro-screen');
             let introBg = document.getElementById('intro-bg');
             const introLogo = document.getElementById('intro-logo-container');
+            const introEnterBtn = document.getElementById('intro-enter-btn');
             const sidebarLogo = document.getElementById('sidebar-logo');
             const introMask = introLogo.querySelector('.mask-logo');
             const introBand = document.getElementById('intro-band');
@@ -799,6 +861,11 @@
             introBand.style.transition = 'none';
             introBand.style.opacity = '0';
             
+            if (introEnterBtn) {
+                introEnterBtn.style.transition = 'none';
+                introEnterBtn.style.opacity = '0';
+            }
+            
             introScreen.style.display = 'flex';
             introScreen.style.backgroundColor = 'transparent'; 
 
@@ -808,6 +875,7 @@
                 const rand = Math.floor(Math.random() * nbCouv) + 1;
                 
                 if (introBg && rand !== 1) {
+                    introBg.classList.remove('loaded');
                     introBg.dataset.tried = '';
                     introBg.src = `Images/Couverture/${rand}.webp`;
                 }
@@ -843,6 +911,11 @@
                     introLogo.style.width = '16.36rem';
                     introMask.classList.remove('align-left');
                     introBand.style.opacity = '1';
+                    
+                    if (introEnterBtn) {
+                        introEnterBtn.style.transition = 'color 0.3s ease, opacity 0.8s ease';
+                        introEnterBtn.style.opacity = '1';
+                    }
 
                     setTimeout(() => {
                         introScreen.style.backgroundColor = 'var(--color-fond)';
@@ -855,6 +928,7 @@
             const introScreen = document.getElementById('intro-screen');
             const introBg = document.getElementById('intro-bg');
             const introLogo = document.getElementById('intro-logo-container');
+            const introEnterBtn = document.getElementById('intro-enter-btn');
             const sidebarLogo = document.getElementById('sidebar-logo');
             const introMask = introLogo.querySelector('.mask-logo');
             const introBand = document.getElementById('intro-band');
@@ -867,6 +941,11 @@
             introLogo.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), width 0.8s';
             introMask.style.transition = 'background-color 0.3s ease, -webkit-mask-position 0.8s cubic-bezier(0.25, 1, 0.5, 1), mask-position 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
             introBand.style.transition = 'opacity 0.5s ease';
+            
+            if (introEnterBtn) {
+                introEnterBtn.style.transition = 'color 0.3s ease, opacity 0.5s ease';
+                introEnterBtn.style.opacity = '0';
+            }
 
             const sRect = sidebarLogo.getBoundingClientRect();
             const iRect = introLogo.getBoundingClientRect();
@@ -1085,7 +1164,8 @@
                     }
                 }
                 if (html !== '') {
-                    document.querySelectorAll('.social-links').forEach(el => el.innerHTML = html);
+                    document.getElementById('social-links-desktop').innerHTML = html;
+                    document.getElementById('social-links-mobile').innerHTML = html;
                 }
             }).catch(e => console.log("Fichier reseaux.txt non trouvé."));
         }
@@ -1107,7 +1187,7 @@
                         <div class="team-member" id="team-member-${indexProfil}" role="button" tabindex="0" onclick="openTeamLightbox(${indexArray})" onkeydown="if(event.key === 'Enter' || event.key === ' ') openTeamLightbox(${indexArray})">
                             <div class="blue-frame">
                                 <div class="portrait-placeholder">
-                                    <img src="Images/Equipe/Profil_${indexProfil}.webp" alt="Portrait de ${name}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none'; this.parentNode.innerHTML='PHOTO ${indexProfil}';}">
+                                    <img src="Images/Equipe/Profil_${indexProfil}.webp" class="blur-load" onload="this.classList.add('loaded')" alt="Portrait de ${name}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none'; this.parentNode.innerHTML='PHOTO ${indexProfil}';}">
                                 </div>
                             </div>
                             <div class="member-name">${name}</div>
@@ -1190,6 +1270,7 @@
                     if (introBg && nbCouv > 1 && window.location.hash.replace('#', '') === '') {
                         const rand = Math.floor(Math.random() * nbCouv) + 1;
                         if (rand !== 1) {
+                            introBg.classList.remove('loaded');
                             introBg.dataset.tried = '';
                             introBg.src = `Images/Couverture/${rand}.webp`;
                         }
@@ -1219,6 +1300,7 @@
                             });
                         }
                     });
+                    document.getElementById('sort-btn-id').classList.add('active-sort');
                     renderProjectsGrid(); 
                     renderVignettesCarousel();
                 }
@@ -1312,7 +1394,7 @@
                 grid.innerHTML += `
                     <div class="project-card" role="button" tabindex="0" onclick="showProject('${p.id}')" onkeydown="if(event.key === 'Enter' || event.key === ' ') showProject('${p.id}')">
                         <div class="card-img-wrapper">
-                            <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.webp" alt="Projet ${p.titre}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none';}">
+                            <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.webp" class="blur-load" onload="this.classList.add('loaded')" alt="Projet ${p.titre}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none';}">
                         </div>
                         <div class="card-info">
                             <div class="card-title-line">
@@ -1324,13 +1406,19 @@
             });
         }
 
-        function reverseSort() {
+        function reverseSort(btnElement) {
+            document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active-sort'));
+            if(btnElement) btnElement.classList.add('active-sort');
+            
             sortDirection *= -1;
             allProjects.reverse();
             renderProjectsGrid();
         }
 
-        function sortTable(column) {
+        function sortTable(column, btnElement) {
+            document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active-sort'));
+            if(btnElement) btnElement.classList.add('active-sort');
+
             if (currentSortColumn === column) {
                 sortDirection *= -1; 
             } else {
@@ -1363,7 +1451,7 @@
             for (let i = 0; i < p.nbImages; i++) {
                 slidesHtml += `
                     <div class="slide">
-                        <img src="Images/Projet/Projet ${p.id}/${i}.webp" alt="Architecture ${p.titre} - Photo ${i + 1}" loading="lazy" 
+                        <img src="Images/Projet/Projet ${p.id}/${i}.webp" class="blur-load" onload="this.classList.add('loaded')" alt="Architecture ${p.titre} - Photo ${i + 1}" loading="lazy" 
                              onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.parentElement.remove();}"
                              onclick="openLightbox(${i})" style="cursor: zoom-in;" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') openLightbox(${i})">
                     </div>`;
@@ -1374,7 +1462,7 @@
                 <article class="project" id="project-${p.id}">
                     <h2 class="project-header"><div>${p.id}</div><div>${p.titre}</div><div>${p.type}</div><div>${p.lieu}</div><div>${p.annee}</div></h2>
                     
-                    <div class="carousel-viewport" style="margin-bottom:15px;" data-current-index="0" data-is-animating="false">
+                    <div class="carousel-viewport" style="margin-bottom:40px;" data-current-index="0" data-is-animating="false">
                         <div class="click-zone zone-left" onclick="moveCarousel(this, -1)">
                             <div class="arrow-icon icon-left"></div>
                         </div>
@@ -1438,6 +1526,7 @@
             if(!p) return;
             const lbImg = document.getElementById('lightbox-img');
             
+            lbImg.classList.remove('loaded');
             lbImg.dataset.tried = ''; 
             lbImg.src = `Images/Projet/Projet ${p.id}/${currentLightboxIndex}.webp`;
         }
@@ -1478,7 +1567,7 @@
                     </div>
                     
                     <div class="portrait-placeholder" style="width: 100%; max-width: 300px; aspect-ratio: 1 / 1; background: transparent;">
-                        <img src="Images/Equipe/Profil_${member.index}.webp" alt="Portrait de ${member.name}" style="object-fit: cover; width: 100%; height: 100%;" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none'; this.parentNode.innerHTML='PHOTO ${member.index}';}">
+                        <img src="Images/Equipe/Profil_${member.index}.webp" class="blur-load" onload="this.classList.add('loaded')" alt="Portrait de ${member.name}" style="object-fit: cover; width: 100%; height: 100%;" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none'; this.parentNode.innerHTML='PHOTO ${member.index}';}">
                     </div>
                     
                     <div class="click-zone-inline" role="button" tabindex="0" onclick="moveTeamLightbox(1); event.stopPropagation();" onkeydown="if(event.key === 'Enter') { moveTeamLightbox(1); event.stopPropagation(); }">
@@ -1514,18 +1603,18 @@
             
             if(otherProjects.length === 0) {
                 wrapper.style.display = 'none';
-                document.getElementById('vignettes-header').style.display = 'none';
+                document.getElementById('vignettes-section-header').style.display = 'none';
                 return;
             }
             
             wrapper.style.display = 'flex';
-            document.getElementById('vignettes-header').style.display = 'flex';
+            document.getElementById('vignettes-section-header').style.display = 'block';
 
             otherProjects.forEach(p => {
                 track.innerHTML += `
                     <div class="vignette-slide" role="button" tabindex="0" onclick="showProject('${p.id}')" onkeydown="if(event.key === 'Enter' || event.key === ' ') showProject('${p.id}')">
                         <div class="vignette-img-container">
-                            <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.webp" alt="Parcourir le projet ${p.titre}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.closest('.vignette-slide').remove();}">
+                            <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.webp" class="blur-load" onload="this.classList.add('loaded')" alt="Parcourir le projet ${p.titre}" loading="lazy" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.closest('.vignette-slide').remove();}">
                         </div>
                     </div>`;
             });
@@ -1656,3 +1745,5 @@
     </script>
 </body>
 </html>
+
+```
