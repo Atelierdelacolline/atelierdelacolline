@@ -1,3 +1,10 @@
+C'est le meilleur choix ! L'utilisation d'une image carrée dédiée garantira un affichage parfait dans l'onglet du navigateur, sans déformation.
+
+Voici le code final mis à jour. J'ai ajouté la balise de favicon dans l'en-tête (`<head>`) du document pour qu'elle pointe vers `Images/Icones/favicon.png`.
+
+**N'oubliez pas d'ajouter votre nouvelle image `favicon.png` (idéalement en 512x512 pixels) dans votre dossier `Images/Icones/` sur GitHub pour que cela fonctionne.**
+
+```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,6 +14,9 @@
     <title>Atelier de la Colline - Architectes</title>
     <meta name="description" id="meta-desc" content="">
     <meta name="keywords" id="meta-keywords" content="">
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="Images/Icones/favicon.png">
     
     <link rel="preload" href="Typo/Lato/Lato-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="Typo/Lato/Lato-Bold.ttf" as="font" type="font/ttf" crossorigin>
