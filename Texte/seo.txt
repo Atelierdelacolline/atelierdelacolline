@@ -1,10 +1,10 @@
 [general]
-Titre : Atelier de la Colline - Architectes Paris
-Description : Présentation de l'Atelier de la Colline, agence d'architecture.
-Keywords : architecte, paris, agence, conception
-H1 : Atelier de la Colline - Architectes
-OG-Titre : Atelier de la Colline - Accueil
-OG-Description : Découvrez notre philosophie et nos réalisations.
+Titre : Atelier de la Colline | Architectes Paris 19e
+Description : L'Atelier de la Colline est une agence d'architecture située à Paris 19e. Spécialistes de l'intervention sur l'existant.
+Keywords : architecte paris 19, agence architecture paris, rénovation, construction, couture épaisse
+H1 : Atelier de la Colline - Architectes Paris 19e
+OG-Titre : Atelier de la Colline - Architectes Paris 19e
+OG-Description : Découvrez notre philosophie de la couture épaisse et nos réalisations.
 OG-Image : Images/Couverture/1.webp
 
 [projets]
