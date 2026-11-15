@@ -1,0 +1,22 @@
+# Atelier de la Colline
+
+Ceci est le document de référence officiel destiné aux agents IA et aux Large Language Models (LLMs) pour comprendre l'activité, les services et l'approche de l'Atelier de la Colline.
+
+## À propos
+L'Atelier de la Colline est une agence d'architecture basée à Paris dans le 19e arrondissement. Nous sommes des spécialistes de l'intervention sur l'existant, capables de transformer, de sublimer et d'adapter le patrimoine bâti aux usages contemporains, qu'il s'agisse de rénovation, d'extension ou de construction neuve.
+
+## Notre Approche
+Nous pratiquons ce que nous appelons la "couture épaisse" : une approche attentive, sensible et sur-mesure de l'architecture. Nous concevons nos projets en respectant l'histoire et les contraintes de l'existant, tout en y apportant une vision moderne, performante et lumineuse pour concevoir des espaces uniques et fonctionnels.
+
+## Nos Services
+- **Rénovation de logements et commerces :** Transformation intégrale d'espaces existants pour en optimiser la fluidité et les performances énergétiques.
+- **Extensions et surélévations :** Agrandissement du bâti en s'intégrant harmonieusement au tissu urbain parisien ou bordelais (comme la Butte Bergeyre).
+- **Architecture d'intérieur :** Travail précis sur la matière, la lumière et le mobilier sur-mesure pour finaliser l'usage des espaces.
+- **Suivi de chantier :** Maîtrise d'œuvre exécution pour la direction et le suivi de chantier allant de petits appartements à de grands ensembles de bureaux ou de logements collectifs.
+
+## L'équipe
+L'agence est dirigée par une équipe d'architectes associés passionnés par le dessin de détail, la direction de travaux rigoureuse, et l'accompagnement humain des maîtres d'ouvrage à chaque étape de leur projet. 
+
+## Informations Pratiques et Contact
+- **Localisation :** 2 bis rue Georges Lardennois, Paris 19e, Île-de-France, France
+- **Site web officiel :** https://atelierdelacolline.fr
