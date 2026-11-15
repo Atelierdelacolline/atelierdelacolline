@@ -58,10 +58,11 @@
             --sidebar-width: clamp(250px, calc((100vw - 1500px) / 2), 600px);
         }
 
-        @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Light.ttf') format('truetype'); font-weight: 300; }
-        @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Regular.ttf') format('truetype'); font-weight: 400; }
-        @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Bold.ttf') format('truetype'); font-weight: 700; }
-        @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Black.ttf') format('truetype'); font-weight: 900; }
+        /* AJOUT CLS : font-display swap pour afficher le texte immédiatement sans saut visuel */
+        @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Light.ttf') format('truetype'); font-weight: 300; font-display: swap; }
+        @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+        @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+        @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Black.ttf') format('truetype'); font-weight: 900; font-display: swap; }
 
         html { font-size: 11px; } 
 
@@ -74,83 +75,30 @@
         
         body.no-scroll { overflow: hidden !important; height: 100vh; height: 100dvh; }
 
-        .blur-load {
-            filter: blur(10px);
-            transition: filter 0.5s ease-in-out;
-            will-change: filter;
-        }
-        .blur-load.loaded {
-            filter: blur(0);
-        }
+        .blur-load { filter: blur(10px); transition: filter 0.5s ease-in-out; will-change: filter; }
+        .blur-load.loaded { filter: blur(0); }
 
-        #intro-screen {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100vh; height: 100dvh; z-index: 9999;
-            background-color: var(--color-fond); cursor: pointer; overflow: hidden; display: flex;
-        }
-        #intro-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+        #intro-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100vh; height: 100dvh; z-index: 9999; background-color: var(--color-fond); cursor: pointer; overflow: hidden; display: flex; }
+        #intro-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
         
-        #intro-band {
-            position: absolute; top: 0; left: 0; width: 100%;
-            height: calc(40px + 3.27rem);
-            background-color: rgba(255, 255, 255, 0.7); 
-            z-index: 1; transition: opacity 0.8s;
-        }
+        #intro-band { position: absolute; top: 0; left: 0; width: 100%; height: calc(40px + 3.27rem); background-color: rgba(255, 255, 255, 0.7); z-index: 1; transition: opacity 0.8s; }
 
-        #intro-logo-container {
-            position: absolute; right: 30px; top: 20px;
-            width: 16.36rem; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), width 0.8s;
-            cursor: pointer; z-index: 2;
-        }
-        
+        #intro-logo-container { position: absolute; right: 30px; top: 20px; width: 16.36rem; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), width 0.8s; cursor: pointer; z-index: 2; }
         #intro-logo-container:focus { outline: none; }
         #intro-logo-container:focus-visible { outline: 2px solid var(--color-action); outline-offset: 8px; }
 
-        #intro-enter-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            font-family: var(--font-nav);
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--color-texte);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: color 0.3s ease, opacity 0.8s ease;
-        }
+        #intro-enter-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; font-family: var(--font-nav); font-size: 2rem; font-weight: 700; color: var(--color-texte); letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: color 0.3s ease, opacity 0.8s ease; }
         #intro-enter-btn:focus { outline: none; }
-        #intro-enter-btn:hover, #intro-enter-btn:focus-visible {
-            color: var(--color-action);
-        }
+        #intro-enter-btn:hover, #intro-enter-btn:focus-visible { color: var(--color-action); }
         
         #sidebar-logo:focus { outline: none; }
         #sidebar-logo:focus-visible { outline: 2px solid var(--color-action); outline-offset: 8px; }
 
-        .mask-logo {
-            width: 100%; height: auto; aspect-ratio: 5/1;
-            background-color: var(--color-texte); 
-            -webkit-mask-image: url('Images/Icones/logo.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat;
-            mask-image: url('Images/Icones/logo.png'); mask-size: contain; mask-repeat: no-repeat;
-            transition: background-color 0.3s ease, -webkit-mask-position 0.8s cubic-bezier(0.25, 1, 0.5, 1), mask-position 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+        .mask-logo { width: 100%; height: auto; aspect-ratio: 5/1; background-color: var(--color-texte); -webkit-mask-image: url('Images/Icones/logo.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; mask-image: url('Images/Icones/logo.png'); mask-size: contain; mask-repeat: no-repeat; transition: background-color 0.3s ease, -webkit-mask-position 0.8s cubic-bezier(0.25, 1, 0.5, 1), mask-position 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
         
-        #sidebar-logo .mask-logo {
-            -webkit-mask-position: left center;
-            mask-position: left center;
-        }
-        #intro-logo-container .mask-logo {
-            -webkit-mask-position: right center;
-            mask-position: right center;
-        }
-        #intro-logo-container .mask-logo.align-left {
-            -webkit-mask-position: left center !important;
-            mask-position: left center !important;
-        }
+        #sidebar-logo .mask-logo { -webkit-mask-position: left center; mask-position: left center; }
+        #intro-logo-container .mask-logo { -webkit-mask-position: right center; mask-position: right center; }
+        #intro-logo-container .mask-logo.align-left { -webkit-mask-position: left center !important; mask-position: left center !important; }
 
         .expandable-wrapper { position: relative; }
         .expandable-content { overflow: hidden; transition: max-height 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
@@ -194,28 +142,15 @@
 
             .desktop-only { display: none !important; }
             .mobile-only { display: block; }
-            .mobile-footer { width: 100%; max-width: 100%; margin: 0; padding: 0 20px 40px 20px; }
             
-            .project-card:hover { 
-                transform: none !important; 
-                border-color: var(--color-texte) !important; 
-            }
-            .project-card:focus-visible { 
-                transform: translateY(-5px) !important; 
-                border-color: var(--color-action) !important; 
-            }
+            /* AJOUT CLS : min-height pour réserver l'espace du footer et éviter le saut */
+            .mobile-footer { width: 100%; max-width: 100%; margin: 0; padding: 0 20px 40px 20px; min-height: 120px; }
             
-            .carousel-viewport, .vignettes-viewport { 
-                overflow: hidden !important; 
-                width: 100%; 
-                min-width: 0; 
-                max-width: 100vw; 
-            }
-            .carousel-track, .vignettes-track {
-                width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden;
-                scroll-snap-type: x mandatory; scroll-behavior: smooth;
-                -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap;
-            }
+            .project-card:hover { transform: none !important; border-color: var(--color-texte) !important; }
+            .project-card:focus-visible { transform: translateY(-5px) !important; border-color: var(--color-action) !important; }
+            
+            .carousel-viewport, .vignettes-viewport { overflow: hidden !important; width: 100%; min-width: 0; max-width: 100vw; }
+            .carousel-track, .vignettes-track { width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap; }
             .carousel-track::-webkit-scrollbar, .vignettes-track::-webkit-scrollbar { display: none; }
             .slide { scroll-snap-align: center; flex: 0 0 100%; width: 100%; max-width: 100%; }
             .vignette-slide { scroll-snap-align: center; flex: 0 0 75%; max-width: 75%; }
@@ -250,15 +185,7 @@
         
         .info-block { margin-bottom: 40px; color: var(--color-texte); font-family: var(--font-contact); font-size: var(--size-contact); font-weight: var(--weight-contact); text-transform: var(--transform-contact); font-style: var(--style-contact); }
         
-        .copyright { 
-            margin-top: 20px; 
-            font-family: var(--font-copyright); 
-            font-size: var(--size-copyright); 
-            font-weight: var(--weight-copyright); 
-            text-transform: var(--transform-copyright); 
-            font-style: var(--style-copyright); 
-            color: var(--color-texte); 
-        }
+        .copyright { margin-top: 20px; font-family: var(--font-copyright); font-size: var(--size-copyright); font-weight: var(--weight-copyright); text-transform: var(--transform-copyright); font-style: var(--style-copyright); color: var(--color-texte); }
 
         .social-links { display: flex; gap: 15px; flex-wrap: wrap; }
         .desktop-only .social-links { padding-top: 40px; margin-bottom: 20px; }
@@ -266,125 +193,42 @@
         .social-links a { text-decoration: none; color: var(--color-texte); border: 5px solid var(--color-texte); padding: 4px 8px; font-family: var(--font-social); font-size: var(--size-social); font-weight: var(--weight-social); text-transform: var(--transform-social); font-style: var(--style-social); transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
         .social-links a:active, .social-links a:focus-visible { background-color: var(--color-action); color: var(--color-fond); border-color: var(--color-action); outline: none;}
 
-        .sort-bar-container {
-            font-family: var(--font-sort-bar) !important;
-            font-size: var(--size-sort-bar) !important;
-            font-weight: var(--weight-sort-bar) !important;
-            text-transform: var(--transform-sort-bar) !important;
-            font-style: var(--style-sort-bar) !important;
-        }
+        .sort-bar-container { font-family: var(--font-sort-bar) !important; font-size: var(--size-sort-bar) !important; font-weight: var(--weight-sort-bar) !important; text-transform: var(--transform-sort-bar) !important; font-style: var(--style-sort-bar) !important; }
         .sort-btn { cursor: pointer; transition: color 0.3s ease; margin: 0 4px; }
         .sort-btn.active-sort { color: var(--color-action); }
         .sort-btn:focus-visible { color: var(--color-action); outline: none; }
 
         .projects-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; margin-bottom: 80px; }
         
-        .project-card { 
-            display: flex; flex-direction: column; 
-            background-color: #ffffff; 
-            border: none; 
-            padding: 15px; 
-            cursor: pointer; 
-            transition: transform 0.3s ease, border-color 0.3s ease; 
-            min-width: 0; 
-        }
+        .project-card { display: flex; flex-direction: column; background-color: #ffffff; border: none; padding: 15px; cursor: pointer; transition: transform 0.3s ease, border-color 0.3s ease; min-width: 0; }
         .project-card:focus { outline: none; }
-        .project-card:focus-visible { 
-            transform: translateY(-5px); 
-            border-color: var(--color-action); 
-        }
+        .project-card:focus-visible { transform: translateY(-5px); border-color: var(--color-action); }
         
-        .card-img-wrapper { 
-            width: 100%; aspect-ratio: 1/1; 
-            overflow: hidden; 
-            border: none; 
-            margin-bottom: 15px; 
-            background-color: var(--color-fond); 
-        }
-        .card-img-wrapper img { 
-            width: 100%; height: 100%; object-fit: cover; 
-            display: block; 
-        }
+        .card-img-wrapper { width: 100%; aspect-ratio: 1/1; overflow: hidden; border: none; margin-bottom: 15px; background-color: var(--color-fond); }
+        .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        .card-info { 
-            display: flex; flex-direction: column; color: var(--color-texte);
-        }
+        .card-info { display: flex; flex-direction: column; color: var(--color-texte); }
         
-        .card-title-line { 
-            display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
-            border-bottom: 1px solid var(--color-texte); 
-            padding-bottom: 6px; margin-bottom: 6px; 
-            font-family: var(--font-project-sub); font-size: calc(var(--size-project-sub) * 0.85); font-weight: var(--weight-project-sub); text-transform: var(--transform-project-sub);
-        }
-        .card-title-text {
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
+        .card-title-line { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--color-texte); padding-bottom: 6px; margin-bottom: 6px; font-family: var(--font-project-sub); font-size: calc(var(--size-project-sub) * 0.85); font-weight: var(--weight-project-sub); text-transform: var(--transform-project-sub); }
+        .card-title-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-title-line .card-id { color: var(--color-action); font-size: 1.1em; flex-shrink: 0; }
         
-        .card-line { 
-            display: flex; justify-content: space-between; 
-            border-bottom: 1px dotted rgba(0,0,0,0.2); 
-            padding: 4px 0; 
-        }
+        .card-line { display: flex; justify-content: space-between; border-bottom: 1px dotted rgba(0,0,0,0.2); padding: 4px 0; }
         .card-line:last-child { border-bottom: none; padding-bottom: 0; }
         
-        .card-label { 
-            font-family: var(--font-card-label) !important;
-            font-size: var(--size-card-label) !important;
-            font-weight: var(--weight-card-label) !important;
-            text-transform: var(--transform-card-label) !important;
-            font-style: var(--style-card-label) !important;
-            padding-right: 10px; flex-shrink: 0; 
-        }
+        .card-label { font-family: var(--font-card-label) !important; font-size: var(--size-card-label) !important; font-weight: var(--weight-card-label) !important; text-transform: var(--transform-card-label) !important; font-style: var(--style-card-label) !important; padding-right: 10px; flex-shrink: 0; }
         
-        .card-value { 
-            font-family: var(--font-card-value) !important;
-            font-size: var(--size-card-value) !important;
-            font-weight: var(--weight-card-value) !important;
-            text-transform: var(--transform-card-value) !important;
-            font-style: var(--style-card-value) !important;
-            text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 65%; 
-        }
+        .card-value { font-family: var(--font-card-value) !important; font-size: var(--size-card-value) !important; font-weight: var(--weight-card-value) !important; text-transform: var(--transform-card-value) !important; font-style: var(--style-card-value) !important; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 65%; }
 
-        .card-subtitle-line {
-            display: flex; justify-content: flex-start; align-items: flex-start;
-            border-bottom: 1px dotted rgba(0,0,0,0.2); 
-            padding: 4px 0; 
-        }
+        .card-subtitle-line { display: flex; justify-content: flex-start; align-items: flex-start; border-bottom: 1px dotted rgba(0,0,0,0.2); padding: 4px 0; }
         
-        .card-value-subtitle {
-            white-space: normal; 
-            display: -webkit-box;
-            -webkit-line-clamp: 2; 
-            line-clamp: 2; 
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-            text-align: left;
-            line-height: 1.3;
-            height: calc(1.3em * 2); 
-        }
+        .card-value-subtitle { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; max-width: 100%; text-align: left; line-height: 1.3; height: calc(1.3em * 2); }
 
         .blue-frame { background-color: var(--color-cadre); padding: 5px; position: relative; margin-bottom: 15px; transition: background-color 0.3s; }
         
-        #colline-philo { 
-            font-family: var(--font-slogan-philo) !important; 
-            font-size: var(--size-slogan-philo) !important; 
-            font-weight: var(--weight-slogan-philo) !important; 
-            font-style: var(--style-slogan-philo) !important; 
-            text-transform: var(--transform-slogan-philo) !important; 
-            margin-top: 25px; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--color-texte); 
-        }
+        #colline-philo { font-family: var(--font-slogan-philo) !important; font-size: var(--size-slogan-philo) !important; font-weight: var(--weight-slogan-philo) !important; font-style: var(--style-slogan-philo) !important; text-transform: var(--transform-slogan-philo) !important; margin-top: 25px; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--color-texte); }
         
-        #sommaire-text { 
-            font-family: var(--font-slogan-projets) !important; 
-            font-size: var(--size-slogan-projets) !important; 
-            font-weight: var(--weight-slogan-projets) !important; 
-            font-style: var(--style-slogan-projets) !important; 
-            text-transform: var(--transform-slogan-projets) !important; 
-            margin-top: 25px; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--color-texte); 
-        }
+        #sommaire-text { font-family: var(--font-slogan-projets) !important; font-size: var(--size-slogan-projets) !important; font-weight: var(--weight-slogan-projets) !important; font-style: var(--style-slogan-projets) !important; text-transform: var(--transform-slogan-projets) !important; margin-top: 25px; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--color-texte); }
         
         .section-header { display: flex; justify-content: space-between; border-top: 1px solid var(--color-texte); border-bottom: 1px solid var(--color-texte); padding: 4px 0; margin-bottom: 30px; font-family: var(--font-section-header); font-size: var(--size-section-header); font-weight: var(--weight-section-header); text-transform: var(--transform-section-header); font-style: var(--style-section-header); color: var(--color-texte); }
         .text-block { column-gap: 40px; text-align: justify; margin-bottom: 30px; color: var(--color-texte); font-family: var(--font-body-text); font-size: var(--size-body-text); font-weight: var(--weight-body-text); text-transform: var(--transform-body-text); font-style: var(--style-body-text); }
@@ -420,11 +264,7 @@
 
         .back-btn-container { display: flex; justify-content: center; margin-top: 40px; margin-bottom: 40px; }
         
-        .back-btn {
-            text-decoration: none; cursor: pointer; color: var(--color-texte); border: 5px solid var(--color-texte); padding: 8px 16px;
-            font-family: var(--font-btn-retour) !important; font-size: var(--size-btn-retour) !important; font-weight: var(--weight-btn-retour) !important; text-transform: var(--transform-btn-retour) !important; font-style: var(--style-btn-retour) !important;
-            transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-        }
+        .back-btn { text-decoration: none; cursor: pointer; color: var(--color-texte); border: 5px solid var(--color-texte); padding: 8px 16px; font-family: var(--font-btn-retour) !important; font-size: var(--size-btn-retour) !important; font-weight: var(--weight-btn-retour) !important; text-transform: var(--transform-btn-retour) !important; font-style: var(--style-btn-retour) !important; transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
 
         .back-btn:focus { outline: none; }
         .back-btn:focus-visible { background-color: var(--color-action); color: var(--color-fond); border-color: var(--color-action); outline: none; }
@@ -439,76 +279,28 @@
         .vignette-img-container img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
         .vignette-slide:focus-visible .vignette-img-container img { transform: scale(1.05); }
 
-        .lightbox {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 10000; display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
-        }
-        .lightbox.active {
-            opacity: 1; pointer-events: auto;
-        }
-        .lightbox-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            cursor: pointer;
-        }
-        .lightbox-content {
-            position: relative; z-index: 10001; 
-            width: 90vw; height: 90vh; 
-            display: flex; align-items: center; justify-content: center;
-            transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .lightbox.active .lightbox-content {
-            transform: scale(1);
-        }
-        .lightbox .arrow-icon {
-            background-color: #ffffff; 
-        }
+        .lightbox { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+        .lightbox.active { opacity: 1; pointer-events: auto; }
+        .lightbox-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); cursor: pointer; }
+        .lightbox-content { position: relative; z-index: 10001; width: 90vw; height: 90vh; display: flex; align-items: center; justify-content: center; transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        .lightbox.active .lightbox-content { transform: scale(1); }
+        .lightbox .arrow-icon { background-color: #ffffff; }
         
-        .lightbox .close-btn {
-            position: absolute; 
-            top: -3rem; 
-            right: 10px; 
-            z-index: 10005; cursor: pointer;
-            width: 1.75rem; height: 1.75rem; 
-        }
+        .lightbox .close-btn { position: absolute; top: -3rem; right: 10px; z-index: 10005; cursor: pointer; width: 1.75rem; height: 1.75rem; }
         
-        .lightbox .icon-close {
-            width: 100%; height: 100%; background-color: #ffffff;
-            -webkit-mask-image: url('Images/Icones/croix.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
-            mask-image: url('Images/Icones/croix.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;
-            transition: background-color 0.3s ease;
-        }
+        .lightbox .icon-close { width: 100%; height: 100%; background-color: #ffffff; -webkit-mask-image: url('Images/Icones/croix.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('Images/Icones/croix.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center; transition: background-color 0.3s ease; }
         
         .lightbox .close-btn:focus { outline: none; }
         .lightbox .close-btn:focus-visible .icon-close,
-        .lightbox .click-zone:focus-visible .arrow-icon {
-            background-color: var(--color-action);
-        }
+        .lightbox .click-zone:focus-visible .arrow-icon { background-color: var(--color-action); }
 
-        .team-lightbox-content {
-            position: relative; z-index: 10001; 
-            width: 90vw; height: 90vh; 
-            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-            transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .lightbox.active .team-lightbox-content {
-            transform: scale(1);
-        }
-        .team-lightbox-card {
-            width: 100%; height: 100%; max-height: 100%;
-            overflow-y: auto; padding: 20px;
-            display: flex; flex-direction: column; align-items: center;
-            scrollbar-width: none; -ms-overflow-style: none;
-        }
+        .team-lightbox-content { position: relative; z-index: 10001; width: 90vw; height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        .lightbox.active .team-lightbox-content { transform: scale(1); }
+        .team-lightbox-card { width: 100%; height: 100%; max-height: 100%; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; align-items: center; scrollbar-width: none; -ms-overflow-style: none; }
         .team-lightbox-card::-webkit-scrollbar { display: none; }
         
-        .team-lightbox-card .member-name {
-            font-family: var(--font-team-name); font-size: var(--size-team-name); font-weight: var(--weight-team-name); text-transform: var(--transform-team-name); font-style: var(--style-team-name); border-bottom: 1px solid #ffffff; padding-bottom: 5px; margin-bottom: 15px; color: #ffffff; width: 100%; text-align: left;
-        }
-        .team-lightbox-card .member-cv {
-            font-family: var(--font-cv); font-size: var(--size-cv); font-weight: var(--weight-cv); text-transform: var(--transform-cv); font-style: var(--style-cv); color: #ffffff; width: 100%; text-align: justify;
-        }
+        .team-lightbox-card .member-name { font-family: var(--font-team-name); font-size: var(--size-team-name); font-weight: var(--weight-team-name); text-transform: var(--transform-team-name); font-style: var(--style-team-name); border-bottom: 1px solid #ffffff; padding-bottom: 5px; margin-bottom: 15px; color: #ffffff; width: 100%; text-align: left; }
+        .team-lightbox-card .member-cv { font-family: var(--font-cv); font-size: var(--size-cv); font-weight: var(--weight-cv); text-transform: var(--transform-cv); font-style: var(--style-cv); color: #ffffff; width: 100%; text-align: justify; }
 
         @media (hover: hover) {
             #sidebar-logo:hover .mask-logo { background-color: var(--color-action); }
@@ -567,7 +359,8 @@
     </script>
 
     <aside class="sidebar">
-        <a id="sidebar-logo" role="button" tabindex="0" onclick="showIntro()" onkeydown="if(event.key === 'Enter') showIntro()"><div class="mask-logo"></div></a>
+        <!-- aria-label "Retour à l'accueil" -->
+        <a id="sidebar-logo" role="button" tabindex="0" aria-label="Retour à l'accueil" onclick="showIntro()" onkeydown="if(event.key === 'Enter') showIntro()"><div class="mask-logo"></div></a>
         
         <nav class="main-nav">
             <a id="nav-projets" role="button" tabindex="0" onkeydown="if(event.key === 'Enter') this.click()">PROJETS</a>
@@ -645,7 +438,8 @@
                     <div class="expandable-content text-expandable-content">
                         <div class="text-block" style="margin-top: 20px;" id="colline-approche-2"></div>
                     </div>
-                    <div class="expand-overlay mobile-only" role="button" tabindex="0" onclick="toggleSection(this)" onkeydown="if(event.key === 'Enter') toggleSection(this)">
+                    <!-- AJOUT A11Y : aria-label pour la zone de développement mobile -->
+                    <div class="expand-overlay mobile-only" role="button" tabindex="0" aria-label="Développer la section" onclick="toggleSection(this)" onkeydown="if(event.key === 'Enter') toggleSection(this)">
                         <div class="expand-gradient"></div>
                         <div class="expand-btn solid-bg">
                             <div class="arrow-icon icon-down"></div>
@@ -671,14 +465,14 @@
     <div id="lightbox" class="lightbox" aria-hidden="true">
         <div class="lightbox-overlay" onclick="closeLightbox()"></div>
         <div class="lightbox-content">
-            <div class="close-btn" role="button" tabindex="0" aria-label="Fermer" onclick="closeLightbox()" onkeydown="if(event.key === 'Enter') closeLightbox()">
+            <div class="close-btn" role="button" tabindex="-1" aria-label="Fermer" onclick="closeLightbox()" onkeydown="if(event.key === 'Enter') closeLightbox()">
                 <div class="icon-close"></div>
             </div>
             
-            <div class="click-zone zone-left" role="button" tabindex="0" aria-label="Image précédente" onclick="moveLightbox(-1)" onkeydown="if(event.key === 'Enter') moveLightbox(-1)">
+            <div class="click-zone zone-left" role="button" tabindex="-1" aria-label="Image précédente" onclick="moveLightbox(-1)" onkeydown="if(event.key === 'Enter') moveLightbox(-1)">
                 <div class="arrow-icon icon-left"></div>
             </div>
-            <div class="click-zone zone-right" role="button" tabindex="0" aria-label="Image suivante" onclick="moveLightbox(1)" onkeydown="if(event.key === 'Enter') moveLightbox(1)">
+            <div class="click-zone zone-right" role="button" tabindex="-1" aria-label="Image suivante" onclick="moveLightbox(1)" onkeydown="if(event.key === 'Enter') moveLightbox(1)">
                 <div class="arrow-icon icon-right"></div>
             </div>
             
@@ -690,7 +484,7 @@
     <div id="team-lightbox" class="lightbox" aria-hidden="true">
         <div class="lightbox-overlay" onclick="closeTeamLightbox()"></div>
         <div class="team-lightbox-content">
-            <div class="close-btn" role="button" tabindex="0" aria-label="Fermer" onclick="closeTeamLightbox()" onkeydown="if(event.key === 'Enter') closeTeamLightbox()">
+            <div class="close-btn" role="button" tabindex="-1" aria-label="Fermer" onclick="closeTeamLightbox()" onkeydown="if(event.key === 'Enter') closeTeamLightbox()">
                 <div class="icon-close"></div>
             </div>
             
@@ -710,7 +504,6 @@
         let sortDirection = 1;
         let currentSortColumn = 'id';
         
-        // HASHES DYNAMIQUES
         let hashBtn1 = 'projets';
         let hashBtn2 = 'colline';
         
@@ -828,7 +621,7 @@
                     introBg.dataset.tried = '';
                     introBg.src = `Images/Couverture/${rand}.webp`;
                 }
-            }).catch(e => { /* Laisse l'image par defaut 1.webp */ });
+            }).catch(e => {});
 
             introLogo.style.transform = 'none'; 
             introLogo.style.width = '16.36rem'; 
@@ -1145,7 +938,8 @@
                                 <div class="expandable-content cv-content">
                                     <div class="member-cv">${bio.replace(/\n/g, '<br>')}</div>
                                 </div>
-                                <div class="expand-overlay mobile-only">
+                                <!-- AJOUT A11Y : rôle, tabindex et events pour la zone de developpement mobile -->
+                                <div class="expand-overlay mobile-only" role="button" tabindex="0" aria-label="Développer la section" onclick="toggleSection(this); event.stopPropagation();" onkeydown="if(event.key === 'Enter') { toggleSection(this); event.stopPropagation(); }">
                                     <div class="expand-gradient"></div>
                                     <div class="expand-btn">
                                         <div class="arrow-icon icon-down"></div>
@@ -1444,13 +1238,18 @@
             if(p.sousTitre) document.getElementById('og-desc').setAttribute('content', p.sousTitre);
         }
 
+        // CORRECTIF A11Y : Gestion dynamique complète du tabindex pour les lightboxes
         function openLightbox(index) {
             currentLightboxIndex = index;
             const lightbox = document.getElementById('lightbox');
             updateLightboxImage();
             lightbox.classList.add('active');
             lightbox.setAttribute('aria-hidden', 'false');
-            document.querySelector('.lightbox .close-btn').focus();
+            
+            lightbox.querySelectorAll('.close-btn, .click-zone, [role="button"]').forEach(btn => btn.setAttribute('tabindex', '0'));
+            const closeBtn = lightbox.querySelector('.close-btn');
+            if(closeBtn) closeBtn.focus();
+            
             lockScroll();
         }
 
@@ -1458,6 +1257,8 @@
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.remove('active');
             lightbox.setAttribute('aria-hidden', 'true');
+            
+            lightbox.querySelectorAll('.close-btn, .click-zone, [role="button"]').forEach(btn => btn.setAttribute('tabindex', '-1'));
             unlockScroll();
         }
 
@@ -1486,7 +1287,11 @@
             updateTeamLightbox();
             lightbox.classList.add('active');
             lightbox.setAttribute('aria-hidden', 'false');
-            document.querySelector('#team-lightbox .close-btn').focus();
+            
+            lightbox.querySelectorAll('.close-btn, .click-zone-inline, [role="button"]').forEach(btn => btn.setAttribute('tabindex', '0'));
+            const closeBtn = lightbox.querySelector('.close-btn');
+            if(closeBtn) closeBtn.focus();
+            
             lockScroll();
         }
 
@@ -1494,6 +1299,8 @@
             const lightbox = document.getElementById('team-lightbox');
             lightbox.classList.remove('active');
             lightbox.setAttribute('aria-hidden', 'true');
+            
+            lightbox.querySelectorAll('.close-btn, .click-zone-inline, [role="button"]').forEach(btn => btn.setAttribute('tabindex', '-1'));
             unlockScroll();
         }
 
@@ -1511,7 +1318,7 @@
             
             card.innerHTML = `
                 <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 25px;">
-                    <div class="click-zone-inline" role="button" tabindex="0" onclick="moveTeamLightbox(-1); event.stopPropagation();" onkeydown="if(event.key === 'Enter') { moveTeamLightbox(-1); event.stopPropagation(); }">
+                    <div class="click-zone-inline" role="button" tabindex="0" aria-label="Profil précédent" onclick="moveTeamLightbox(-1); event.stopPropagation();" onkeydown="if(event.key === 'Enter') { moveTeamLightbox(-1); event.stopPropagation(); }">
                         <div class="arrow-icon icon-left" style="background-color: #ffffff;"></div>
                     </div>
                     
@@ -1519,7 +1326,7 @@
                         <img src="Images/Equipe/Profil_${member.index}.webp" class="blur-load" onload="this.classList.add('loaded')" alt="Portrait de ${member.name}" style="object-fit: cover; width: 100%; height: 100%;" width="800" height="800" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none'; this.parentNode.innerHTML='PHOTO ${member.index}';}">
                     </div>
                     
-                    <div class="click-zone-inline" role="button" tabindex="0" onclick="moveTeamLightbox(1); event.stopPropagation();" onkeydown="if(event.key === 'Enter') { moveTeamLightbox(1); event.stopPropagation(); }">
+                    <div class="click-zone-inline" role="button" tabindex="0" aria-label="Profil suivant" onclick="moveTeamLightbox(1); event.stopPropagation();" onkeydown="if(event.key === 'Enter') { moveTeamLightbox(1); event.stopPropagation(); }">
                         <div class="arrow-icon icon-right" style="background-color: #ffffff;"></div>
                     </div>
                 </div>
@@ -1668,6 +1475,13 @@
                 }
             }
         }
+
+        // INITIALISATION : Retrait du focus des lightboxes invisibles
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('#lightbox, #team-lightbox').forEach(lb => {
+                lb.querySelectorAll('.close-btn, .click-zone, .click-zone-inline, [role="button"]').forEach(btn => btn.setAttribute('tabindex', '-1'));
+            });
+        });
 
         window.onload = () => { 
             loadColors(); 
