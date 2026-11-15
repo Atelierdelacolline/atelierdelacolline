@@ -1,7 +1,7 @@
-Couleur cadre : #ae3717
+Couleur cadre : #9e3518
 
-Couleur action : #f55135
+Couleur action : #bd4022
 
-Couleur fond : #f6f6f6
+Couleur fond : #f8f7f5
 
-Couleur texte : #23776c
+Couleur texte : #134e46
