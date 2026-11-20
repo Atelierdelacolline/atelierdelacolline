@@ -143,7 +143,6 @@
             .desktop-only { display: none !important; }
             .mobile-only { display: block; }
             
-            /* AJOUT CLS : min-height pour réserver l'espace du footer et éviter le saut */
             .mobile-footer { width: 100%; max-width: 100%; margin: 0; padding: 0 20px 40px 20px; min-height: 120px; }
             
             .project-card:hover { transform: none !important; border-color: var(--color-texte) !important; }
@@ -231,7 +230,45 @@
         #sommaire-text { font-family: var(--font-slogan-projets) !important; font-size: var(--size-slogan-projets) !important; font-weight: var(--weight-slogan-projets) !important; font-style: var(--style-slogan-projets) !important; text-transform: var(--transform-slogan-projets) !important; margin-top: 25px; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--color-texte); }
         
         .section-header { display: flex; justify-content: space-between; border-top: 1px solid var(--color-texte); border-bottom: 1px solid var(--color-texte); padding: 4px 0; margin-bottom: 30px; font-family: var(--font-section-header); font-size: var(--size-section-header); font-weight: var(--weight-section-header); text-transform: var(--transform-section-header); font-style: var(--style-section-header); color: var(--color-texte); }
-        .text-block { column-gap: 40px; text-align: justify; margin-bottom: 30px; color: var(--color-texte); font-family: var(--font-body-text); font-size: var(--size-body-text); font-weight: var(--weight-body-text); text-transform: var(--transform-body-text); font-style: var(--style-body-text); }
+        
+        /* TRAITEMENT EN 2 COLONNES DE PRESSE SANS FOND BLANC SUR LA PAGE LA COLLINE / AGENCE */
+        .text-block {
+            column-count: 2;
+            column-gap: 44px;
+            column-rule: 1px solid rgba(0, 0, 0, 0.14);
+            text-align: justify;
+            hyphens: auto;
+            -webkit-hyphens: auto;
+            line-height: 1.55;
+            margin-bottom: 30px;
+            color: var(--color-texte);
+            font-family: var(--font-body-text);
+            font-size: var(--size-body-text);
+            font-weight: var(--weight-body-text);
+            text-transform: var(--transform-body-text);
+            font-style: var(--style-body-text);
+        }
+        @media (max-width: 900px) {
+            .text-block { column-count: 1; }
+        }
+        .text-block p {
+            margin-bottom: 16px;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+        .text-block p:last-child {
+            margin-bottom: 0;
+        }
+        #colline-approche-1 > p:first-of-type::first-letter {
+            float: left;
+            font-family: var(--font-nav);
+            font-size: 3.9rem;
+            font-weight: 450;
+            line-height: 0.82;
+            padding-right: 12px;
+            padding-top: 3px;
+            color: var(--color-texte);
+        }
         
         .image-placeholder, .portrait-placeholder { background-color: var(--color-fond); filter: brightness(0.95); background-image: radial-gradient(var(--color-texte) 1px, transparent 1px); background-size: 15px 15px; display: flex; align-items: center; justify-content: center; color: var(--color-texte); text-align: center; overflow: hidden; }
         .image-placeholder { height: 450px; font-size: 1.63rem; }
@@ -262,7 +299,7 @@
         .click-zone-inline { cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 10px; outline: none; }
         .click-zone-inline:hover .arrow-icon, .click-zone-inline:focus-visible .arrow-icon { background-color: var(--color-action) !important; }
 
-        .back-btn-container { display: flex; justify-content: center; margin-top: 40px; margin-bottom: 40px; }
+        .back-btn-container { display: flex; justify-content: center; margin-top: 40px; margin-bottom: 40px; clear: both; }
         
         .back-btn { text-decoration: none; cursor: pointer; color: var(--color-texte); border: 5px solid var(--color-texte); padding: 8px 16px; font-family: var(--font-btn-retour) !important; font-size: var(--size-btn-retour) !important; font-weight: var(--weight-btn-retour) !important; text-transform: var(--transform-btn-retour) !important; font-style: var(--style-btn-retour) !important; transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
 
@@ -294,13 +331,14 @@
         .lightbox .close-btn:focus-visible .icon-close,
         .lightbox .click-zone:focus-visible .arrow-icon { background-color: var(--color-action); }
 
-        .team-lightbox-content { position: relative; z-index: 10001; width: 90vw; height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        /* LIGHTBOX EQUIPE : BLOC PROFIL CENTRÉ AUX BONNES DIMENSIONS */
+        .team-lightbox-content { position: relative; z-index: 10001; width: 90vw; max-width: 720px; max-height: 85vh; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
         .lightbox.active .team-lightbox-content { transform: scale(1); }
-        .team-lightbox-card { width: 100%; height: 100%; max-height: 100%; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; align-items: center; scrollbar-width: none; -ms-overflow-style: none; }
+        .team-lightbox-card { width: 100%; max-height: 85vh; overflow-y: auto; padding: 10px 20px; display: flex; flex-direction: column; align-items: center; scrollbar-width: none; -ms-overflow-style: none; }
         .team-lightbox-card::-webkit-scrollbar { display: none; }
         
-        .team-lightbox-card .member-name { font-family: var(--font-team-name); font-size: var(--size-team-name); font-weight: var(--weight-team-name); text-transform: var(--transform-team-name); font-style: var(--style-team-name); border-bottom: 1px solid #ffffff; padding-bottom: 5px; margin-bottom: 15px; color: #ffffff; width: 100%; text-align: left; }
-        .team-lightbox-card .member-cv { font-family: var(--font-cv); font-size: var(--size-cv); font-weight: var(--weight-cv); text-transform: var(--transform-cv); font-style: var(--style-cv); color: #ffffff; width: 100%; text-align: justify; }
+        .team-lightbox-card .member-name { font-family: var(--font-team-name); font-size: var(--size-team-name); font-weight: var(--weight-team-name); text-transform: var(--transform-team-name); font-style: var(--style-team-name); border-bottom: 1px solid #ffffff; padding-bottom: 8px; margin-bottom: 18px; color: #ffffff; width: 100%; text-align: left; }
+        .team-lightbox-card .member-cv { font-family: var(--font-cv); font-size: var(--size-cv); font-weight: var(--weight-cv); text-transform: var(--transform-cv); font-style: var(--style-cv); color: #ffffff; width: 100%; text-align: justify; line-height: 1.6; hyphens: auto; -webkit-hyphens: auto; }
 
         @media (hover: hover) {
             #sidebar-logo:hover .mask-logo { background-color: var(--color-action); }
@@ -317,13 +355,170 @@
             .team-member:hover { transform: translateY(-5px); }
         }
 
-        .project-desc { display: flex; flex-direction: column; gap: 10px; }
+        /* GRILLE 3 COLONNES : BLOC TEXTE+IMAGES CENTRÉ SUR LA PAGE, SOUS-TITRE & POINTS À GAUCHE */
+        .project-desc {
+            display: grid;
+            grid-template-columns: minmax(210px, 1fr) minmax(0, 820px) minmax(0px, 1fr);
+            gap: 40px;
+            align-items: start;
+        }
+        .project-meta-col {
+            grid-column: 1;
+            justify-self: start;
+            width: 100%;
+            position: sticky;
+            top: 30px;
+            border-top: 1px solid var(--color-texte);
+            padding-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .project-body-col {
+            grid-column: 2;
+            width: 100%;
+            min-width: 0;
+        }
+        @media (max-width: 1000px) {
+            .project-desc { grid-template-columns: 1fr; gap: 30px; }
+            .project-meta-col { grid-column: 1; position: static; }
+            .project-body-col { grid-column: 1; }
+        }
+
         .project-desc-id { font-family: var(--font-project-sub); font-size: var(--size-project-sub); font-weight: var(--weight-project-sub); text-transform: var(--transform-project-sub); font-style: var(--style-project-sub); margin-bottom: 10px; color: var(--color-texte); }
         .key-points { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
         .key-item { display: flex; align-items: center; gap: 10px; font-family: var(--font-key-points); font-size: var(--size-key-points); font-weight: var(--weight-key-points); text-transform: var(--transform-key-points); font-style: var(--style-key-points); margin-bottom: 4px; color: var(--color-texte); }
-        .dot { width: 5px; height: 5px; background-color: var(--color-texte); border-radius: 50%; flex-shrink: 0; }
-        .project-text { text-align: justify; line-height: 1.5; color: var(--color-texte); font-family: var(--font-body-text); font-size: var(--size-body-text); font-weight: var(--weight-body-text); text-transform: var(--transform-body-text); font-style: var(--style-body-text); margin-bottom: 40px; }
-        .project-text p { margin-bottom: 15px; }
+        
+        /* PUCES CARRÉES UNIFORMISÉES (COULEUR DU TEXTE) */
+        .dot { width: 5px; height: 5px; background-color: var(--color-texte); flex-shrink: 0; }
+
+        /* FEUILLE BLANCHE EN 2 COLONNES DE PRESSE AVEC VISUELS INTERCALÉS ENTRE LES PARAGRAPHES */
+        .project-text {
+            background-color: #ffffff;
+            padding: 35px 40px;
+            column-count: 2;
+            column-gap: 44px;
+            column-rule: 1px solid rgba(0, 0, 0, 0.14);
+            text-align: justify;
+            hyphens: auto;
+            -webkit-hyphens: auto;
+            line-height: 1.55;
+            color: var(--color-texte);
+            font-family: var(--font-body-text);
+            font-size: var(--size-body-text);
+            font-weight: var(--weight-body-text);
+            text-transform: var(--transform-body-text);
+            font-style: var(--style-body-text);
+            margin-bottom: 40px;
+        }
+        @media (max-width: 900px) {
+            .project-text {
+                column-count: 1;
+                padding: 25px 20px;
+            }
+        }
+
+        .project-text p {
+            margin-bottom: 16px;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+        .project-text p:last-child {
+            margin-bottom: 0;
+        }
+        .project-text h3 {
+            font-weight: 700;
+            margin-top: 26px;
+            margin-bottom: 10px;
+            break-inside: avoid;
+            page-break-inside: avoid;
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+        .project-text h3:first-child {
+            margin-top: 0;
+        }
+
+        /* LETTRINE (FONT-WEIGHT: 450) */
+        .project-text > p:first-of-type::first-letter {
+            float: left;
+            font-family: var(--font-nav);
+            font-size: 3.9rem;
+            font-weight: 450;
+            line-height: 0.82;
+            padding-right: 12px;
+            padding-top: 3px;
+            color: var(--color-texte);
+        }
+
+        /* TOUTES LES LISTES À POINTS : PETITS CARRÉS DE LA COULEUR DU TEXTE */
+        .project-text ul, .text-block ul, .member-cv ul {
+            list-style: none;
+            margin: 16px 0 22px 0;
+            padding-left: 0;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+        .project-text ul:last-child, .text-block ul:last-child, .member-cv ul:last-child {
+            margin-bottom: 0;
+        }
+        .project-text ul li, .text-block ul li, .member-cv ul li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 10px;
+            break-inside: avoid;
+        }
+        .project-text ul li:last-child, .text-block ul li:last-child, .member-cv ul li:last-child {
+            margin-bottom: 0;
+        }
+        .project-text ul li::before, .text-block ul li::before, .member-cv ul li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 5px;
+            height: 5px;
+            background-color: var(--color-texte);
+        }
+
+        /* VISUELS INTERCALÉS ENTRE LES PARAGRAPHES DANS LA COLONNE DE TEXTE */
+        .project-inline-media {
+            display: block;
+            width: 100%;
+            margin: 22px 0 26px 0;
+            cursor: zoom-in;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+        .project-inline-media:first-child {
+            margin-top: 0;
+        }
+        .project-inline-media.wide {
+            column-span: all;
+            margin: 30px 0;
+        }
+        .project-inline-media img {
+            width: 100%;
+            height: auto;
+            max-height: 460px;
+            object-fit: contain;
+            display: block;
+        }
+        .project-inline-media.wide img {
+            max-height: 600px;
+        }
+        .project-inline-media figcaption {
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(0, 0, 0, 0.15);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            color: var(--color-texte);
+            opacity: 0.75;
+            text-align: left;
+        }
 
         #section-colline .blue-frame { background-color: transparent; border: none; padding: 0; margin-bottom: 25px; }
         #section-colline .image-placeholder { height: auto; background: none; padding: 0; }
@@ -953,12 +1148,123 @@
             });
         }
 
+        function formatColumnParagraphs(rawText) {
+            return rawText
+                .trim()
+                .split(/\r?\n\s*\r?\n/)
+                .map(block => block.trim())
+                .filter(Boolean)
+                .map(block => `<p>${block.replace(/\r?\n/g, '<br>')}</p>`)
+                .join('');
+        }
+
+        function parseMarkdownProject(id, mdText) {
+            const titreMatch = mdText.match(/^#\s+(.+)$/m);
+            const titre = titreMatch ? titreMatch[1].trim() : "";
+
+            const h2Matches = [...mdText.matchAll(/^##\s+(.+)$/gm)];
+            const subHeading = h2Matches.find(m => !m[1].trim().toLowerCase().startsWith("le projet"));
+            const sousTitre = subHeading ? subHeading[1].trim() : "";
+
+            const getMeta = (key) => {
+                const regex = new RegExp(`^[-*]\\s+\\*\\*(?:${key})\\s*:?\\*\\*\\s*:?\\s*(.+)$`, 'im');
+                const m = mdText.match(regex);
+                return m ? m[1].trim() : "";
+            };
+
+            const nbImagesMatch = mdText.match(/Nombre\s*d['’]images\s*:\s*(\d+)/i);
+            const nbImages = nbImagesMatch ? parseInt(nbImagesMatch[1], 10) : 3;
+
+            let paragraphs = "";
+            const projetSectionMatch = mdText.match(/##\s+Le Projet\s*([\s\S]+)$/i);
+            
+            if (projetSectionMatch) {
+                let content = projetSectionMatch[1].trim();
+                content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                content = content.replace(/\*(.*?)\*/g, '<em>$1</em>');
+                
+                // Les visuels s'intercalent directement entre les paragraphes au fil de la lecture
+                paragraphs = content.split(/\r?\n\s*\r?\n/).map(block => {
+                    block = block.trim();
+                    if (!block) return "";
+
+                    // Détection de la balise Image : X | Légende (ou Image large : X | Légende)
+                    if (/^Image(?:\s+large)?\s*:\s*\d+/i.test(block)) {
+                        const m = block.match(/^Image(\s+large)?\s*:\s*(\d+)(?:\s*\|\s*(.+))?/i);
+                        const isWide = Boolean(m[1]);
+                        const imgIndex = parseInt(m[2], 10);
+                        const caption = m[3] ? m[3].trim() : "";
+                        return `
+                            <figure class="project-inline-media${isWide ? ' wide' : ''}" onclick="openLightbox(${imgIndex})">
+                                <img src="Images/Projet/Projet ${id}/${imgIndex}.webp" alt="${caption || titre}" loading="lazy"
+                                     onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.closest('figure').remove();}">
+                                ${caption ? `<figcaption>${caption}</figcaption>` : ''}
+                            </figure>`;
+                    }
+
+                    if (block.startsWith('### ')) {
+                        return block.replace(/^###\s+(.+)$/gm, '<h3>$1</h3>');
+                    }
+                    if (/^[-*]\s+/.test(block)) {
+                        const listItems = block.split(/\r?\n/)
+                            .filter(l => /^[-*]\s+/.test(l.trim()))
+                            .map(l => `<li>${l.trim().replace(/^[-*]\s+/, '')}</li>`)
+                            .join('');
+                        return `<ul>${listItems}</ul>`;
+                    }
+                    return `<p>${block.replace(/\r?\n/g, '<br>')}</p>`;
+                }).join('');
+            }
+
+            return {
+                id: id.toString(),
+                titre: titre,
+                type: getMeta("Type"),
+                annee: getMeta("Année|Annee"),
+                lieu: getMeta("Lieu"),
+                client: getMeta("Client"),
+                etat: getMeta("État|Etat"),
+                budget: getMeta("Budget"),
+                surface: getMeta("Surface"),
+                sousTitre: sousTitre,
+                nbImages: nbImages,
+                paragraphs: paragraphs
+            };
+        }
+
+        async function loadMarkdownProjects() {
+            const projects = [];
+            let id = 1;
+            let consecutiveMisses = 0;
+
+            while (consecutiveMisses < 2 && id <= 50) {
+                try {
+                    const response = await fetch(`Texte/Projets/${id}.md?nocache=${Date.now()}`);
+                    if (response.ok) {
+                        const mdText = await response.text();
+                        if (!mdText.trim().startsWith('<!DOCTYPE') && !mdText.trim().startsWith('<html')) {
+                            projects.push(parseMarkdownProject(id.toString(), mdText));
+                            consecutiveMisses = 0;
+                        } else {
+                            consecutiveMisses++;
+                        }
+                    } else {
+                        consecutiveMisses++;
+                    }
+                } catch (e) {
+                    consecutiveMisses++;
+                }
+                id++;
+            }
+            return projects;
+        }
+
         function loadCoreData() {
             Promise.all([
                 fetch('Texte/accueil.txt').then(r=>r.text()).catch(e=>""),
-                fetch('Texte/projets.txt').then(r=>r.text()).catch(e=>""),
+                loadMarkdownProjects(),
                 fetch('Texte/colline.txt').then(r=>r.text()).catch(e=>"")
-            ]).then(([accueilText, projetsText, collineText]) => {
+            ]).then(([accueilText, projectsList, collineText]) => {
                 
                 if (accueilText) {
                     const menuMatch = accueilText.match(/Menu Principal\s*:\s*[\r\n]+([^\r\n]+)[\r\n]+([^\r\n]+)/i);
@@ -1002,8 +1308,10 @@
                     const carrouselMatch = accueilText.match(/Section Projets - 02 Carroussel[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
                     if (carrouselMatch) {
                         const parts = carrouselMatch[1].split('|');
-                        document.getElementById('vignettes-header-left').innerText = parts[0] ? parts[0].trim() : '';
-                        document.getElementById('vignettes-header-right').innerText = parts[1] ? parts[1].trim() : '';
+                        const leftEl = document.getElementById('vignettes-header-left');
+                        const rightEl = document.getElementById('vignettes-header-right');
+                        if (leftEl) leftEl.innerText = parts[0] ? parts[0].trim() : '';
+                        if (rightEl) rightEl.innerText = parts[1] ? parts[1].trim() : '';
                     }
 
                     const nbCouvMatch = accueilText.match(/Nombre de couvertures\s*:\s*(\d+)/i);
@@ -1023,26 +1331,8 @@
                     if (retourMatch) textBtnRetour = retourMatch[1].trim();
                 }
 
-                if (projetsText) {
-                    allProjects = []; 
-                    projetsText.split(/Section Projets - /i).filter(b => b.trim() !== "").forEach((block) => {
-                        if (block.toLowerCase().startsWith("projet")) {
-                            allProjects.push({
-                                id: block.match(/Projet\s+(\d+)/i)?.[1] || "0",
-                                titre: block.match(/Titre\s*:\s*(.+)/i)?.[1] || "",
-                                type: block.match(/Type\s*:\s*(.+)/i)?.[1] || "",
-                                annee: block.match(/Année\s*:\s*(.+)/i)?.[1] || "",
-                                lieu: block.match(/Lieu\s*:\s*(.+)/i)?.[1] || "",
-                                client: block.match(/Client\s*:\s*(.+)/i)?.[1] || "",
-                                etat: block.match(/(?:État|Etat)\s*:\s*(.+)/i)?.[1] || "",
-                                budget: block.match(/Budget\s*:\s*(.+)/i)?.[1] || "",
-                                surface: block.match(/Surface\s*:\s*(.+)/i)?.[1] || "",
-                                sousTitre: block.match(/Sous-titre\s*:\s*(.+)/i)?.[1] || "",
-                                nbImages: parseInt(block.match(/Nombre d'images\s*:\s*(\d+)/i)?.[1] || "3"),
-                                paragraphs: (block.match(/Texte\s*:\s*([\s\S]+)/i)?.[1] || "").trim().split(/\n\s*\n/).map(p => `<p>${p.trim().replace(/\n/g, '<br>')}</p>`).join('')
-                            });
-                        }
-                    });
+                if (projectsList && projectsList.length > 0) {
+                    allProjects = projectsList;
                     document.getElementById('sort-btn-id').classList.add('active-sort');
                     renderProjectsGrid(); 
                     renderVignettesCarousel();
@@ -1060,10 +1350,10 @@
                     }
 
                     const appBloc1 = collineText.match(/Texte bloc 1\s*:\s*([\s\S]*?)(?=Texte bloc 2\s*:)/i);
-                    if (appBloc1) document.getElementById('colline-approche-1').innerHTML = appBloc1[1].trim().replace(/\n/g, '<br>');
+                    if (appBloc1) document.getElementById('colline-approche-1').innerHTML = formatColumnParagraphs(appBloc1[1]);
                     
                     const appBloc2 = collineText.match(/Texte bloc 2\s*:\s*([\s\S]*?)(?=Section La Colline - 03|$)/i);
-                    if (appBloc2) document.getElementById('colline-approche-2').innerHTML = appBloc2[1].trim().replace(/\n/g, '<br>');
+                    if (appBloc2) document.getElementById('colline-approche-2').innerHTML = formatColumnParagraphs(appBloc2[1]);
                     
                     const appHeadMatch = collineText.match(/02 Notre approche[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
                     if (appHeadMatch) {
@@ -1216,17 +1506,21 @@
                     </div>
                     
                     <div class="project-desc">
-                        <div class="project-desc-id">${p.sousTitre}</div>
-                        <div class="key-points">
-                            ${p.client ? `<div class="key-item"><div class="dot"></div> CLIENT : ${p.client}</div>` : ''}
-                            ${p.etat ? `<div class="key-item"><div class="dot"></div> ÉTAT : ${p.etat}</div>` : ''}
-                            ${p.budget ? `<div class="key-item"><div class="dot"></div> BUDGET : ${p.budget}</div>` : ''}
-                            ${p.surface ? `<div class="key-item"><div class="dot"></div> SURFACE : ${p.surface}</div>` : ''}
+                        <div class="project-meta-col">
+                            <div class="project-desc-id">${p.sousTitre}</div>
+                            <div class="key-points">
+                                ${p.client ? `<div class="key-item"><div class="dot"></div> CLIENT : ${p.client}</div>` : ''}
+                                ${p.etat ? `<div class="key-item"><div class="dot"></div> ÉTAT : ${p.etat}</div>` : ''}
+                                ${p.budget ? `<div class="key-item"><div class="dot"></div> BUDGET : ${p.budget}</div>` : ''}
+                                ${p.surface ? `<div class="key-item"><div class="dot"></div> SURFACE : ${p.surface}</div>` : ''}
+                            </div>
                         </div>
-                        <div class="project-text">${p.paragraphs}</div>
-                        
-                        <div class="back-btn-container">
-                            <a class="back-btn" role="button" tabindex="0" onclick="switchPage('projets', hashBtn1)" onkeydown="if(event.key === 'Enter') this.click()">${textBtnRetour}</a>
+                        <div class="project-body-col">
+                            <div class="project-text">${p.paragraphs}</div>
+                            
+                            <div class="back-btn-container">
+                                <a class="back-btn" role="button" tabindex="0" onclick="switchPage('projets', hashBtn1)" onkeydown="if(event.key === 'Enter') this.click()">${textBtnRetour}</a>
+                            </div>
                         </div>
                     </div>
                 </article>`;
