@@ -8,7 +8,7 @@
     <meta name="description" id="meta-desc" content="L'Atelier de la Colline est une agence d'architecture située à Paris 19e. Spécialistes de l'intervention sur l'existant, rénovation et construction. Découvrez notre approche de la couture épaisse.">
     <meta name="keywords" id="meta-keywords" content="architecte paris 19, agence architecture paris, rénovation, extension, construction, couture épaisse, butte bergeyre, architecte intérieur paris">
     
-    <!-- PRELOAD LCP IMAGE (Optimisation Lighthouse) -->
+    <!-- PRELOAD LCP IMAGE -->
     <link rel="preload" as="image" href="Images/Couverture/1.webp" fetchpriority="high">
     
     <!-- FAVICON -->
@@ -58,7 +58,6 @@
             --sidebar-width: clamp(250px, calc((100vw - 1500px) / 2), 600px);
         }
 
-        /* AJOUT CLS : font-display swap pour afficher le texte immédiatement sans saut visuel */
         @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Light.ttf') format('truetype'); font-weight: 300; font-display: swap; }
         @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
         @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
@@ -259,16 +258,6 @@
         .text-block p:last-child {
             margin-bottom: 0;
         }
-        #colline-approche-1 > p:first-of-type::first-letter {
-            float: left;
-            font-family: var(--font-nav);
-            font-size: 3.9rem;
-            font-weight: 450;
-            line-height: 0.82;
-            padding-right: 12px;
-            padding-top: 3px;
-            color: var(--color-texte);
-        }
         
         .image-placeholder, .portrait-placeholder { background-color: var(--color-fond); filter: brightness(0.95); background-image: radial-gradient(var(--color-texte) 1px, transparent 1px); background-size: 15px 15px; display: flex; align-items: center; justify-content: center; color: var(--color-texte); text-align: center; overflow: hidden; }
         .image-placeholder { height: 450px; font-size: 1.63rem; }
@@ -340,6 +329,10 @@
         .team-lightbox-card .member-name { font-family: var(--font-team-name); font-size: var(--size-team-name); font-weight: var(--weight-team-name); text-transform: var(--transform-team-name); font-style: var(--style-team-name); border-bottom: 1px solid #ffffff; padding-bottom: 8px; margin-bottom: 18px; color: #ffffff; width: 100%; text-align: left; }
         .team-lightbox-card .member-cv { font-family: var(--font-cv); font-size: var(--size-cv); font-weight: var(--weight-cv); text-transform: var(--transform-cv); font-style: var(--style-cv); color: #ffffff; width: 100%; text-align: justify; line-height: 1.6; hyphens: auto; -webkit-hyphens: auto; }
 
+        /* LETTRINE BLANCHE UNIQUEMENT DANS LA LIGHTBOX SOMBRE */
+        .team-lightbox-card .member-cv > p:first-of-type::first-letter { color: #ffffff; }
+        .team-lightbox-card .member-cv ul li::before { background-color: #ffffff; }
+
         @media (hover: hover) {
             #sidebar-logo:hover .mask-logo { background-color: var(--color-action); }
             #intro-enter-btn:hover { color: var(--color-action); }
@@ -355,16 +348,16 @@
             .team-member:hover { transform: translateY(-5px); }
         }
 
-        /* GRILLE 3 COLONNES : BLOC TEXTE+IMAGES CENTRÉ SUR LA PAGE, SOUS-TITRE & POINTS À GAUCHE */
+        /* GRILLE 3 COLONNES : BLOC TEXTE+IMAGES ÉLARGI AU CENTRE, SOUS-TITRE & POINTS À GAUCHE */
         .project-desc {
             display: grid;
-            grid-template-columns: minmax(210px, 1fr) minmax(0, 820px) minmax(0px, 1fr);
+            grid-template-columns: minmax(180px, 1fr) minmax(0, 1050px) minmax(180px, 1fr);
             gap: 40px;
             align-items: start;
         }
         .project-meta-col {
             grid-column: 1;
-            justify-self: start;
+            justify-self: stretch;
             width: 100%;
             position: sticky;
             top: 30px;
@@ -379,7 +372,7 @@
             width: 100%;
             min-width: 0;
         }
-        @media (max-width: 1000px) {
+        @media (max-width: 1100px) {
             .project-desc { grid-template-columns: 1fr; gap: 30px; }
             .project-meta-col { grid-column: 1; position: static; }
             .project-body-col { grid-column: 1; }
@@ -439,8 +432,10 @@
             margin-top: 0;
         }
 
-        /* LETTRINE (FONT-WEIGHT: 450) */
-        .project-text > p:first-of-type::first-letter {
+        /* LETTRINE (FONT-WEIGHT: 450) SUR PROJETS, COLLINE ET PROFILS */
+        .project-text > p:first-of-type::first-letter,
+        #colline-approche-1 > p:first-of-type::first-letter,
+        .member-cv > p:first-of-type::first-letter {
             float: left;
             font-family: var(--font-nav);
             font-size: 3.9rem;
@@ -500,12 +495,12 @@
         .project-inline-media img {
             width: 100%;
             height: auto;
-            max-height: 460px;
+            max-height: 550px;
             object-fit: contain;
             display: block;
         }
         .project-inline-media.wide img {
-            max-height: 600px;
+            max-height: 750px;
         }
         .project-inline-media figcaption {
             margin-top: 8px;
@@ -1120,6 +1115,8 @@
                     
                     allTeamMembers.push({ name, bio, index: indexProfil });
                     
+                    let formattedBio = bio.trim().split(/\r?\n\s*\r?\n/).map(p => `<p>${p.trim().replace(/\r?\n/g, '<br>')}</p>`).join('');
+
                     container.innerHTML += `
                         <div class="team-member" id="team-member-${indexProfil}" role="button" tabindex="0" onclick="openTeamLightbox(${indexArray})" onkeydown="if(event.key === 'Enter' || event.key === ' ') openTeamLightbox(${indexArray})">
                             <div class="blue-frame">
@@ -1131,9 +1128,8 @@
                             
                             <div class="expandable-wrapper">
                                 <div class="expandable-content cv-content">
-                                    <div class="member-cv">${bio.replace(/\n/g, '<br>')}</div>
+                                    <div class="member-cv">${formattedBio}</div>
                                 </div>
-                                <!-- AJOUT A11Y : rôle, tabindex et events pour la zone de developpement mobile -->
                                 <div class="expand-overlay mobile-only" role="button" tabindex="0" aria-label="Développer la section" onclick="toggleSection(this); event.stopPropagation();" onkeydown="if(event.key === 'Enter') { toggleSection(this); event.stopPropagation(); }">
                                     <div class="expand-gradient"></div>
                                     <div class="expand-btn">
@@ -1183,12 +1179,10 @@
                 content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                 content = content.replace(/\*(.*?)\*/g, '<em>$1</em>');
                 
-                // Les visuels s'intercalent directement entre les paragraphes au fil de la lecture
                 paragraphs = content.split(/\r?\n\s*\r?\n/).map(block => {
                     block = block.trim();
                     if (!block) return "";
 
-                    // Détection de la balise Image : X | Légende (ou Image large : X | Légende)
                     if (/^Image(?:\s+large)?\s*:\s*\d+/i.test(block)) {
                         const m = block.match(/^Image(\s+large)?\s*:\s*(\d+)(?:\s*\|\s*(.+))?/i);
                         const isWide = Boolean(m[1]);
@@ -1532,7 +1526,6 @@
             if(p.sousTitre) document.getElementById('og-desc').setAttribute('content', p.sousTitre);
         }
 
-        // CORRECTIF A11Y : Gestion dynamique complète du tabindex pour les lightboxes
         function openLightbox(index) {
             currentLightboxIndex = index;
             const lightbox = document.getElementById('lightbox');
@@ -1610,6 +1603,8 @@
             if (!member) return;
             const card = document.getElementById('team-lightbox-card');
             
+            let formattedBio = member.bio.trim().split(/\r?\n\s*\r?\n/).map(p => `<p>${p.trim().replace(/\r?\n/g, '<br>')}</p>`).join('');
+
             card.innerHTML = `
                 <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 25px;">
                     <div class="click-zone-inline" role="button" tabindex="0" aria-label="Profil précédent" onclick="moveTeamLightbox(-1); event.stopPropagation();" onkeydown="if(event.key === 'Enter') { moveTeamLightbox(-1); event.stopPropagation(); }">
@@ -1625,7 +1620,7 @@
                     </div>
                 </div>
                 <div class="member-name">${member.name}</div>
-                <div class="member-cv">${member.bio.replace(/\n/g, '<br>')}</div>
+                <div class="member-cv">${formattedBio}</div>
             `;
             card.scrollTop = 0;
         }
