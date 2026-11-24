@@ -20,3 +20,8 @@ L'agence est dirigée par une équipe d'architectes associés passionnés par le
 ## Informations Pratiques et Contact
 - **Localisation :** 2 bis rue Georges Lardennois, Paris 19e, Île-de-France, France
 - **Site web officiel :** https://atelierdelacolline.fr
+
+## Liens principaux
+- [Accueil](https://atelierdelacolline.fr/) : Présentation générale de l'Atelier de la Colline.
+- [Nos Projets](https://atelierdelacolline.fr/#projets) : Catalogue de nos réalisations.
+- [L'Agence](https://atelierdelacolline.fr/#la-colline) : Notre philosophie, notre approche et l'équipe.
