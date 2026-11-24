@@ -8,7 +8,7 @@
     <meta name="description" id="meta-desc" content="L'Atelier de la Colline est une agence d'architecture située à Paris 19e. Spécialistes de l'intervention sur l'existant, rénovation et construction. Découvrez notre approche de la couture épaisse.">
     <meta name="keywords" id="meta-keywords" content="architecte paris 19, agence architecture paris, rénovation, extension, construction, couture épaisse, butte bergeyre, architecte intérieur paris">
     
-    <!-- PRELOAD LCP IMAGE -->
+    <!-- PRELOAD LCP IMAGE (Optimisation Lighthouse) -->
     <link rel="preload" as="image" href="Images/Couverture/1.webp" fetchpriority="high">
     
     <!-- FAVICON -->
@@ -58,6 +58,7 @@
             --sidebar-width: clamp(250px, calc((100vw - 1500px) / 2), 600px);
         }
 
+        /* AJOUT CLS : font-display swap pour afficher le texte immédiatement sans saut visuel */
         @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Light.ttf') format('truetype'); font-weight: 300; font-display: swap; }
         @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
         @font-face { font-family: 'Lato'; src: url('Typo/Lato/Lato-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
@@ -116,7 +117,7 @@
         .icon-down { -webkit-mask-image: url('Images/Icones/fleche_bas.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('Images/Icones/fleche_bas.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
 
         .sidebar { width: var(--sidebar-width); flex-shrink: 0; padding: 20px 30px; position: fixed; left: 0; top: 0; z-index: 100; height: 100vh; max-height: 100vh; overflow: hidden; border-right: 5px solid transparent; display: flex; flex-direction: column; }
-        .main-content { margin-left: 0; width: 100%; display: flex; justify-content: center; padding: 20px var(--sidebar-width); position: relative; min-width: 0; }
+        .main-content { margin-left: 0; width: 100%; min-height: 100vh; display: flex; justify-content: center; padding: 20px var(--sidebar-width); position: relative; min-width: 0; }
         .page-section { width: 1500px; max-width: 100%; padding: 0 30px; display: none; animation: fadeIn 0.4s ease-in-out; min-width: 0; }
 
         .mobile-only { display: none; }
@@ -146,19 +147,22 @@
             
             .project-card:hover { transform: none !important; border-color: var(--color-texte) !important; }
             .project-card:focus-visible { transform: translateY(-5px) !important; border-color: var(--color-action) !important; }
-            
-            .carousel-viewport, .vignettes-viewport { overflow: hidden !important; width: 100%; min-width: 0; max-width: 100vw; }
-            .carousel-track, .vignettes-track { width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap; }
+
+            .carousel-viewport { overflow: hidden !important; width: 100%; min-width: 0; max-width: 100vw; }
+            .carousel-track { width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap; }
             .carousel-track::-webkit-scrollbar, .vignettes-track::-webkit-scrollbar { display: none; }
             .slide { scroll-snap-align: center; flex: 0 0 100%; width: 100%; max-width: 100%; }
-            .vignette-slide { scroll-snap-align: center; flex: 0 0 75%; max-width: 75%; }
             
             .click-zone { display: none !important; }
             .lightbox .click-zone { display: flex !important; width: 50px; } 
 
-            .vignettes-wrapper { display: block; }
-            .vignettes-viewport { width: 100%; }
-            
+            /* Carrousel "Nos autres projets" centré avec flèches + glissement au doigt */
+            .vignettes-wrapper { display: flex !important; align-items: center; justify-content: center; width: 100%; }
+            .vignettes-wrapper .click-zone { display: flex !important; flex-shrink: 0; }
+            .vignettes-viewport { flex: 1; width: auto !important; min-width: 0; overflow: hidden !important; }
+            .vignettes-track { display: flex; margin: 0 !important; width: 100%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap; }
+            .vignette-slide { scroll-snap-align: start; flex: 0 0 33.3333%; max-width: 33.3333%; padding: 0 6px; }
+
             .lightbox .close-btn { top: 15px; right: 15px; }
 
             .expand-overlay.mobile-only { display: flex; }
@@ -230,7 +234,7 @@
         
         .section-header { display: flex; justify-content: space-between; border-top: 1px solid var(--color-texte); border-bottom: 1px solid var(--color-texte); padding: 4px 0; margin-bottom: 30px; font-family: var(--font-section-header); font-size: var(--size-section-header); font-weight: var(--weight-section-header); text-transform: var(--transform-section-header); font-style: var(--style-section-header); color: var(--color-texte); }
         
-        /* TRAITEMENT EN 2 COLONNES DE PRESSE SANS FOND BLANC SUR LA PAGE LA COLLINE / AGENCE */
+        /* TRAITEMENT EN 2 COLONNES DE PRESSE SUR LA PAGE LA COLLINE / AGENCE */
         .text-block {
             column-count: 2;
             column-gap: 44px;
@@ -264,6 +268,7 @@
         .portrait-placeholder { height: 400px; font-size: 1.63rem; }
         .image-placeholder img, .portrait-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+        /* CARROUSEL PRINCIPAL DE LA PAGE PROJET */
         .project { margin-bottom: 40px; scroll-margin-top: 20px; min-width: 0; }
         .project-header { display: flex; justify-content: space-between; border-top: 1px solid var(--color-texte); border-bottom: 1px solid var(--color-texte); padding: 4px 0; margin-bottom: 40px; font-family: var(--font-section-header); font-size: var(--size-section-header); font-weight: var(--weight-section-header); text-transform: var(--transform-section-header); font-style: var(--style-section-header); gap: 10px; color: var(--color-texte); }
         
@@ -295,7 +300,8 @@
         .back-btn:focus { outline: none; }
         .back-btn:focus-visible { background-color: var(--color-action); color: var(--color-fond); border-color: var(--color-action); outline: none; }
 
-        .vignettes-wrapper { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; margin-bottom: 50px;}
+        /* CARROUSEL DES VIGNETTES : NOS AUTRES PROJETS */
+        .vignettes-wrapper { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; margin-bottom: 50px; }
         .vignettes-viewport { width: calc(100% - 4rem); overflow: hidden; position: relative; min-width: 0; } 
         .vignettes-track { display: flex; margin: 0 -10px; min-width: 0; } 
         
@@ -305,6 +311,7 @@
         .vignette-img-container img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
         .vignette-slide:focus-visible .vignette-img-container img { transform: scale(1.05); }
 
+        /* LIGHTBOX GÉNÉRIQUE */
         .lightbox { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
         .lightbox.active { opacity: 1; pointer-events: auto; }
         .lightbox-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); cursor: pointer; }
@@ -348,7 +355,7 @@
             .team-member:hover { transform: translateY(-5px); }
         }
 
-        /* GRILLE 3 COLONNES : BLOC TEXTE+IMAGES ÉLARGI AU CENTRE, SOUS-TITRE & POINTS À GAUCHE */
+        /* GRILLE 3 COLONNES : BLOC TEXTE+IMAGES ÉLARGI AU CENTRE (1050px) */
         .project-desc {
             display: grid;
             grid-template-columns: minmax(180px, 1fr) minmax(0, 1050px) minmax(180px, 1fr);
@@ -385,13 +392,8 @@
         /* PUCES CARRÉES UNIFORMISÉES (COULEUR DU TEXTE) */
         .dot { width: 5px; height: 5px; background-color: var(--color-texte); flex-shrink: 0; }
 
-        /* FEUILLE BLANCHE EN 2 COLONNES DE PRESSE AVEC VISUELS INTERCALÉS ENTRE LES PARAGRAPHES */
+        /* FORMATAGE DYNAMIQUE DU TEXTE DES PROJETS (SANS FOND BLANC) */
         .project-text {
-            background-color: #ffffff;
-            padding: 35px 40px;
-            column-count: 2;
-            column-gap: 44px;
-            column-rule: 1px solid rgba(0, 0, 0, 0.14);
             text-align: justify;
             hyphens: auto;
             -webkit-hyphens: auto;
@@ -403,18 +405,44 @@
             text-transform: var(--transform-body-text);
             font-style: var(--style-body-text);
             margin-bottom: 40px;
+            width: 100%;
+        }
+
+        .project-text-columns {
+            column-count: 2;
+            column-gap: 44px;
+            column-rule: 1px solid rgba(0, 0, 0, 0.14);
+            margin-bottom: 20px;
         }
         @media (max-width: 900px) {
-            .project-text {
-                column-count: 1;
-                padding: 25px 20px;
-            }
+            .project-text-columns { column-count: 1; }
+        }
+
+        .project-text-single {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .project-text-wrap {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
         }
 
         .project-text p {
             margin-bottom: 16px;
             break-inside: avoid;
             page-break-inside: avoid;
+        }
+        .project-text-columns > p:only-child {
+            break-inside: auto;
+            page-break-inside: auto;
+            orphans: 3;
+            widows: 3;
         }
         .project-text p:last-child {
             margin-bottom: 0;
@@ -423,17 +451,14 @@
             font-weight: 700;
             margin-top: 26px;
             margin-bottom: 10px;
-            break-inside: avoid;
-            page-break-inside: avoid;
-            break-after: avoid;
-            page-break-after: avoid;
+            clear: both; /* Évite qu'un sous-titre ne se glisse sous une image flottante */
         }
         .project-text h3:first-child {
             margin-top: 0;
         }
 
         /* LETTRINE (FONT-WEIGHT: 450) SUR PROJETS, COLLINE ET PROFILS */
-        .project-text > p:first-of-type::first-letter,
+        .project-text > div:first-of-type p:first-of-type::first-letter,
         #colline-approche-1 > p:first-of-type::first-letter,
         .member-cv > p:first-of-type::first-letter {
             float: left;
@@ -476,8 +501,16 @@
             background-color: var(--color-texte);
         }
 
-        /* VISUELS INTERCALÉS ENTRE LES PARAGRAPHES DANS LA COLONNE DE TEXTE */
-        .project-inline-media {
+        /* VISUELS INTERCALÉS DANS LE TEXTE DES PROJETS */
+        .project-text-wrap .project-inline-media {
+            float: right;
+            width: 45%;
+            margin: 6px 0 20px 30px;
+            cursor: zoom-in;
+            clear: right;
+        }
+        .project-text-columns .project-inline-media,
+        .project-text-single .project-inline-media {
             display: block;
             width: 100%;
             margin: 22px 0 26px 0;
@@ -489,8 +522,11 @@
             margin-top: 0;
         }
         .project-inline-media.wide {
-            column-span: all;
+            float: none;
+            width: 100%;
             margin: 30px 0;
+            clear: both;
+            column-span: all;
         }
         .project-inline-media img {
             width: 100%;
@@ -513,6 +549,13 @@
             color: var(--color-texte);
             opacity: 0.75;
             text-align: left;
+        }
+        @media (max-width: 900px) {
+            .project-text-wrap .project-inline-media {
+                float: none;
+                width: 100%;
+                margin: 25px 0;
+            }
         }
 
         #section-colline .blue-frame { background-color: transparent; border: none; padding: 0; margin-bottom: 25px; }
@@ -591,21 +634,27 @@
         <div id="section-projet-detail" class="page-section">
             <div id="current-project-container"></div>
             
-            <div id="vignettes-section-header" style="display: none;">
-                <hr style="border: none; border-top: 1px solid var(--color-texte); margin: 0 0 40px 0;">
-                <div id="nos-autres-projets-title" style="text-align: center; margin-bottom: 40px; font-family: var(--font-nav); font-size: var(--size-nav); font-weight: var(--weight-nav); text-transform: var(--transform-nav); font-style: var(--style-nav); color: var(--color-texte);">NOS AUTRES PROJETS</div>
-            </div>
+            <div class="project-desc" id="vignettes-outer-container" style="display: none; align-items: center;">
+                <div class="project-meta-col desktop-only" style="border: none; position: static;"></div>
+                <div class="project-body-col">
+                    <div id="vignettes-section-header">
+                        <hr style="border: none; border-top: 1px solid var(--color-texte); margin: 0 0 40px 0;">
+                        <div id="nos-autres-projets-title" style="text-align: center; margin-bottom: 40px; font-family: var(--font-nav); font-size: var(--size-nav); font-weight: var(--weight-nav); text-transform: var(--transform-nav); font-style: var(--style-nav); color: var(--color-texte);">NOS AUTRES PROJETS</div>
+                    </div>
 
-            <div class="vignettes-wrapper" id="bottom-carousel-wrapper" style="display: none;">
-                <div class="click-zone" onclick="moveVignettes(-1)" style="position:relative; width:auto;">
-                    <div class="arrow-icon icon-left"></div>
+                    <div class="vignettes-wrapper" id="bottom-carousel-wrapper">
+                        <div class="click-zone" onclick="moveVignettes(-1)" style="position:relative; width:auto;">
+                            <div class="arrow-icon icon-left"></div>
+                        </div>
+                        <div class="vignettes-viewport" data-is-animating="false">
+                            <div class="vignettes-track" id="vignettes-track"></div>
+                        </div>
+                        <div class="click-zone" onclick="moveVignettes(1)" style="position:relative; width:auto;">
+                            <div class="arrow-icon icon-right"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="vignettes-viewport" data-is-animating="false">
-                    <div class="vignettes-track" id="vignettes-track"></div>
-                </div>
-                <div class="click-zone" onclick="moveVignettes(1)" style="position:relative; width:auto;">
-                    <div class="arrow-icon icon-right"></div>
-                </div>
+                <div class="desktop-only"></div>
             </div>
         </div>
 
@@ -702,6 +751,7 @@
         
         let savedScrollPosition = 0;
         let textBtnRetour = "RETOUR";
+        let vignettesScrollTimer = null;
 
         function lockScroll() {
             savedScrollPosition = window.scrollY;
@@ -717,7 +767,7 @@
             window.scrollTo(0, savedScrollPosition);
         }
 
-        // GESTION DU SWIPE TACTILE
+        // GESTION DU SWIPE TACTILE UNIQUEMENT SUR LES LIGHTBOXES
         let touchStartX = 0;
         let touchStartY = 0;
         let touchEndX = 0;
@@ -750,13 +800,6 @@
                 if (teamLightbox && teamLightbox.classList.contains('active')) {
                     if (diffX < 0) moveTeamLightbox(1); 
                     if (diffX > 0) moveTeamLightbox(-1); 
-                    return;
-                }
-                
-                const carouselViewport = e.target.closest('.carousel-viewport');
-                if (carouselViewport) {
-                    if (diffX < 0) moveCarousel(carouselViewport, 1);
-                    if (diffX > 0) moveCarousel(carouselViewport, -1);
                     return;
                 }
             }
@@ -1179,35 +1222,101 @@
                 content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                 content = content.replace(/\*(.*?)\*/g, '<em>$1</em>');
                 
-                paragraphs = content.split(/\r?\n\s*\r?\n/).map(block => {
-                    block = block.trim();
-                    if (!block) return "";
+                // Groupage adaptatif du texte pour gérer 1 colonne, 2 colonnes, avec ou sans image
+                let rawBlocks = content.split(/\r?\n\s*\r?\n/).map(b => b.trim()).filter(Boolean);
+                let clusters = [];
+                let currentCluster = { blocks: [], textLength: 0 };
 
-                    if (/^Image(?:\s+large)?\s*:\s*\d+/i.test(block)) {
-                        const m = block.match(/^Image(\s+large)?\s*:\s*(\d+)(?:\s*\|\s*(.+))?/i);
-                        const isWide = Boolean(m[1]);
-                        const imgIndex = parseInt(m[2], 10);
-                        const caption = m[3] ? m[3].trim() : "";
-                        return `
-                            <figure class="project-inline-media${isWide ? ' wide' : ''}" onclick="openLightbox(${imgIndex})">
-                                <img src="Images/Projet/Projet ${id}/${imgIndex}.webp" alt="${caption || titre}" loading="lazy"
-                                     onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.closest('figure').remove();}">
-                                ${caption ? `<figcaption>${caption}</figcaption>` : ''}
-                            </figure>`;
-                    }
-
+                rawBlocks.forEach(block => {
                     if (block.startsWith('### ')) {
-                        return block.replace(/^###\s+(.+)$/gm, '<h3>$1</h3>');
+                        if (currentCluster.blocks.length > 0) clusters.push(currentCluster);
+                        clusters.push({ blocks: [{ type: 'h3', raw: block }], textLength: 0, isHeading: true });
+                        currentCluster = { blocks: [], textLength: 0 };
+                    } else {
+                        if (/^Image(?:\s+large)?\s*:\s*\d+/i.test(block)) {
+                            const m = block.match(/^Image(\s+large)?\s*:\s*(\d+)(?:\s*\|\s*(.+))?/i);
+                            currentCluster.blocks.push({
+                                type: 'image',
+                                isWide: Boolean(m[1]),
+                                index: parseInt(m[2], 10),
+                                caption: m[3] ? m[3].trim() : ""
+                            });
+                        } else if (/^[-*]\s+/.test(block)) {
+                            currentCluster.blocks.push({ type: 'ul', raw: block });
+                            currentCluster.textLength += block.length;
+                        } else {
+                            currentCluster.blocks.push({ type: 'p', raw: block });
+                            currentCluster.textLength += block.length;
+                        }
                     }
-                    if (/^[-*]\s+/.test(block)) {
-                        const listItems = block.split(/\r?\n/)
-                            .filter(l => /^[-*]\s+/.test(l.trim()))
-                            .map(l => `<li>${l.trim().replace(/^[-*]\s+/, '')}</li>`)
-                            .join('');
-                        return `<ul>${listItems}</ul>`;
+                });
+                if (currentCluster.blocks.length > 0) clusters.push(currentCluster);
+
+                let paragraphsHtml = "";
+                clusters.forEach(cluster => {
+                    if (cluster.isHeading) {
+                        paragraphsHtml += cluster.blocks[0].raw.replace(/^###\s+(.+)$/gm, '<h3>$1</h3>');
+                        return;
                     }
-                    return `<p>${block.replace(/\r?\n/g, '<br>')}</p>`;
-                }).join('');
+                    
+                    let wrapImages = "";
+                    let wrapTexts = "";
+                    let hasImage = false;
+                    
+                    cluster.blocks.forEach(b => {
+                        if (b.type === 'image') {
+                            hasImage = true;
+                            let fig = `<figure class="project-inline-media${b.isWide ? ' wide' : ''}" onclick="openLightbox(${b.index})">
+                                    <img src="Images/Projet/Projet ${id}/${b.index}.webp" alt="${b.caption || titre}" loading="lazy" width="800" height="600"
+                                         onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.closest('figure').remove();}">
+                                    ${b.caption ? `<figcaption>${b.caption}</figcaption>` : ''}
+                                </figure>`;
+                            wrapImages += fig;
+                        } else if (b.type === 'ul') {
+                            const listItems = b.raw.split(/\r?\n/)
+                                .filter(l => /^[-*]\s+/.test(l.trim()))
+                                .map(l => `<li>${l.trim().replace(/^[-*]\s+/, '')}</li>`)
+                                .join('');
+                            wrapTexts += `<ul>${listItems}</ul>`;
+                        } else if (b.type === 'p') {
+                            wrapTexts += `<p>${b.raw.replace(/\r?\n/g, '<br>')}</p>`;
+                        }
+                    });
+                    
+                    if (cluster.textLength > 400) {
+                        // Texte long : 2 colonnes, respect de l'ordre d'origine
+                        let htmlOrig = cluster.blocks.map(b => {
+                            if (b.type === 'image') {
+                                return `<figure class="project-inline-media${b.isWide ? ' wide' : ''}" onclick="openLightbox(${b.index})">
+                                        <img src="Images/Projet/Projet ${id}/${b.index}.webp" alt="${b.caption || titre}" loading="lazy" width="800" height="600"
+                                             onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.closest('figure').remove();}">
+                                        ${b.caption ? `<figcaption>${b.caption}</figcaption>` : ''}
+                                    </figure>`;
+                            } else if (b.type === 'ul') {
+                                const listItems = b.raw.split(/\r?\n/).filter(l => /^[-*]\s+/.test(l.trim())).map(l => `<li>${l.trim().replace(/^[-*]\s+/, '')}</li>`).join('');
+                                return `<ul>${listItems}</ul>`;
+                            } else {
+                                return `<p>${b.raw.replace(/\r?\n/g, '<br>')}</p>`;
+                            }
+                        }).join('');
+                        paragraphsHtml += `<div class="project-text-columns">${htmlOrig}</div>`;
+                    } else if (hasImage) {
+                        // Texte court + image : l'image flotte, le texte s'enroule
+                        paragraphsHtml += `<div class="project-text-wrap clearfix">${wrapImages}${wrapTexts}</div>`;
+                    } else {
+                        // Texte court seul : pleine largeur pour éviter le vide
+                        let htmlOrig = cluster.blocks.map(b => {
+                            if (b.type === 'ul') {
+                                const listItems = b.raw.split(/\r?\n/).filter(l => /^[-*]\s+/.test(l.trim())).map(l => `<li>${l.trim().replace(/^[-*]\s+/, '')}</li>`).join('');
+                                return `<ul>${listItems}</ul>`;
+                            } else {
+                                return `<p>${b.raw.replace(/\r?\n/g, '<br>')}</p>`;
+                            }
+                        }).join('');
+                        paragraphsHtml += `<div class="project-text-single">${htmlOrig}</div>`;
+                    }
+                });
+                paragraphs = paragraphsHtml;
             }
 
             return {
@@ -1226,7 +1335,25 @@
             };
         }
 
-        async function loadMarkdownProjects() {
+        async function loadMarkdownProjects(nbProjets = null) {
+            if (nbProjets && nbProjets > 0) {
+                const timestamp = Date.now();
+                const requests = Array.from({ length: nbProjets }, (_, i) => {
+                    const id = (i + 1).toString();
+                    return fetch(`Texte/Projets/${id}.md?nocache=${timestamp}`)
+                        .then(r => r.ok ? r.text() : null)
+                        .then(mdText => {
+                            if (mdText && !mdText.trim().startsWith('<!DOCTYPE') && !mdText.trim().startsWith('<html')) {
+                                return parseMarkdownProject(id, mdText);
+                            }
+                            return null;
+                        })
+                        .catch(() => null);
+                });
+                const results = await Promise.all(requests);
+                return results.filter(Boolean);
+            }
+
             const projects = [];
             let id = 1;
             let consecutiveMisses = 0;
@@ -1253,124 +1380,126 @@
             return projects;
         }
 
-        function loadCoreData() {
-            Promise.all([
-                fetch('Texte/accueil.txt').then(r=>r.text()).catch(e=>""),
-                loadMarkdownProjects(),
-                fetch('Texte/colline.txt').then(r=>r.text()).catch(e=>"")
-            ]).then(([accueilText, projectsList, collineText]) => {
+        async function loadCoreData() {
+            const [accueilText, collineText] = await Promise.all([
+                fetch('Texte/accueil.txt').then(r => r.text()).catch(() => ""),
+                fetch('Texte/colline.txt').then(r => r.text()).catch(() => "")
+            ]);
+
+            const nbProjetsMatch = accueilText ? accueilText.match(/Nombre de projets\s*:\s*(\d+)/i) : null;
+            const nbProjets = nbProjetsMatch ? parseInt(nbProjetsMatch[1], 10) : null;
+            const projectsList = await loadMarkdownProjects(nbProjets);
+
+            if (accueilText) {
+                const menuMatch = accueilText.match(/Menu Principal\s*:\s*[\r\n]+([^\r\n]+)[\r\n]+([^\r\n]+)/i);
+                let btn1Text = "PROJETS";
+                let btn2Text = "LA COLLINE";
                 
-                if (accueilText) {
-                    const menuMatch = accueilText.match(/Menu Principal\s*:\s*[\r\n]+([^\r\n]+)[\r\n]+([^\r\n]+)/i);
-                    let btn1Text = "PROJETS";
-                    let btn2Text = "LA COLLINE";
-                    
-                    if (menuMatch) {
-                        btn1Text = menuMatch[1].trim();
-                        btn2Text = menuMatch[2].trim();
-                    }
-                    
-                    document.getElementById('nav-projets').innerText = btn1Text;
-                    document.getElementById('nav-colline').innerText = btn2Text;
-                    
-                    hashBtn1 = slugify(btn1Text);
-                    hashBtn2 = slugify(btn2Text);
-                    
-                    document.getElementById('nav-projets').onclick = () => switchPage('projets', hashBtn1);
-                    document.getElementById('nav-colline').onclick = () => switchPage('colline', hashBtn2);
+                if (menuMatch) {
+                    btn1Text = menuMatch[1].trim();
+                    btn2Text = menuMatch[2].trim();
+                }
+                
+                document.getElementById('nav-projets').innerText = btn1Text;
+                document.getElementById('nav-colline').innerText = btn2Text;
+                
+                hashBtn1 = slugify(btn1Text);
+                hashBtn2 = slugify(btn2Text);
+                
+                document.getElementById('nav-projets').onclick = () => switchPage('projets', hashBtn1);
+                document.getElementById('nav-colline').onclick = () => switchPage('colline', hashBtn2);
 
-                    const copyMatch = accueilText.match(/Sidebar - Copyright\s*:\s*([^\r\n]+)/i);
-                    if (copyMatch) document.querySelectorAll('.dynamic-copyright').forEach(el => el.innerHTML = copyMatch[1].trim().replace(/\n/g, '<br>'));
+                const copyMatch = accueilText.match(/Sidebar - Copyright\s*:\s*([^\r\n]+)/i);
+                if (copyMatch) document.querySelectorAll('.dynamic-copyright').forEach(el => el.innerHTML = copyMatch[1].trim().replace(/\n/g, '<br>'));
 
-                    const indexMatch = accueilText.match(/Section Projets - 01 Sommaire[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
-                    if (indexMatch) {
-                        const parts = indexMatch[1].split('|');
-                        document.getElementById('sommaire-header-left').innerText = parts[0] ? parts[0].trim() : '';
-                        document.getElementById('sommaire-header-right').innerText = parts[1] ? parts[1].trim() : '';
-                        document.getElementById('sommaire-header').style.display = 'flex';
-                    }
-
-                    const sommaireSection = accueilText.match(/Section Projets - 01 Sommaire[\s\S]*?(?=Section Projets - 02|$)/i);
-                    if (sommaireSection) {
-                        const textMatch = sommaireSection[0].match(/Texte\s*:\s*([^\r\n]+)/i);
-                        if (textMatch) {
-                            document.getElementById('sommaire-text').innerText = textMatch[1].trim();
-                            document.getElementById('sommaire-text').style.display = 'block';
-                        }
-                    }
-
-                    const carrouselMatch = accueilText.match(/Section Projets - 02 Carroussel[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
-                    if (carrouselMatch) {
-                        const parts = carrouselMatch[1].split('|');
-                        const leftEl = document.getElementById('vignettes-header-left');
-                        const rightEl = document.getElementById('vignettes-header-right');
-                        if (leftEl) leftEl.innerText = parts[0] ? parts[0].trim() : '';
-                        if (rightEl) rightEl.innerText = parts[1] ? parts[1].trim() : '';
-                    }
-
-                    const nbCouvMatch = accueilText.match(/Nombre de couvertures\s*:\s*(\d+)/i);
-                    const nbCouv = nbCouvMatch ? parseInt(nbCouvMatch[1]) : 1;
-                    const introBg = document.getElementById('intro-bg');
-                    
-                    if (introBg && nbCouv > 1 && window.location.hash.replace('#', '') === '') {
-                        const rand = Math.floor(Math.random() * nbCouv) + 1;
-                        if (rand !== 1) {
-                            introBg.classList.remove('loaded');
-                            introBg.dataset.tried = '';
-                            introBg.src = `Images/Couverture/${rand}.webp`;
-                        }
-                    }
-
-                    const retourMatch = accueilText.match(/Bouton retour projet\s*:\s*([^\r\n]+)/i);
-                    if (retourMatch) textBtnRetour = retourMatch[1].trim();
+                const indexMatch = accueilText.match(/Section Projets - 01 Sommaire[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
+                if (indexMatch) {
+                    const parts = indexMatch[1].split('|');
+                    document.getElementById('sommaire-header-left').innerText = parts[0] ? parts[0].trim() : '';
+                    document.getElementById('sommaire-header-right').innerText = parts[1] ? parts[1].trim() : '';
+                    document.getElementById('sommaire-header').style.display = 'flex';
                 }
 
-                if (projectsList && projectsList.length > 0) {
-                    allProjects = projectsList;
-                    document.getElementById('sort-btn-id').classList.add('active-sort');
-                    renderProjectsGrid(); 
-                    renderVignettesCarousel();
-                }
-
-                if (collineText) {
-                    const philoMatch = collineText.match(/01 Philosophie[\s\S]*?Texte\s*:\s*([\s\S]*?)(?=Section La Colline - 02|$)/i);
-                    if (philoMatch) document.getElementById('colline-philo').innerText = philoMatch[1].trim();
-                    
-                    const philoHeadMatch = collineText.match(/01 Philosophie[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
-                    if (philoHeadMatch) {
-                        const parts = philoHeadMatch[1].split('|');
-                        document.getElementById('philo-header-left').innerText = parts[0] ? parts[0].trim() : '';
-                        document.getElementById('philo-header-right').innerText = parts[1] ? parts[1].trim() : '';
-                    }
-
-                    const appBloc1 = collineText.match(/Texte bloc 1\s*:\s*([\s\S]*?)(?=Texte bloc 2\s*:)/i);
-                    if (appBloc1) document.getElementById('colline-approche-1').innerHTML = formatColumnParagraphs(appBloc1[1]);
-                    
-                    const appBloc2 = collineText.match(/Texte bloc 2\s*:\s*([\s\S]*?)(?=Section La Colline - 03|$)/i);
-                    if (appBloc2) document.getElementById('colline-approche-2').innerHTML = formatColumnParagraphs(appBloc2[1]);
-                    
-                    const appHeadMatch = collineText.match(/02 Notre approche[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
-                    if (appHeadMatch) {
-                        const parts = appHeadMatch[1].split('|');
-                        document.getElementById('approche-header-left').innerText = parts[0] ? parts[0].trim() : '';
-                        document.getElementById('approche-header-right').innerText = parts[1] ? parts[1].trim() : '';
-                    }
-                    
-                    const teamHeadMatch = collineText.match(/03 L'équipe[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
-                    if (teamHeadMatch) {
-                        const parts = teamHeadMatch[1].split('|');
-                        document.getElementById('team-header-left').innerText = parts[0] ? parts[0].trim() : '';
-                        document.getElementById('team-header-right').innerText = parts[1] ? parts[1].trim() : '';
+                const sommaireSection = accueilText.match(/Section Projets - 01 Sommaire[\s\S]*?(?=Section Projets - 02|$)/i);
+                if (sommaireSection) {
+                    const textMatch = sommaireSection[0].match(/Texte\s*:\s*([^\r\n]+)/i);
+                    if (textMatch) {
+                        document.getElementById('sommaire-text').innerText = textMatch[1].trim();
+                        document.getElementById('sommaire-text').style.display = 'block';
                     }
                 }
 
-                if(window.location.hash.replace('#', '') !== '') {
-                    document.getElementById('intro-screen').style.display = 'none';
-                    document.getElementById('sidebar-logo').style.opacity = '1';
-                    document.body.classList.remove('no-scroll');
-                    handleHash();
+                const carrouselMatch = accueilText.match(/Section Projets - 02 Carroussel[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
+                if (carrouselMatch) {
+                    const parts = carrouselMatch[1].split('|');
+                    const leftEl = document.getElementById('vignettes-header-left');
+                    const rightEl = document.getElementById('vignettes-header-right');
+                    if (leftEl) leftEl.innerText = parts[0] ? parts[0].trim() : '';
+                    if (rightEl) rightEl.innerText = parts[1] ? parts[1].trim() : '';
                 }
-            });
+
+                const nbCouvMatch = accueilText.match(/Nombre de couvertures\s*:\s*(\d+)/i);
+                const nbCouv = nbCouvMatch ? parseInt(nbCouvMatch[1]) : 1;
+                const introBg = document.getElementById('intro-bg');
+                
+                if (introBg && nbCouv > 1 && window.location.hash.replace('#', '') === '') {
+                    const rand = Math.floor(Math.random() * nbCouv) + 1;
+                    if (rand !== 1) {
+                        introBg.classList.remove('loaded');
+                        introBg.dataset.tried = '';
+                        introBg.src = `Images/Couverture/${rand}.webp`;
+                    }
+                }
+
+                const retourMatch = accueilText.match(/Bouton retour projet\s*:\s*([^\r\n]+)/i);
+                if (retourMatch) textBtnRetour = retourMatch[1].trim();
+            }
+
+            if (projectsList && projectsList.length > 0) {
+                allProjects = projectsList;
+                document.getElementById('sort-btn-id').classList.add('active-sort');
+                renderProjectsGrid(); 
+                renderVignettesCarousel();
+            }
+
+            if (collineText) {
+                const philoMatch = collineText.match(/01 Philosophie[\s\S]*?Texte\s*:\s*([\s\S]*?)(?=Section La Colline - 02|$)/i);
+                if (philoMatch) document.getElementById('colline-philo').innerText = philoMatch[1].trim();
+                
+                const philoHeadMatch = collineText.match(/01 Philosophie[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
+                if (philoHeadMatch) {
+                    const parts = philoHeadMatch[1].split('|');
+                    document.getElementById('philo-header-left').innerText = parts[0] ? parts[0].trim() : '';
+                    document.getElementById('philo-header-right').innerText = parts[1] ? parts[1].trim() : '';
+                }
+
+                const appBloc1 = collineText.match(/Texte bloc 1\s*:\s*([\s\S]*?)(?=Texte bloc 2\s*:)/i);
+                if (appBloc1) document.getElementById('colline-approche-1').innerHTML = formatColumnParagraphs(appBloc1[1]);
+                
+                const appBloc2 = collineText.match(/Texte bloc 2\s*:\s*([\s\S]*?)(?=Section La Colline - 03|$)/i);
+                if (appBloc2) document.getElementById('colline-approche-2').innerHTML = formatColumnParagraphs(appBloc2[1]);
+                
+                const appHeadMatch = collineText.match(/02 Notre approche[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
+                if (appHeadMatch) {
+                    const parts = appHeadMatch[1].split('|');
+                    document.getElementById('approche-header-left').innerText = parts[0] ? parts[0].trim() : '';
+                    document.getElementById('approche-header-right').innerText = parts[1] ? parts[1].trim() : '';
+                }
+                
+                const teamHeadMatch = collineText.match(/03 L'équipe[\s\S]*?En-tête\s*:\s*([^\r\n]+)/i);
+                if (teamHeadMatch) {
+                    const parts = teamHeadMatch[1].split('|');
+                    document.getElementById('team-header-left').innerText = parts[0] ? parts[0].trim() : '';
+                    document.getElementById('team-header-right').innerText = parts[1] ? parts[1].trim() : '';
+                }
+            }
+
+            if(window.location.hash.replace('#', '') !== '') {
+                document.getElementById('intro-screen').style.display = 'none';
+                document.getElementById('sidebar-logo').style.opacity = '1';
+                document.body.classList.remove('no-scroll');
+                handleHash();
+            }
         }
 
         function handleHash() {
@@ -1398,7 +1527,7 @@
             const grid = document.getElementById('projects-grid');
             grid.innerHTML = '';
             
-            allProjects.forEach(p => {
+            allProjects.forEach((p, index) => {
                 let detailsHtml = '';
                 
                 if (p.sousTitre) {
@@ -1418,10 +1547,13 @@
                 addField('Lieu', p.lieu);
                 addField('Année', p.annee);
 
+                const loadingAttr = index < 3 ? '' : 'loading="lazy"';
+                const priorityAttr = index === 0 ? 'fetchpriority="high"' : '';
+
                 grid.innerHTML += `
                     <div class="project-card" role="button" tabindex="0" onclick="showProject('${p.id}')" onkeydown="if(event.key === 'Enter' || event.key === ' ') showProject('${p.id}')">
                         <div class="card-img-wrapper">
-                            <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.webp" class="blur-load" onload="this.classList.add('loaded')" alt="Projet ${p.titre}" loading="lazy" width="800" height="800" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none';}">
+                            <img src="Images/Projet/Projet ${p.id}/vignette_projet${p.id}.webp" class="blur-load" onload="this.classList.add('loaded')" alt="Projet ${p.titre}" ${loadingAttr} ${priorityAttr} width="800" height="800" onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.style.display='none';}">
                         </div>
                         <div class="card-info">
                             <div class="card-title-line">
@@ -1476,9 +1608,11 @@
             
             let slidesHtml = '';
             for (let i = 0; i < p.nbImages; i++) {
+                const loadingAttr = i === 0 ? '' : 'loading="lazy"';
+                const priorityAttr = i === 0 ? 'fetchpriority="high"' : '';
                 slidesHtml += `
                     <div class="slide">
-                        <img src="Images/Projet/Projet ${p.id}/${i}.webp" class="blur-load" onload="this.classList.add('loaded')" alt="Architecture ${p.titre} - Photo ${i + 1}" loading="lazy" width="1920" height="1080" 
+                        <img src="Images/Projet/Projet ${p.id}/${i}.webp" class="blur-load" onload="this.classList.add('loaded')" alt="Architecture ${p.titre} - Photo ${i + 1}" ${loadingAttr} ${priorityAttr} width="1920" height="1080" 
                              onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.src.replace('.webp', '.jpg');}else{this.onerror=null; this.parentElement.remove();}"
                              onclick="openLightbox(${i})" style="cursor: zoom-in;" role="button" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') openLightbox(${i})">
                     </div>`;
@@ -1526,6 +1660,7 @@
             if(p.sousTitre) document.getElementById('og-desc').setAttribute('content', p.sousTitre);
         }
 
+        // CORRECTIF A11Y : Gestion dynamique complète du tabindex pour les lightboxes
         function openLightbox(index) {
             currentLightboxIndex = index;
             const lightbox = document.getElementById('lightbox');
@@ -1639,23 +1774,58 @@
             }
         });
 
+        function initMobileVignettesScroll() {
+            const track = document.getElementById('vignettes-track');
+            if (!track || window.innerWidth > 1300 || track.dataset.infinite !== 'true') return;
+
+            const setWidth = track.scrollWidth / 3;
+            if (setWidth > 0) {
+                track.style.scrollBehavior = 'auto';
+                track.scrollLeft = setWidth;
+                track.style.scrollBehavior = '';
+            }
+        }
+
+        function handleVignettesInfiniteScroll() {
+            const track = document.getElementById('vignettes-track');
+            if (!track || window.innerWidth > 1300 || track.dataset.infinite !== 'true') return;
+
+            clearTimeout(vignettesScrollTimer);
+            vignettesScrollTimer = setTimeout(() => {
+                const setWidth = track.scrollWidth / 3;
+                if (setWidth <= 0) return;
+
+                if (track.scrollLeft >= setWidth * 2 - 5) {
+                    track.style.scrollBehavior = 'auto';
+                    track.scrollLeft -= setWidth;
+                    track.style.scrollBehavior = '';
+                } else if (track.scrollLeft <= 5) {
+                    track.style.scrollBehavior = 'auto';
+                    track.scrollLeft += setWidth;
+                    track.style.scrollBehavior = '';
+                }
+            }, 120);
+        }
+
         function renderVignettesCarousel() {
-            const wrapper = document.getElementById('bottom-carousel-wrapper');
+            const wrapperOuter = document.getElementById('vignettes-outer-container');
             const track = document.getElementById('vignettes-track');
             track.innerHTML = '';
             
             const otherProjects = allProjects.filter(p => p.id !== currentProjectId);
             
-            if(otherProjects.length === 0) {
-                wrapper.style.display = 'none';
-                document.getElementById('vignettes-section-header').style.display = 'none';
+            if (otherProjects.length === 0) {
+                if (wrapperOuter) wrapperOuter.style.display = 'none';
                 return;
             }
             
-            wrapper.style.display = 'flex';
-            document.getElementById('vignettes-section-header').style.display = 'block';
+            if (wrapperOuter) wrapperOuter.style.display = 'grid';
 
-            otherProjects.forEach(p => {
+            const isInfinite = otherProjects.length > 3;
+            track.dataset.infinite = isInfinite ? 'true' : 'false';
+            const itemsToRender = isInfinite ? [...otherProjects, ...otherProjects, ...otherProjects] : otherProjects;
+
+            itemsToRender.forEach(p => {
                 track.innerHTML += `
                     <div class="vignette-slide" role="button" tabindex="0" onclick="showProject('${p.id}')" onkeydown="if(event.key === 'Enter' || event.key === ' ') showProject('${p.id}')">
                         <div class="vignette-img-container">
@@ -1663,6 +1833,9 @@
                         </div>
                     </div>`;
             });
+
+            track.onscroll = handleVignettesInfiniteScroll;
+            requestAnimationFrame(initMobileVignettesScroll);
         }
 
         function switchPage(pageName, urlHash = null) {
@@ -1676,9 +1849,9 @@
                 document.getElementById('nav-projets').classList.add('active');
             } else if (pageName === 'colline') {
                 document.getElementById('nav-colline').classList.add('active');
-            }
-            else if (pageName === 'projet-detail') {
+            } else if (pageName === 'projet-detail') {
                 document.getElementById('nav-projets').classList.add('active');
+                requestAnimationFrame(initMobileVignettesScroll);
             }
             
             document.getElementById('dynamic-contact-info').style.display = (pageName === 'colline') ? 'block' : 'none';
@@ -1721,6 +1894,23 @@
         function moveVignettes(dir) {
             const vp = document.querySelector('.vignettes-viewport');
             const track = document.getElementById('vignettes-track');
+
+            if (window.innerWidth <= 1300) {
+                if (track.dataset.infinite === 'true') {
+                    const setWidth = track.scrollWidth / 3;
+                    if (dir === 1 && track.scrollLeft >= setWidth * 2 - track.clientWidth) {
+                        track.style.scrollBehavior = 'auto';
+                        track.scrollLeft -= setWidth;
+                        track.style.scrollBehavior = '';
+                    } else if (dir === -1 && track.scrollLeft <= track.clientWidth) {
+                        track.style.scrollBehavior = 'auto';
+                        track.scrollLeft += setWidth;
+                        track.style.scrollBehavior = '';
+                    }
+                }
+                track.scrollBy({ left: dir * track.clientWidth, behavior: 'smooth' });
+                return;
+            }
             
             if (vp.getAttribute('data-is-animating') === 'true' || track.children.length <= 3) return;
             vp.setAttribute('data-is-animating', 'true');
