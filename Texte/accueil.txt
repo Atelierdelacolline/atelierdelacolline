@@ -17,3 +17,5 @@ VOIR D'AVANTAGE
 
 Bouton retour projet :
 RETOUR
+
+Nombre de projets : 6
