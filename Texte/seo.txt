@@ -1,26 +1,26 @@
 [general]
-Titre : Atelier de la Colline | Architectes Paris 19e
-Description : L'Atelier de la Colline est une agence d'architecture située à Paris 19e. Spécialistes de l'intervention sur l'existant.
-Keywords : architecte paris 19, agence architecture paris, rénovation, construction, couture épaisse
-H1 : Atelier de la Colline - Architectes Paris 19e
-OG-Titre : Atelier de la Colline - Architectes Paris 19e
-OG-Description : Découvrez notre philosophie de la couture épaisse et nos réalisations.
-OG-Image : Images/Couverture/1.webp
+Titre : Atelier de la Colline | Agence d'architecture Paris 19e
+Description : Agence d'architecture à Paris 19e, Bordeaux et Normandie : rénovation d'appartement, extension de maison, surélévation et copropriété, en mission complète.
+Keywords : agence d'architecture paris 19e, architecte rénovation appartement paris, extension maison, surélévation, architecte copropriété, mission complète architecte, maîtrise d'œuvre travaux, architecte bordeaux, architecte normandie
+H1 : Atelier de la Colline – Agence d'architecture à Paris 19e, Bordeaux et Normandie
+OG-Titre : Atelier de la Colline | Agence d'architecture Paris 19e
+OG-Description : Rénovation d'appartement, extension de maison, surélévation et copropriété à Paris 19e, Bordeaux et Normandie, de l'esquisse au chantier.
+OG-Image : https://atelierdelacolline.fr/Images/Couverture/1.webp
 
 [projets]
-Titre : Nos Projets | Atelier de la Colline
-Description : Explorez nos différentes réalisations et constructions.
-Keywords : architecte, projets, réalisations, bois, construction
-H1 : Sommaire de nos projets d'architecture
-OG-Titre : Les projets de l'Atelier de la Colline
-OG-Description : Explorez notre grille de projets architecturaux.
-OG-Image : Images/Couverture/2.webp
+Titre : Nos Projets | Atelier de la Colline – Architectes Paris 19e
+Description : Découvrez nos réalisations à Paris, Bordeaux et en Normandie : rénovations d'appartements, extensions de maisons, surélévations et copropriétés.
+Keywords : projets d'architecture paris, réalisations rénovation appartement, extension maison bois, surélévation maison, réhabilitation copropriété, transformation existant, réalisations bordeaux, architecture normandie
+H1 : Projets et réalisations – Agence d'architecture Atelier de la Colline
+OG-Titre : Nos Projets | Atelier de la Colline – Architectes Paris 19e
+OG-Description : Rénovations d'appartements, extensions de maisons, surélévations et interventions en copropriété à Paris, Bordeaux et en Normandie.
+OG-Image : https://atelierdelacolline.fr/Images/Couverture/2.webp
 
 [colline]
-Titre : L'Agence | Atelier de la Colline
-Description : Notre équipe, notre approche et notre vision.
-Keywords : équipe, architectes, philosophie, approche
-H1 : Philosophie et équipe de l'agence
-OG-Titre : L'Atelier de la Colline - Notre vision
-OG-Description : Découvrez les architectes derrière nos projets.
-OG-Image : Images/Approche/photo_approche.webp
+Titre : L'Agence | Atelier de la Colline – Architectes Paris 19e
+Description : Agence d'architecture à Paris 19e, Bordeaux et Normandie. Notre équipe assure la mission complète : étude de faisabilité, esquisse et suivi de chantier.
+Keywords : architectes associés paris 19e, étude de faisabilité architecturale, esquisse projet, permis de construire, suivi de chantier rénovation, accompagnement maîtrise d'ouvrage, marion foucault, ambroise de courtivron
+H1 : L'Agence Atelier de la Colline – Architectes en mission complète à Paris 19e, Bordeaux et Normandie
+OG-Titre : L'Agence | Atelier de la Colline – Architectes Paris 19e
+OG-Description : Notre équipe d'architectes vous accompagne à Paris 19e, Bordeaux et en Normandie, de l'étude de faisabilité et l'esquisse jusqu'au suivi de chantier.
+OG-Image : https://atelierdelacolline.fr/Images/Approche/photo_approche.webp
