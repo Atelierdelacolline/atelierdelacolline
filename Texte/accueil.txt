@@ -1,6 +1,7 @@
 Menu Principal :
 PROJETS
 AGENCE
+MISSIONS
 
 Sidebar - Informations de contact (texte de secours) :
 Atelier de la Colline
@@ -11,6 +12,9 @@ EMAIL: _
 
 Sidebar - Copyright :
 Atelier de la Colline | Architecture
+
+Mentions légales :
+Mentions légales
 
 Bouton chargement cartes :
 VOIR D'AVANTAGE
